@@ -229,3 +229,20 @@ org $00E9C2
     SBC.W #$0008-!extra_columns
 
 pullpc
+
+
+; Adjust OW borders
+
+pushpc
+
+org $0084D0+3
+	dl title_screen
+	dl overworld
+
+pullpc
+
+title_screen:
+	incbin "title-screen.stim"
+
+overworld:
+	incbin "overworld.stim"
