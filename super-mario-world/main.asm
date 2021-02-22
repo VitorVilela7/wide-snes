@@ -10,7 +10,7 @@
 
 
 ; Extra pixels added to the left/right side
-!extra_columns = 64
+!extra_columns = 48
 
 ; Effective screen width
 !screen_size = 256+(2*!extra_columns)
