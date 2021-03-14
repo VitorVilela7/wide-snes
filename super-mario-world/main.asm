@@ -8,9 +8,16 @@
 ; -> title screen
 ; -> deal with windowing
 
+; 1 for 21:9, 0 for 16:9
+!ultrawide = 0
+
 
 ; Extra pixels added to the left/right side
 !extra_columns = 48
+
+if !ultrawide == 1
+	!extra_columns = 96
+endif
 
 ; Effective screen width
 !screen_size = 256+(2*!extra_columns)
@@ -241,11 +248,20 @@ org $0084D0+3
 
 pullpc
 
-title_screen:
-	incbin "title-screen.stim"
+if !ultrawide == 1
+	title_screen:
+		incbin "title-screen-ultrawide.stim"
+		
+	overworld:
+		incbin "overworld-ultrawide.stim"
+else
+	title_screen:
+		incbin "title-screen.stim"
+		
+	overworld:
+		incbin "overworld.stim"
+endif
 
-overworld:
-	incbin "overworld.stim"
 
 ; take care of window hdma
 
