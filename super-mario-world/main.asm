@@ -246,3 +246,78 @@ title_screen:
 
 overworld:
 	incbin "overworld.stim"
+
+; take care of window hdma
+
+pushpc
+
+;define x/y pos
+; use CODE_00CA88 as set up $00 and $01
+; X position should be adjusted.
+
+; size calculation
+org $00CC51
+	JSL hack_test
+	PLY
+	RTS
+	
+org $00CA74
+	JSL fix_x_pos
+	NOP #3
+	
+org $03C612
+	NOP #3
+
+pullpc
+
+fix_x_pos:
+	REP #$20
+	LDA $7E
+	CLC
+	ADC #$0008
+	
+	CLC
+	ADC #$0080
+	BPL +
+	LDA #$0000
++	CMP #$01FF
+	BMI +
+	LDA #$01FF
+	
++
+	LSR
+	STA $00
+	SEP #$20
+	RTL
+
+hack_test:
+	LDA $4217
+	LSR
+	STA $02
+	
+	LSR $03
+	
+	;A's value is used
+	RTL
+	
+	
+pushpc
+
+org $05B25D
+	JML recalc_x
+
+pullpc
+
+recalc_x:
+	LSR
+	STA $00
+	CLC
+	ADC #$80
+	XBA
+	
+	LDA #$80
+	SEC
+	SBC $00
+	JML $05B267
+	
+	
