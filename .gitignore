@@ -1,4 +1,6 @@
-
+other/
+*-usage.bin
+*.cht
 *.srm
 *.smc
 *.bsz
