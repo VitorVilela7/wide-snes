@@ -166,6 +166,7 @@ org $02D398
 ; +   STA $1A
     
     ; JML $00F79D
+  
     
 ; CODE_00F73F:        65 1A         ADC RAM_ScreenBndryXLo    ;/
 ; CODE_00F741:        10 03         BPL CODE_00F746           ;>if not past the left edge, good.
@@ -185,27 +186,113 @@ org $02D398
 org $00F73F
     autoclean JML left_edge
     
-org $00F754
-    autoclean JML right_edge
+;org $00F748
+;    autoclean JML right_edge
+    
+org $009708
+	JSL x_scroll_fix
     
 freecode
 
+; fix originally provided by Alcaro and it's required to camera bounds work as expected.
+; this fix is not needed for LM 3.01+, keep this in mind for ROM hacks.
+
+; basically SMW does not set the screen width on initialization, which makes the scrolling
+; routine does not work correctly on screen edges.
+
+x_scroll_fix:
+	LDA [$65]
+	AND #$1F
+	INC A
+	STA $5E
+	
+	;I don't remember why I added that on LM 3.00, but it's not needed here.
+	;JSL $00F6DB
+	RTL
+	
+; this makes sure the camera position is within bounds of the widescreen region, with special
+; treatment for 256 pixels wide levels.
+
 left_edge:
-    ADC $1A
-    CMP.W #$0000+!extra_columns
-    BPL +
-    LDA.W #$0000+!extra_columns
+	ADC $1A
+	CMP.W #$0000+!extra_columns
+	BPL +
+	LDA.W #$0000+!extra_columns
     
-+   JML $00F746
++
+	STA $1A
+	;fall through right_edge
     
 right_edge:
-    SEC
-    SBC.W #$0000+!extra_columns
-    CMP $1A
-    BPL +
-    STA $1A
-    
-+   JML $00F75A
+	LDA $5E
+	DEC A
+	
+	XBA            
+	AND #$FF00
+	BEQ .single_screen
+	
+	BPL .resume
+	
+	LDA #$0080
+.resume
+	SEC
+	SBC.W #$0000+!extra_columns
+	CMP $1A
+	BPL .return
+	STA $1A
+
+.return
+	JML $00F75A
+
+.single_screen
+	; static position, keep level centered.
+	STZ $1A
+	BRA .return
+
+pushpc
+	org $0580A9
+		JSL screen0_special
+		
+	org $0580B0
+		JSL screen0_restore
+		
+pullpc
+
+screen0_restore:
+	LDA $4F
+	STA $1A
+	LDA $4D
+	STA $4F
+	
+	LDA $45
+	STA $47
+	RTL
+	
+screen0_special:
+	STA $4D
+	
+	; temporally copy $1A
+	LDA $1A
+	STA $4F
+	
+	; funny enough, $5D doesn't work there.
+	; the value might be temporally changed on this routine.
+	
+	LDA $5E
+	DEC
+	AND #$00FF
+	BNE .not_needed
+	
+	; why #$0080? it appears that SMW changes the scrolling
+	; strategy based on the odds (0,128,256,384) which fills
+	; completely the rendering screen. I'm using this for me
+	; favor.
+	
+	LDA.w #$0080
+	STA $1A
+	
+.not_needed
+	RTL
 
 pushpc
 
