@@ -423,4 +423,6 @@ recalc_x:
 	SBC $00
 	JML $05B267
 	
+incsrc "overworld.asm"
 	
+; Modify the original levels
