@@ -33,6 +33,19 @@ endif
 
 assert !extra_columns%16 == 0, "Extra columns must be divisible by 16."
 
+; Hybrid SA-1 support
+if read1($00FFD5) == $23
+	sa1rom
+
+	!sa1	= 1
+	!dp	= $3000
+	!addr	= $6000
+else
+	!sa1	= 0
+	!dp	= $3000
+	!addr	= $6000
+endif
+
 ; Make sprites X spawn range much larger than normal
 ; db $D0,$00,$20
 org $02A7F6
