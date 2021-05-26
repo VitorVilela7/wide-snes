@@ -77,10 +77,170 @@ pushpc
 
 pullpc
 
+;- make the mario/luigi overworld sprites set 9th x-bit
+;======================================================
+
 pushpc
-	; improve Mario and Luigi small sprites
+	; make both mario and luigi render even if they are
+	; offscreen.
+	org $048639
+		BRA +
+		NOP #2
+	+
+		PHA
+	
+	org $04865F
+		BRA +
+		NOP #2
+	+
+		PHA
+
+	org $0486E1
+		JML apply_main_player_high_bit
+		
+	org $04876E
+		JML apply_other_player_high_bit
+		
+	org $04870C
+		BNE free_stack
+		
+	org $048741
+		BEQ free_stack
+		
+	org $048748
+		BCS free_stack
+		
+	org $04874F
+		BCS free_stack
+		
+	; in case the other player is not drawn, use the unused space
+	; for freeing up stack space.
+	org $048781
+		free_stack:
+			; we don't know if it's 16-bit mode or not
+			SEP #$30
+			PLA
+			PLA
+			PLA
+			PLA
+			RTS
+			
+		warnpc $048788
 	
 pullpc
+
+; we take the initial relative x position, offset to the
+; initial tile position and adjust 9th bit based on left
+; and right tiles.
+
+; put repetitive code on a macro
+macro apply_offscreen_correction(pos, use_table, offset)
+	REP #$21
+	LDA <pos>,s
+	
+	if <use_table> == 1
+		SBC.l overworld_player_offsets,x
+	endif
+	
+	if <offset> != 0
+		CLC
+		ADC.w #<offset>
+	endif
+	
+	SEP #$20
+	
+	XBA
+	AND #$01
+endmacro
+
+apply_main_player_high_bit:
+	LDA $0DD6
+	LSR
+	TAY
+	LSR
+	TAX
+	LDA $0DBA,x
+	BEQ +	
+	LDA $1F13,y
++	TAX
+	
+	; deals when there's player + yoshi, left tile
+	%apply_offscreen_correction($03, 1, 0)
+	STA $0447
+	STA $0449
+	
+	; deals when there's player + yoshi, right tile
+	%apply_offscreen_correction($03, 1, 8)
+	STA $0448
+	STA $044A
+
+	; general cases
+	; carry calculation for left side
+	LDA $03,s
+	SEC
+	SBC #$08
+
+	; this is for the right side tiles (x - 8 + 8)
+	LDA $04,s
+	AND #$01
+	STA $044C
+	STA $044E
+	
+	; this is for the left side tiles (x - 8)
+	BCS +
+	EOR #$01
++	STA $044B
+	STA $044D	
+	
+	JML $0486F9
+
+apply_other_player_high_bit:
+	LDA $0DD6
+	EOR #$04
+	LSR
+	TAY
+	LSR
+	TAX
+	LDA $0DBA,x
+	BEQ +	
+	LDA $1F13,y
++	TAX
+	
+	; deals when there's player + yoshi, left tile
+	%apply_offscreen_correction($01, 1, 0)
+	STA.W $044F
+	STA.W $0451
+
+	; deals when there's player + yoshi, right tile
+	%apply_offscreen_correction($01, 1, 8)
+	STA.W $0450
+	STA.W $0452	
+	
+	; carry calculation for left side
+	LDA $01,s
+	SEC
+	SBC #$08
+
+	; this is for the right side tiles (x - 8 + 8)
+	LDA $02,s
+	AND #$01
+	STA.W $0454
+	STA.W $0456
+	
+	; this is for the left side tiles (x - 8)
+	BCS +
+	EOR #$01
++	STA.W $0453
+	STA.W $0455
+	
+	; end
+	JML free_stack
+	
+overworld_player_offsets:
+	; special treatment when (it's left or right) and (if using yoshi)
+	dw $0008-1, $0008-1, $0000-1, $0010-1
+	dw $0008-1, $0008-1, $0008-1, $0008-1
+	dw $0008-1, $0008-1, $0008-1, $0008-1
 
 ; - make overworld sprites render correctly on screen edges
 ;==========================================================
