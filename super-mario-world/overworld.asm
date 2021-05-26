@@ -54,8 +54,21 @@ pushpc
 
 pullpc
 
+;- make the overworld clouds work correctly on widescreen
+;========================================================
+
 pushpc
-	; improve OW clouds
+	; initial cloud x position spawn related to the layer 1
+	; x position. Make these always spawn "behind"
+	; layer 1 x position, so they won't appear out of sudden
+	; on screen.
+	
+	; only positions that has higher chances of spawning
+	; inside screen (given y positions at $04F6E8) were
+	; shifted by -64
+	org $04F6D8
+		dw $FFF0-64, $0020, $00C0, $FFF0-64
+		dw $FFF0, $0080, $00F0-64, $0000
 	
 	; increase spawn range
 	org $04FB4C
