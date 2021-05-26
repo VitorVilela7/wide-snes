@@ -154,13 +154,14 @@ macro apply_offscreen_correction(pos, use_table, offset)
 endmacro
 
 apply_main_player_high_bit:
+	; if main player has yoshi, store animation number on x, else store 0.
 	LDA $0DD6
 	LSR
 	TAY
 	LSR
 	TAX
 	LDA $0DBA,x
-	BEQ +	
+	BEQ +
 	LDA $1F13,y
 +	TAX
 	
@@ -174,7 +175,7 @@ apply_main_player_high_bit:
 	STA $0448
 	STA $044A
 
-	; general cases
+	; general case (optimized)
 	; carry calculation for left side
 	LDA $03,s
 	SEC
@@ -190,11 +191,12 @@ apply_main_player_high_bit:
 	BCS +
 	EOR #$01
 +	STA $044B
-	STA $044D	
+	STA $044D
 	
 	JML $0486F9
 
 apply_other_player_high_bit:
+	; if other player has yoshi, store animation number on x, else store 0.
 	LDA $0DD6
 	EOR #$04
 	LSR
@@ -238,6 +240,7 @@ apply_other_player_high_bit:
 	
 overworld_player_offsets:
 	; special treatment when (it's left or right) and (if using yoshi)
+	; -1 is to compensate the SBC with carry clear.
 	dw $0008-1, $0008-1, $0000-1, $0010-1
 	dw $0008-1, $0008-1, $0008-1, $0008-1
 	dw $0008-1, $0008-1, $0008-1, $0008-1
