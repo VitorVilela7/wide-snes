@@ -119,6 +119,7 @@ pushpc
 		free_stack:
 			; we don't know if it's 16-bit mode or not
 			SEP #$30
+		.axy
 			PLA
 			PLA
 			PLA
@@ -236,7 +237,7 @@ apply_other_player_high_bit:
 	STA.W $0455
 	
 	; end
-	JML free_stack
+	JML free_stack_axy
 	
 overworld_player_offsets:
 	; special treatment when (it's left or right) and (if using yoshi)
