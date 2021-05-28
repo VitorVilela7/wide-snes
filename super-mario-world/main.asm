@@ -40,10 +40,12 @@ if read1($00FFD5) == $23
 	!sa1	= 1
 	!dp	= $3000
 	!addr	= $6000
+	!bank	= $000000
 else
 	!sa1	= 0
 	!dp	= $3000
 	!addr	= $6000
+	!bank	= $800000
 endif
 
 ; Make sprites X spawn range much larger than normal
