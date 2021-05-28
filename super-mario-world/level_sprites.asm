@@ -119,6 +119,8 @@ spinning_add4:
 ;- Smoke sprites
 ;===============
 
-;....
+; Most of the logic is dealt by smoke_position.asm
 
-	
+;....
+; TO DO: mario turning around smoke
+
