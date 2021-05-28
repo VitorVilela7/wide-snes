@@ -344,22 +344,15 @@ pushpc
 
 org $0084D0+3
 	dl title_screen
-	dl overworld
 
 pullpc
 
 if !ultrawide == 1
 	title_screen:
 		incbin "title-screen-ultrawide.stim"
-		
-	overworld:
-		incbin "overworld-ultrawide.stim"
 else
 	title_screen:
 		incbin "title-screen.stim"
-		
-	overworld:
-		incbin "overworld.stim"
 endif
 
 

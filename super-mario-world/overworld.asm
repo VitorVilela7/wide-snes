@@ -297,8 +297,16 @@ full_range_ow_sprites:
 	.dont_render
 		JML $04FB36
 
+; - add universal overworld border (works with any size)
+;=======================================================
+
+pushpc	
+	org $0084D0+6
+		dl overworld_border
+		
+pullpc
+
+overworld_border:
+	incbin "overworld-universal.stim"
 
 ;TO DO: check [!] blocks
-;TO DO: fix mario/luigi sprites
-;TO DO: add overworld border here
-
