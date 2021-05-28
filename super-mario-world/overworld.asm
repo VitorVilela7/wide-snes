@@ -310,3 +310,5 @@ overworld_border:
 	incbin "overworld-universal.stim"
 
 ;TO DO: check [!] blocks
+;TO DO: save/unsave, continue/end windowing fixes
+
