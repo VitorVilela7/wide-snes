@@ -13,10 +13,11 @@
 ; TO DO: quake sprites
 ; TO DO: extended sprites
 ; TO DO: shooter sprites
-; TO DO: smoke sprites
-; TO DO: spinnning coin sprites (from ? block)
 ; TO DO: minor extended sprites
 ; TO DO: generator sprites (adjust spawn position)
+
+; DONE: smoke sprites
+; DONE: spinnning coin sprites (from ? block)
 
 ; TO DO: add koopaling hair fix
 ; TO DO: add "S" from MARIO START
