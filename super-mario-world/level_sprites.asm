@@ -1,6 +1,12 @@
 ; Dedicated code for improving level sprites
 ; For widescreen SMW support
 
+; Special thanks:
+; - MarioE
+; - Tattletale
+; - LX5
+; - Thomas
+
 ; TO DO: cluster sprites
 ; TO DO: regular sprites
 ; TO DO: bounce sprites
@@ -19,8 +25,8 @@
 ;- RAM addresses definitions
 ;===========================
 
-; x position high byte for smoke sprites.
-!smoke_x_high = $18C5
+; x position high byte for smoke sprites - given by smoke_position.asm
+!smoke_x_high = $18C9
 
 ;- Spinning coins
 ;================
@@ -109,5 +115,10 @@ spinning_add4:
 
 ; TO DO for spinning: smoke sprites at 029AE5
 ; TO DO for spinning: score [10pts] sprite support
+
+;- Smoke sprites
+;===============
+
+;....
 
 	

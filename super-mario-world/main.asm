@@ -433,3 +433,6 @@ recalc_x:
 	
 incsrc "level_sprites.asm"
 incsrc "overworld.asm"
+
+; 3rd party - independent patches - smoke x/y high bytes patch
+incsrc "smoke_position.asm"
