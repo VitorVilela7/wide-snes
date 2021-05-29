@@ -26,6 +26,9 @@
 ; TO DO: add "S" from MARIO START
 ; TO DO: add Luigi graphics
 
+; TO DO for spinning: glitter effect (using smoke sprites as proxy). TODO for minor extended sprites.
+; DONE for spinning: score [10pts] sprite support
+
 ;- RAM addresses definitions
 ;===========================
 
@@ -116,9 +119,6 @@ spinning_add4:
 	ADC #$00
 	AND #$01 ;mask it already for the MSB bit
 	RTL
-
-; TO DO for spinning: smoke sprites at 029AE5
-; TO DO for spinning: score [10pts] sprite support
 
 ;- Smoke sprites
 ;===============
