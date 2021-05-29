@@ -436,3 +436,8 @@ incsrc "overworld.asm"
 
 ; 3rd party - independent patches - smoke x/y high bytes patch
 incsrc "smoke_position.asm"
+; 3rd party - independent patches - fixes feather score bug
+incsrc "feather_score_fix.asm"
+; 3rd party - independent patches - fixes game freezing when getting feather
+incsrc "feather_fix.asm"
+
