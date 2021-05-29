@@ -21,6 +21,7 @@
 ; DONE: smoke sprites
 ; DONE: spinnning coin sprites (from ? block)
 ; DONE: score sprites
+; DONE: mario turning around smoke effect
 
 ; TO DO: add koopaling hair fix
 ; TO DO: add "S" from MARIO START
@@ -125,9 +126,6 @@ spinning_add4:
 
 ; Most of the logic is dealt by smoke_position.asm
 
-;....
-; TO DO: mario turning around smoke
-
 ; - Score sprites
 ;================
 
@@ -195,4 +193,27 @@ pushpc
 	warnpc $02AEFB
 		
 
+pullpc
+
+;- Mario high position tweaks
+;============================
+
+; $7F / $81 checks
+; NOTE: $81 is Y position, not interesting for widescreen.
+
+pushpc
+	org $00FD5A
+		LDA #$00
+	
+	org $00FE50
+		ORA #$00
+	
+	;$01C5AE skipped: feather fix.
+	
+	org $028AF5
+		ORA #$00
+	
+	org $02CF5A
+		ORA #$00
+	
 pullpc
