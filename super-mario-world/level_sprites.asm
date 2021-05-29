@@ -6,6 +6,8 @@
 ; - Tattletale
 ; - LX5
 ; - Thomas
+; - RussianMan
+; - Romi
 
 ; TO DO: cluster sprites
 ; TO DO: regular sprites
