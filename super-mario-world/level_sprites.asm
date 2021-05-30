@@ -40,6 +40,9 @@
 ; x position high byte for smoke sprites - given by smoke_position.asm
 !smoke_x_high = $18C9
 
+; set if "x position" is on widescreen area. Used as alternative for $15A0.
+!sprite_wide_flag_table = $1FD6
+
 ;- Spinning coins
 ;================
 
@@ -864,65 +867,88 @@ puff_smoke_x_check_mode7:
 pushpc
 	org $01A36B
 		get_draw_info_1:
+			STZ.w !sprite_wide_flag_table,x
+		
 			LDA $14E0,x
 			XBA	
-			LDA $00E4,x ;addr,x intentional to fit block
+			LDA $E4,x
 			REP #$20
 			SEC
 			SBC $1A
-			CMP.w #$0000-!extra_columns
-			BMI .offscreen
-			CMP.w #$0100+!extra_columns
-			BMI .ok
+			BIT #$0100
+			BEQ .not_wide
+			INC.w !sprite_wide_flag_table,x
 			
-		.offscreen
-			INC $15A0,x
-		
-		.ok
+		.not_wide
+			JSL test_offscreen
 	
 	; print pc
-	warnpc $01A384
+	warnpc $01A385
 	
 	org $02D37E
 		get_draw_info_2:
+			STZ.w !sprite_wide_flag_table,x
+		
 			LDA $14E0,x
 			XBA	
-			LDA $00E4,x ;addr,x intentional to fit block
+			LDA $E4,x
 			REP #$20
 			SEC
 			SBC $1A
-			CMP.w #$0000-!extra_columns
-			BMI .offscreen
-			CMP.w #$0100+!extra_columns
-			BMI .ok
+			BIT #$0100
+			BEQ .not_wide
+			INC.w !sprite_wide_flag_table,x
 			
-		.offscreen
-			INC $15A0,x
-		
-		.ok
+		.not_wide
+			JSL test_offscreen
 	
 	; print pc
-	warnpc $02D397
+	warnpc $02D398
 	
 	org $03B766
 		get_draw_info_3:
+			STZ.w !sprite_wide_flag_table,x
+		
 			LDA $14E0,x
 			XBA	
-			LDA $00E4,x ;addr,x intentional to fit block
+			LDA $E4,x
 			REP #$20
 			SEC
 			SBC $1A
-			CMP.w #$0000-!extra_columns
-			BMI .offscreen
-			CMP.w #$0100+!extra_columns
-			BMI .ok
+			BIT #$0100
+			BEQ .not_wide
+			INC.w !sprite_wide_flag_table,x
 			
-		.offscreen
-			INC $15A0,x
-		
-		.ok
+		.not_wide
+			JSL test_offscreen
 	
 	; print pc
-	warnpc $03B77F
+	warnpc $03B780
 	
 pullpc
+
+test_offscreen:
+	CMP.w #$0000-!extra_columns
+	BMI .offscreen
+	CMP.w #$0100+!extra_columns
+	BMI .ok
+	
+.offscreen
+	INC $15A0,x
+
+.ok
+	CLC
+	RTL
+
+; modify sprites to use new flag
+pushpc
+	org $019DCC
+		ORA.w !sprite_wide_flag_table,x
+		
+	org $019F51
+		ORA.w !sprite_wide_flag_table,x
+		
+	org $01BF0F
+		ORA.w !sprite_wide_flag_table,x
+pullpc
+	
