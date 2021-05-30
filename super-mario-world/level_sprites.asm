@@ -671,7 +671,6 @@ extended_x_test:
 ; TO DO: $029D04
 ; Unused extended sprite - ignored: $029DC7
 ; TO DO: $029EA0
-; TO DO: $02A271
 
 ; General / fireball / mode 7: $02A05A
 ; General / fireball / regular: $02A1B1
@@ -741,6 +740,45 @@ extended_x_test_3:
 	JML $02A1C0|!bank
 	
 ; TO DO: $02A36C
+; Baseball / bone extended sprites: $02A271
+pushpc
+	org $02A271
+		LDA $1733,x
+		XBA
+		LDA $171F,x
+		REP #$20
+		SEC
+		JML baseball_x_check
+		
+	; print pc
+	warnpc $02A280
+	
+	org $02A2B9
+		LDA $0F
+
+pullpc
+
+baseball_x_check:
+	SBC $1A
+	CMP.w #$0000-!extra_columns-$0020
+	BMI .return
+	CMP.w #$0100+!extra_columns+$0020
+	BMI .ok
+.return
+	SEP #$20
+	XBA
+	; get high byte and XOR with direction
+	; to decide if it'll get erased or not.
+	JML $02A280|!bank
+
+.ok
+	SEP #$20
+	STA $00
+	XBA
+	AND #$01
+	STA $0F
+	JML $02A287|!bank
+
 ; TO DO: $02A3B4
 ; TO DO: $02A42C --> note that smoke high bytes might have done something.
 
