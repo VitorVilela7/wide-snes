@@ -635,3 +635,56 @@ minor_brick_check:
 	
 	LDA $01
 	JML $028FF1|!bank
+
+;- Extended sprites
+;==================
+
+; TO DO: $01FD16
+
+; Volcano Lotus: $029B54
+pushpc
+	org $029B5C
+		JSL extended_x_test
+		NOP
+		
+	org $029BA0
+		LDA $0F
+		
+	; LOTUS SPRITE FIX ($15A0):
+	org $02E079
+		NOP
+		LDA #$00
+pullpc
+
+extended_x_test:
+	LDA $1733,x
+	SBC $1B
+	XBA
+	LDA $00
+	REP #$20
+	CMP.w #$0000-!extra_columns-$0020
+	BMI .return
+	CMP.w #$0100+!extra_columns+$0020
+	BMI .ok
+.return
+	SEP #$20
+	LDA #$01
+	RTL
+.ok
+	SEP #$20
+	XBA
+	AND #$01
+	STA $0F
+	
+	LDA #$00
+	RTL
+
+; TO DO: $029D04
+; Unused extended sprite - ignored: $029DC7
+; TO DO: $029EA0
+; TO DO: $02A05A
+; TO DO: $02A1B1
+; TO DO: $02A271
+; TO DO: $02A36C
+; TO DO: $02A3B4
+; TO DO: $02A42C --> note that smoke high bytes might have done something.
