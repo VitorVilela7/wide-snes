@@ -347,15 +347,28 @@ pushpc
 		
 	org $0285DB
 		JML minor_store_spr_x_star
+		
+	org $028602
+		JSL podoboo_flame_sign_extension
+		
+	; sign extended...
+	org $02860E
+		ADC $00
 
 pullpc
 
 minor_load_spr_x_star:
+	LDY #$00
+	CMP #$00
+	BPL +
+	DEY
++
+	CLC
 	ADC $94
 	STA $02
 	
-	LDA $95
-	ADC #$00
+	TYA
+	ADC $95
 	STA $03
 	
 	RTL
@@ -368,6 +381,17 @@ minor_store_spr_x_star:
 	STA $18EA,y
 	
 	; end/restore
+	RTL
+	
+podoboo_flame_sign_extension:
+	STZ $00
+	
+	SEC
+	SBC #$03
+	BPL +
+	DEC $00
++	
+	CLC
 	RTL
 	
 pushpc
