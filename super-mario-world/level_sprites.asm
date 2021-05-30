@@ -224,6 +224,14 @@ pullpc
 ;================
 
 pushpc
+	; Rewrite GFX routine to compress a few code sections
+	; in a manner that I can check of the widescreen area
+	; and draw in the correct area without using freespace.
+	
+	; Note that Y >= #$FFF0 should be considered, since it'll
+	; just disappear, but it should be extremely rare to
+	; trigger this in game to be worth allocating freespace.
+	
 	org $029201
 		bounce_gfx:
 			LDA $16A1,x	
