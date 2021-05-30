@@ -243,7 +243,6 @@ decTimer:
 no_dec:	
 	LDA $17C0|!addr,x
 	AND #$7F
-	print pc
 	JSL $0086DF|!bank
 	
 	dw return
@@ -526,6 +525,8 @@ glitter:
 	
 	LDA $17C8|!addr,x
 	STA $00
+	LDA !high_x,x
+	STA $02
 	LDA $17C4|!addr,x
 	STA $01
 	
@@ -537,10 +538,9 @@ glitter:
 	TAX
 	LDA $00
 	ADC glitter_x,x
-	STA $1808|!addr,y
-	LDA $01
-	CLC
-	ADC glitter_y,x
+	
+	JSL glitter_high_x
+	
 	STA $17FC|!addr,y
 	PLX
 	
@@ -720,6 +720,18 @@ warnpc $0299D2|!bank
 freedata
 ;print "Code is located at: $", pc
 ;reset bytes
+
+glitter_high_x:
+	STA $1808|!addr,y
+
+	LDA $02
+	ADC #$00
+	STA $18EA|!addr,y
+	
+	LDA $01
+	CLC
+	ADC glitter_y,x
+	RTL
 
 check_x_wide:
 	LDA !high_x,x
