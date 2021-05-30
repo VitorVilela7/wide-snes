@@ -11,7 +11,6 @@
 
 ; TO DO: cluster sprites
 ; TO DO: regular sprites
-; TO DO: bounce sprites
 ; TO DO: quake sprites
 ; TO DO: extended sprites
 ; TO DO: shooter sprites
@@ -22,6 +21,9 @@
 ; DONE: spinnning coin sprites (from ? block)
 ; DONE: score sprites
 ; DONE: mario turning around smoke effect
+; DONE: bounce sprites
+
+; TO DO: check bounce sprites on vertical levels. $02925C
 
 ; TO DO: add koopaling hair fix
 ; TO DO: add "S" from MARIO START
@@ -217,3 +219,60 @@ pushpc
 		ORA #$00
 	
 pullpc
+
+;- Bounce sprites
+;================
+
+pushpc
+	org $029201
+		bounce_gfx:
+			LDA $16A1,x	
+			SEC
+			SBC $001C,y
+			STA $01
+			LDA $16A9,x	
+			SBC $001D,y		
+			BNE .return
+		
+			LDA $16A5,x
+			SEC
+			SBC $001A,y
+			STA $00
+			XBA
+			
+			LDA $16AD,x
+			SBC $001B,y
+			XBA
+			
+			REP #$20
+			CMP.w #$0000-!extra_columns-$0020
+			BMI .return
+			CMP.w #$0100+!extra_columns+$0020
+			BMI .ok
+			
+		.return
+			SEP #$20
+			RTS
+			
+			NOP #2
+		
+		.ok
+			AND #$0100
+			ORA #$0200
+			STA $02
+		
+			LDY $91ED,x
+			LDA $00
+			STA $0200,y
+			
+			SEP #$20
+	
+	; print pc
+	warnpc $029246
+	
+	org $02925C
+		bounce_set_msb:
+			LDA $03
+	
+pullpc
+	
