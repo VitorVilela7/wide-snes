@@ -778,7 +778,8 @@ baseball_x_check:
 	STA $0F
 	JML $02A287|!bank
 
-; Smoke puff: $02A36C
+; Puff of smoke - regular: $02A36C
+; Puff of smoke - mode 7: $02A3B4
 pushpc
 	org $02A36C
 		LDA $1733,x
@@ -790,7 +791,20 @@ pushpc
 	; print pc
 	warnpc $02A379
 	
+	org $02A3B4
+		LDA $1733,x
+		XBA
+		LDA $171F,x
+		REP #$20
+		JML puff_smoke_x_check_mode7
+		
+	print pc
+	warnpc $02A3C1
+	
 	org $02A3A5
+		LDA $0F
+		
+	org $02A3F0
 		LDA $0F
 	
 pullpc
@@ -817,8 +831,31 @@ puff_smoke_x_check:
 	STA $0F
 	
 	JML $02A379|!bank
+	
+; TO DO: Behavior still needs to be tested. Do after testing Roy/Morton.
+puff_smoke_x_check_mode7:
+	SEC
+	SBC $1A
+	CMP.w #$0000-!extra_columns-$0020
+	BMI .return
+	CMP.w #$0100+!extra_columns+$0020
+	BMI .ok
+.return
+	SEP #$20
+	
+	; erase
+	JML $02A211|!bank
+	
+.ok
+	SEP #$20
+	STA $0300,y
+	XBA
+	AND #$01
+	ORA #$02
+	STA $0F
+	
+	JML $02A3C1|!bank
 
-; TO DO: $02A3B4
 ; TO DO: $02A42C --> note that smoke high bytes might have done something.
 
 ;- Regular sprites (offscreen flag - $15A0)
