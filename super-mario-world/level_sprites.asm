@@ -454,12 +454,6 @@ pushpc
 	org $02C10E
 		JSL spawn_rip_van_fish_zs
 		NOP
-		
-	; ignore horizontal offscreen flag (standard sprite)
-	; for rip van fish ($15A0+x)
-	org $02C0DC
-		LDA #$00
-		NOP
 	
 	; cracked yoshi egg
 	org $028EA4
@@ -649,11 +643,6 @@ pushpc
 		
 	org $029BA0
 		LDA $0F
-		
-	; LOTUS SPRITE FIX ($15A0):
-	org $02E079
-		NOP
-		LDA #$00
 pullpc
 
 extended_x_test:
@@ -688,3 +677,72 @@ extended_x_test:
 ; TO DO: $02A36C
 ; TO DO: $02A3B4
 ; TO DO: $02A42C --> note that smoke high bytes might have done something.
+
+;- Regular sprites (offscreen flag - $15A0)
+;==========================================
+
+pushpc
+	org $01A36B
+		get_draw_info_1:
+			LDA $14E0,x
+			XBA	
+			LDA $00E4,x ;addr,x intentional to fit block
+			REP #$20
+			SEC
+			SBC $1A
+			CMP.w #$0000-!extra_columns
+			BMI .offscreen
+			CMP.w #$0100+!extra_columns
+			BMI .ok
+			
+		.offscreen
+			INC $15A0,x
+		
+		.ok
+	
+	; print pc
+	warnpc $01A384
+	
+	org $02D37E
+		get_draw_info_2:
+			LDA $14E0,x
+			XBA	
+			LDA $00E4,x ;addr,x intentional to fit block
+			REP #$20
+			SEC
+			SBC $1A
+			CMP.w #$0000-!extra_columns
+			BMI .offscreen
+			CMP.w #$0100+!extra_columns
+			BMI .ok
+			
+		.offscreen
+			INC $15A0,x
+		
+		.ok
+	
+	; print pc
+	warnpc $02D397
+	
+	org $03B766
+		get_draw_info_3:
+			LDA $14E0,x
+			XBA	
+			LDA $00E4,x ;addr,x intentional to fit block
+			REP #$20
+			SEC
+			SBC $1A
+			CMP.w #$0000-!extra_columns
+			BMI .offscreen
+			CMP.w #$0100+!extra_columns
+			BMI .ok
+			
+		.offscreen
+			INC $15A0,x
+		
+		.ok
+	
+	; print pc
+	warnpc $03B77F
+	
+pullpc
