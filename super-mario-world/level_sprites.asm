@@ -739,7 +739,6 @@ extended_x_test_3:
 
 	JML $02A1C0|!bank
 	
-; TO DO: $02A36C
 ; Baseball / bone extended sprites: $02A271
 pushpc
 	org $02A271
@@ -778,6 +777,46 @@ baseball_x_check:
 	AND #$01
 	STA $0F
 	JML $02A287|!bank
+
+; Smoke puff: $02A36C
+pushpc
+	org $02A36C
+		LDA $1733,x
+		XBA
+		LDA $171F,x
+		REP #$20
+		JML puff_smoke_x_check
+		
+	; print pc
+	warnpc $02A379
+	
+	org $02A3A5
+		LDA $0F
+	
+pullpc
+
+puff_smoke_x_check:
+	SEC
+	SBC $1A
+	CMP.w #$0000-!extra_columns-$0020
+	BMI .return
+	CMP.w #$0100+!extra_columns+$0020
+	BMI .ok
+.return
+	SEP #$20
+	
+	; erase
+	JML $02A211|!bank
+	
+.ok
+	SEP #$20
+	STA $0200,y
+	XBA
+	AND #$01
+	ORA #$02
+	STA $0F
+	
+	JML $02A379|!bank
 
 ; TO DO: $02A3B4
 ; TO DO: $02A42C --> note that smoke high bytes might have done something.
