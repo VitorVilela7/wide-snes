@@ -29,6 +29,8 @@
 ; TO DO: add "S" from MARIO START
 ; TO DO: add Luigi graphics
 ; TO DO: test more carefully yoshi eggs on screen edges.
+; TO DO: minor star position generation fixes.
+; TO DO: podoboo flames position checks.
 
 ; TO DO for spinning: glitter effect (using smoke sprites as proxy). TODO for minor extended sprites.
 ; DONE for spinning: score [10pts] sprite support
@@ -471,6 +473,48 @@ pushpc
 	; minor star x msb
 	org $028F25
 		LDA $0F
+		
+	; podoboo flames
+	org $028F2F
+		JSL minor_x_calc_check
+		BNE podoboo_flames_erase
+		
+		BRA +
+		NOP #4
+	+
+		
+	; print pc
+	warnpc $028F3B
+	
+	org $028F50
+		LDA $00
+		STA $0200,y
+		
+		BRA +
+		NOP #2
+	+
+		
+	; print pc
+	warnpc $028F59
+	
+	; podoboo flames x msb
+	org $028F81
+		LDA $0F
+		
+	org $028F87
+		podoboo_flames_erase:
+		
+	; the brick particles when you break a turn block
+	; with a spin jump
+	org $028FED
+		JML minor_brick_check
+	
+	; minor brick x msb
+	org $029027
+		LDA $0F
+		
+	; $02990F is already covered by smoke_position.asm
+	
 pullpc
 		
 
@@ -548,3 +592,23 @@ abort_rip_van_fish_if_timeout:
 	STA $0420,y
 
 	JML $028E76|!bank
+
+minor_brick_check:
+	XBA
+	LDA $01
+	REP #$20
+	CMP.w #$0000-!extra_columns-$0020
+	BMI .return
+	CMP.w #$0100+!extra_columns+$0020
+	BMI .ok
+.return
+	SEP #$20
+	JML $028F87|!bank
+.ok
+	SEP #$20
+	XBA
+	AND #$01
+	STA $0F
+	
+	LDA $01
+	JML $028FF1|!bank
