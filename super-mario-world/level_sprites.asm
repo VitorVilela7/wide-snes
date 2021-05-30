@@ -28,6 +28,7 @@
 ; TO DO: add koopaling hair fix
 ; TO DO: add "S" from MARIO START
 ; TO DO: add Luigi graphics
+; TO DO: test more carefully yoshi eggs on screen edges.
 
 ; TO DO for spinning: glitter effect (using smoke sprites as proxy). TODO for minor extended sprites.
 ; DONE for spinning: score [10pts] sprite support
@@ -415,6 +416,7 @@ pushpc
 	;print pc
 	warnpc $028E31
 	
+	; rip van vish 'zzz' x msb
 	org $028E6D
 		LDA $0F
 		
@@ -433,6 +435,42 @@ pushpc
 	org $02C0DC
 		LDA #$00
 		NOP
+	
+	; cracked yoshi egg
+	org $028EA4
+		JSL minor_x_calc_check
+		BNE minor_yoshi_egg_stop
+		
+		LDA #$00
+		LDA $00
+		
+	; print pc
+	warnpc $028EAE
+	
+	; cracked yoshi egg x msb
+	org $028EC6
+		LDA $0F
+		
+	org $028ED7
+		minor_yoshi_egg_stop:
+		
+	; "small star" / "glitter"
+	org $028EE4
+		JSL minor_x_calc_check
+		BNE minor_star_erase
+		
+		LDA #$00
+		LDA $00
+		
+	; print pc
+	warnpc $028EEE
+		
+	org $028ED7
+		minor_star_erase:
+		
+	; minor star x msb
+	org $028F25
+		LDA $0F
 pullpc
 		
 
