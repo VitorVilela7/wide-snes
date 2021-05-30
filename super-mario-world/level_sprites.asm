@@ -11,7 +11,6 @@
 
 ; TO DO: cluster sprites
 ; TO DO: regular sprites
-; TO DO: quake sprites
 ; TO DO: extended sprites
 ; TO DO: shooter sprites
 ; TO DO: minor extended sprites
@@ -22,6 +21,7 @@
 ; DONE: score sprites
 ; DONE: mario turning around smoke effect
 ; DONE: bounce sprites
+; DONE: quake sprites
 
 ; TO DO: check bounce sprites on vertical levels. $02925C
 
@@ -275,4 +275,19 @@ pushpc
 			LDA $03
 	
 pullpc
+
+;- Quake sprites
+;===============
+
+pushpc
+	; Quake sprites doesn't appear on screen, it's an invisible
+	; box that comes when you hit any block which if any sprite
+	; touches that invisible square it's stomped immediately.
 	
+	; The only thing I noticed it's this typo, storing to high Y
+	; instead of high X. So it's fixed now.
+	
+	org $0286D6
+		STA $16D5,y
+
+pullpc	
