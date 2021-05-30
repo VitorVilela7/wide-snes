@@ -13,18 +13,9 @@
 ; TO DO: regular sprites
 ; TO DO: extended sprites
 ; TO DO: shooter sprites
-; TO DO: minor extended sprites
 ; TO DO: generator sprites (adjust spawn position)
 
-; DONE: smoke sprites
-; DONE: spinnning coin sprites (from ? block)
-; DONE: score sprites
-; DONE: mario turning around smoke effect
-; DONE: bounce sprites
-; DONE: quake sprites
-
 ; TO DO: check bounce sprites on vertical levels. $02925C
-
 ; TO DO: add koopaling hair fix
 ; TO DO: add "S" from MARIO START
 ; TO DO: add Luigi graphics
@@ -32,7 +23,15 @@
 ; TO DO: minor star position generation fixes.
 ; TO DO: podoboo flames position checks.
 
-; TO DO for spinning: glitter effect (using smoke sprites as proxy). TODO for minor extended sprites.
+; DONE: smoke sprites
+; DONE: spinnning coin sprites (from ? block)
+; DONE: score sprites
+; DONE: mario turning around smoke effect
+; DONE: bounce sprites
+; DONE: quake sprites
+; DONE: minor extended sprites
+
+; DONE for spinning: glitter effect (using smoke sprites as proxy).
 ; DONE for spinning: score [10pts] sprite support
 
 ;- RAM addresses definitions
