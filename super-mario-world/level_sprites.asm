@@ -671,9 +671,75 @@ extended_x_test:
 ; TO DO: $029D04
 ; Unused extended sprite - ignored: $029DC7
 ; TO DO: $029EA0
-; TO DO: $02A05A
-; TO DO: $02A1B1
 ; TO DO: $02A271
+
+; General / fireball / mode 7: $02A05A
+; General / fireball / regular: $02A1B1
+pushpc
+	; mode 7 case
+	org $02A05A
+		JML extended_x_test_2
+		
+	org $02A0A0
+		LDA $0F
+		
+	org $02A1B1
+		LDA $1733,x
+		XBA
+		LDA $171F,x
+		REP #$20
+		JML extended_x_test_3
+		
+	; print pc
+	warnpc $02A1C0
+	
+	org $02A208
+		LDA $0F
+pullpc
+
+extended_x_test_2:
+	LDA $1733,x
+	XBA
+	LDA $171F,x
+	REP #$20
+	SEC
+	SBC $1A
+	CMP.w #$0000-!extra_columns-$0020
+	BMI .return
+	CMP.w #$0100+!extra_columns+$0020
+	BMI .ok
+.return
+	SEP #$20
+	JML $02A0A9|!bank
+
+.ok
+	SEP #$20
+	XBA
+	AND #$01
+	STA $0F
+	XBA
+	JML $02A064|!bank
+	
+extended_x_test_3:
+	SEC
+	SBC $1A
+	CMP.w #$0000-!extra_columns-$0020
+	BMI .return
+	CMP.w #$0100+!extra_columns+$0020
+	BMI .ok
+.return
+	SEP #$20
+	JML $02A211|!bank
+
+.ok
+	SEP #$20
+	STA $01
+	XBA
+	AND #$01
+	STA $0F
+
+	JML $02A1C0|!bank
+	
 ; TO DO: $02A36C
 ; TO DO: $02A3B4
 ; TO DO: $02A42C --> note that smoke high bytes might have done something.
