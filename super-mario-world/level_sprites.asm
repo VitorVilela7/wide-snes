@@ -20,6 +20,8 @@
 ; TO DO: fix torpedo ted's hand on widescreen area.
 ; TO DO: fix jump 'strings'
 ; TO DO: fix 'smashed' OAM on koopas without shell.
+; TO DO: fix winged sprites...
+; TO DO: test puff of smoke hitting wall once Roy/Morton/Ludwig is fixed...
 
 ; DONE: smoke sprites
 ; DONE: spinnning coin sprites (from ? block)
@@ -32,8 +34,8 @@
 ; DONE: extended sprites
 ; DONE: generator sprites (adjust spawn position)
 
-; DONE for spinning: glitter effect (using smoke sprites as proxy).
-; DONE for spinning: score [10pts] sprite support
+; DONE: for spinning: glitter effect (using smoke sprites as proxy).
+; DONE: for spinning: score [10pts] sprite support
 ; DONE: podoboo flames position checks.
 ; DONE: minor star position generation fixes.
 
@@ -838,7 +840,6 @@ puff_smoke_x_check:
 	
 	JML $02A379|!bank
 	
-; TO DO: Behavior still needs to be tested. Do after testing Roy/Morton.
 puff_smoke_x_check_mode7:
 	SEC
 	SBC $1A

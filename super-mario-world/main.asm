@@ -26,7 +26,7 @@ endif
 ; (4/3) / (8/7) = 4/3 * 7/8 = 1/3 * 7/2 = 7/6
 
 ; CRT Screen Aspect Correction Ratio Theory #2:
-; Someone told me that the NTSC clock makes the ratio = 8/7
+; Most analysis leads to, possibly due of NTSC clock differences = 8/7
 
 ; Either way for both to be used, !extra_columns must be 44 according bsnes-hd spec.
 ; Keeping in mind that it must be divisible by 16.
@@ -167,9 +167,6 @@ org $02D398
 
 org $00F78E
     autoclean JML camera_x_limit_vert
-    warnpc $00F79D
-
-; freecode  
     
 ; CODE_00F73F:        65 1A         ADC RAM_ScreenBndryXLo    ;/
 ; CODE_00F741:        10 03         BPL CODE_00F746           ;>if not past the left edge, good.
@@ -187,10 +184,7 @@ org $00F78E
 ; CODE_00F75A:        80 41         BRA CODE_00F79D           ;>Go to layer 2 scrolling
 
 org $00F73F
-    autoclean JML left_edge
-    
-;org $00F748
-;    autoclean JML right_edge
+    autoclean JML camera_x_limit_horz
     
 org $009708
 	JSL x_scroll_fix
@@ -228,7 +222,7 @@ x_scroll_fix:
 ; this makes sure the camera position is within bounds of the widescreen region, with special
 ; treatment for 256 pixels wide levels.
 
-left_edge:
+camera_x_limit_horz:
 	ADC $1A
 	CMP.W #$0000+!extra_columns
 	BPL +
@@ -236,9 +230,8 @@ left_edge:
     
 +
 	STA $1A
-	;fall through right_edge
-    
-right_edge:
+
+	; right side
 	LDA $5E
 	DEC A
 	
