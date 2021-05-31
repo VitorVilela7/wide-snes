@@ -11,17 +11,15 @@
 
 ; TO DO: cluster sprites
 ; TO DO: regular sprites
-; TO DO: extended sprites
-; TO DO: shooter sprites
 ; TO DO: generator sprites (adjust spawn position)
 
 ; TO DO: check bounce sprites on vertical levels. $02925C
 ; TO DO: add koopaling hair fix
 ; TO DO: add "S" from MARIO START
 ; TO DO: add Luigi graphics
-; TO DO: test more carefully yoshi eggs on screen edges.
-; TO DO: minor star position generation fixes.
-; TO DO: podoboo flames position checks.
+; TO DO: test more carefully yoshi eggs on screen edges. (fix needed)
+; TO DO: fix torpedo ted's hand on widescreen area.
+; TO DO: fix jump 'strings'
 
 ; DONE: smoke sprites
 ; DONE: spinnning coin sprites (from ? block)
@@ -30,9 +28,13 @@
 ; DONE: bounce sprites
 ; DONE: quake sprites
 ; DONE: minor extended sprites
+; DONE: shooter sprites
+; DONE: extended sprites
 
 ; DONE for spinning: glitter effect (using smoke sprites as proxy).
 ; DONE for spinning: score [10pts] sprite support
+; DONE: podoboo flames position checks.
+; DONE: minor star position generation fixes.
 
 ;- RAM addresses definitions
 ;===========================
@@ -951,4 +953,68 @@ pushpc
 	org $01BF0F
 		ORA.w !sprite_wide_flag_table,x
 pullpc
+
+;- Shooter sprites
+;=================
+
+; Torpedo Ted
+pushpc
+	org $02B3CC
+		JML torpedo_ted
+pullpc
+
+torpedo_ted:
+	LDA $17A3,x
+	XBA
+	LDA $179B,x
+	REP #$20
+	SEC
+	SBC $1A
+	CMP.w #$0000-!extra_columns+$0010
+	BMI .return
+	CMP.w #$0100+!extra_columns-$0010+1
+	BMI .ok
 	
+.return
+	SEP #$20
+	JML $02B3AA|!bank
+	
+.ok
+	SEP #$20
+	JML $02B3E5|!bank
+
+; Bullet Bill Shooter
+pushpc
+	org $02B47C
+		JML bullet_bill_shooter
+pullpc
+
+bullet_bill_shooter:
+	LDA $17A3,x
+	XBA
+	LDA $179B,x
+	REP #$20
+	STA $00
+	SEC
+	SBC $1A
+	CMP.w #$0000-!extra_columns+$0010
+	BMI .return
+	CMP.w #$0100+!extra_columns-$0010+1
+	BMI .ok
+	
+.return
+	SEP #$20
+	JML $02B4DD|!bank
+	
+.ok
+	LDA $94
+	SEC
+	SBC $00
+	BPL +
+	EOR #$FFFF
+	INC
++	CMP #$0011
+	BCC .return
+
+	SEP #$20
+	JML $02B4A1|!bank
