@@ -165,23 +165,11 @@ org $02D398
 ; CODE_00F798:        A9 00 01      LDA.W #$0100              ;>The furthest right the screen can scroll rightwards
 ; CODE_00F79B:        85 1A         STA RAM_ScreenBndryXLo    ;>Store screen position (this is how Mario moves the screen horizontally, vertical levels only)
 
-; org $00F78E
-    ; autoclean JML camera_x_limit
-    ; ;warnpc $00F79D
+org $00F78E
+    autoclean JML camera_x_limit_vert
+    warnpc $00F79D
 
-; freecode
-
-; camera_x_limit:
-    ; CMP.W #$0000+!extra_columns
-    ; BPL +
-    ; LDA.W #$0000+!extra_columns
-; +   CMP.W #$0101-!extra_columns
-    ; BMI +
-    ; LDA.W #$0101-!extra_columns
-; +   STA $1A
-    
-    ; JML $00F79D
-  
+; freecode  
     
 ; CODE_00F73F:        65 1A         ADC RAM_ScreenBndryXLo    ;/
 ; CODE_00F741:        10 03         BPL CODE_00F746           ;>if not past the left edge, good.
@@ -208,6 +196,18 @@ org $009708
 	JSL x_scroll_fix
     
 freecode
+
+camera_x_limit_vert:
+    CMP.W #$0000+!extra_columns
+    BPL +
+    LDA.W #$0000+!extra_columns
++   CMP.W #$0101-!extra_columns
+    BMI +
+    LDA.W #$0101-!extra_columns
++   STA $1A
+    
+    JML $00F79D
+
 
 ; fix originally provided by Alcaro and it's required to camera bounds work as expected.
 ; this fix is not needed for LM 3.01+, keep this in mind for ROM hacks.

@@ -801,7 +801,7 @@ pushpc
 		REP #$20
 		JML puff_smoke_x_check_mode7
 		
-	print pc
+	; print pc
 	warnpc $02A3C1
 	
 	org $02A3A5
