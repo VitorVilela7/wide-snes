@@ -226,11 +226,10 @@ org $038A2E|!bank
 ; + oam handling, which remains basically the same
 org $0296C0|!bank
 	STZ $0F
-	REP #$30
-	TXA
-	AND #$00FF
-	TAX
+	STZ $0E
 	SEP #$30
+	LDA #$00
+	XBA
 	
 	LDA $17CC|!addr,x
 	BEQ kill
@@ -383,26 +382,29 @@ contact:
 	PHP
 	CLC
 	ADC #$08
+	BCC .on_scr1
+	INC $0F
+.on_scr1
 	PLP
 	STA $0204|!addr,y
 	STA $020C|!addr,y
 	BCC .on_scr
-	INC $0F
+	INC $0E
+	LDA $0F
+	EOR #$01
+	STA $0F
 .on_scr	
 	REP #$20
 	TYA
 	LSR
 	LSR
 	TAY
-	SEP #$20
-	LDA $0F
+	LDA $0E
 	STA $0420|!addr,y
-	STA $0421|!addr,y
 	STA $0422|!addr,y
-	STA $0423|!addr,y
 	
 .return	
-	SEP #$10
+	SEP #$30
 	RTS
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
