@@ -22,6 +22,7 @@
 ; TO DO: fix 'smashed' OAM on koopas without shell.
 ; TO DO: fix winged sprites...
 ; TO DO: test puff of smoke hitting wall once Roy/Morton/Ludwig is fixed...
+; TO DO: key/keyhole windowing hdma
 
 ; DONE: smoke sprites
 ; DONE: spinnning coin sprites (from ? block)

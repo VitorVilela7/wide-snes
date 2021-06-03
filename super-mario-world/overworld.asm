@@ -246,8 +246,8 @@ overworld_player_offsets:
 	dw $0008-1, $0008-1, $0008-1, $0008-1
 	dw $0008-1, $0008-1, $0008-1, $0008-1
 
-; - make overworld sprites render correctly on screen edges
-;==========================================================
+;- make overworld sprites render correctly on screen edges
+;=========================================================
 
 pushpc
 	; this fixes benefits in particular "boo", "cloud" and "smoke"
@@ -296,9 +296,76 @@ full_range_ow_sprites:
 	
 	.dont_render
 		JML $04FB36
+		
+;- [!] switch palace blocks
+;===========================
 
-; - add universal overworld border (works with any size)
-;=======================================================
+pushpc
+	org $04F31A
+		JSL cache_palace_color
+
+	org $04F34C
+		JML palace_blocks_check_range
+pullpc
+
+cache_palace_color:
+	; restore
+	STA $0F
+
+	; current palace color -> yxppCCCt
+	; useful speedup without SA-1
+	LDA $13D2
+	DEC
+	ASL
+	ORA #$30
+	STA $0E
+	
+	; restore
+	LDX #$00
+	RTL
+
+palace_blocks_check_range:
+	; draw only if y < 224
+	CMP #$00E0
+	BCS .no
+	STA $02
+	
+	; draw only if -15 < x < 256
+	LDA $00
+	CMP #$0100
+	BCC .ok
+	CMP #$FFF0
+	BCC .no
+.ok
+	SEP #$20
+	
+	LDY $0F
+	STA $0340,y
+	
+	LDA $02
+	STA $0341,y
+	
+	LDA #$E6
+	STA $0342,y
+	LDA $0E
+	STA $0343,y
+	
+	TYA
+	LSR
+	LSR
+	TAY
+	
+	LDA $01
+	AND #$01
+	ORA #$02
+	JML $04F375|!bank
+	
+.no
+	SEP #$20
+	JML $04F378|!bank
+
+;- add universal overworld border (works with any size)
+;======================================================
 
 pushpc	
 	org $0084D0+6
@@ -309,6 +376,5 @@ pullpc
 overworld_border:
 	incbin "overworld-universal.stim"
 
-;TO DO: check [!] blocks
 ;TO DO: save/unsave, continue/end windowing fixes
 
