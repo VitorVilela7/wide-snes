@@ -378,3 +378,24 @@ overworld_border:
 
 ;TO DO: save/unsave, continue/end windowing fixes
 
+pushpc
+	org $04F453
+		LSR
+		
+	org $04F46E
+		STA $00
+		ADC $1B89
+		LSR
+		AND #$FE
+		TAX
+		JSL set_save_window_side_right
+	; print pc
+	warnpc $04F47B
+
+pullpc
+
+set_save_window_side_right:
+	LDA #$80
+	SEC
+	SBC $00
+	RTL
