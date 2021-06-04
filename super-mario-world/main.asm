@@ -424,6 +424,20 @@ recalc_x:
 	SBC $00
 	JML $05B267
 	
+pushpc
+	org $05D923
+		JSL horz_customizer
+		NOP
+pullpc
+
+horz_customizer:
+	LDA #$01
+	CPY #$00FA
+	BNE +
+	DEC
++	STA $1411
+	RTL
+	
 incsrc "level_sprites.asm"
 incsrc "overworld.asm"
 
