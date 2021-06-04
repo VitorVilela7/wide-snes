@@ -438,6 +438,22 @@ horz_customizer:
 +	STA $1411
 	RTL
 	
+; layer 1+2 vertical levels
+pushpc
+	org $05BEBC
+		JML l2_vertx_h
+
+pullpc
+
+l2_vertx_h:
+	LDA #$0000+!extra_columns
+	STA $1A
+	STA $1462
+	STA $1E
+	STA $1466
+	
+	JML $05BEC6|!bank
+	
 incsrc "level_sprites.asm"
 incsrc "overworld.asm"
 
