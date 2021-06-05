@@ -433,10 +433,13 @@ horz_customizer:
 	DEC
 +	STA $1411
 
-	; if it's yoshi's house, set initial layer 1 position to #$0100
+	; if it's yoshi's house or top secret area,
+	; set initial layer 1 position to #$0100
+	CPY #$0003
+	BEQ ++
 	CPY #$0104
 	BNE +
-	STZ $1A
+++	STZ $1A
 	STA $1B
 +	RTL
 	
