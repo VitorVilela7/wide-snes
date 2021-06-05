@@ -49,20 +49,35 @@
 ; set if "x position" is on widescreen area. Used as alternative for $15A0.
 !sprite_wide_flag_table = $1FD6
 
-;- Horizontal levels spawning range
-;==================================
+;- Horizontal/vertical level spawning range
+;==========================================
 
 pushpc
 	; Make sprites X spawn range much larger than normal
 	; db $D0,$00,$20
 	org $02A7F6
-	    db $D0-!extra_columns
-	    db $00
-	    db $20+!extra_columns
+		horz_range:
+			db $D0-!extra_columns
+			db $00
+			db $20+!extra_columns
+	    
+	; Remap table if vertical level, to not break
+	; vertical levels spawning.
+	org $02A80C
+		ADC.w vert_range,y
+		
+	; Mirror table to unused space, so vertical
+	; levels still works as normal.
+	org $02FFE2
+		vert_range:
+			db $D0
+			db $00
+			db $20
+		
 pullpc
 
-;- Spinning coins
-;================
+;- Spinning coins sprite
+;=======================
 
 pushpc
 	org $0299E3
