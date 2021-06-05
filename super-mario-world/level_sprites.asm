@@ -49,6 +49,18 @@
 ; set if "x position" is on widescreen area. Used as alternative for $15A0.
 !sprite_wide_flag_table = $1FD6
 
+;- Horizontal levels spawning range
+;==================================
+
+pushpc
+	; Make sprites X spawn range much larger than normal
+	; db $D0,$00,$20
+	org $02A7F6
+	    db $D0-!extra_columns
+	    db $00
+	    db $20+!extra_columns
+pullpc
+
 ;- Spinning coins
 ;================
 

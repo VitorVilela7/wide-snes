@@ -48,11 +48,6 @@ else
 	!bank	= $800000
 endif
 
-; Make sprites X spawn range much larger than normal
-; db $D0,$00,$20
-org $02A7F6
-    db $D0-!extra_columns,$00,$20+!extra_columns
-
 ; Adjust off-screen routines
 macro adjust_offscreen(v)
     if <v> >= $8000
