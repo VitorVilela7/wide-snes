@@ -441,6 +441,17 @@ horz_customizer:
 	BNE +
 ++	STZ $1A
 	STA $1B
++
+
+	; special case for specific cloud level
+	CPY #$01C9
+	BNE +
+	STZ $1A
+	LDA #$04
+	STA $1B
+	; required to the camera not end up adjusted again
+	STZ $1411
+
 +	RTL
 	
 ; layer 1+2 vertical levels
