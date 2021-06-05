@@ -426,12 +426,19 @@ pushpc
 pullpc
 
 horz_customizer:
+	; if it's ghost house bonus, disable horizontal scrolling
 	LDA #$01
 	CPY #$00FA
 	BNE +
 	DEC
 +	STA $1411
-	RTL
+
+	; if it's yoshi's house, set initial layer 1 position to #$0100
+	CPY #$0104
+	BNE +
+	STZ $1A
+	STA $1B
++	RTL
 	
 ; layer 1+2 vertical levels
 pushpc
