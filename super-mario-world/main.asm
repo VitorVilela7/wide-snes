@@ -459,6 +459,11 @@ pushpc
 	org $05BEBC
 		JML l2_vertx_h
 
+	; this fixes a sign overflow, causing
+	; layer 2 sideways long scroll sprite
+	; not work on widescreen mode.
+	org $05BEFE
+		AND #$01FF
 pullpc
 
 l2_vertx_h:
