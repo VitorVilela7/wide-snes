@@ -433,14 +433,20 @@ horz_customizer:
 	DEC
 +	STA $1411
 
-	; if it's yoshi's house or top secret area,
 	; set initial layer 1 position to #$0100
+	; if top secret area
 	CPY #$0003
 	BEQ ++
+	; big boo fight
+	CPY #$00E4
+	BEQ ++
+	; yoshi's house
 	CPY #$0104
 	BNE +
 ++	STZ $1A
 	STA $1B
+	; required to the camera not end up adjusted again
+	STZ $1411
 +
 
 	; special case for specific cloud level
