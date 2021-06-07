@@ -101,21 +101,21 @@ pushpc
 	org $04876E
 		JML apply_other_player_high_bit
 		
-	org $04870C
+	org $04870C|!bank
 		BNE free_stack
 		
-	org $048741
+	org $048741|!bank
 		BEQ free_stack
 		
-	org $048748
+	org $048748|!bank
 		BCS free_stack
 		
-	org $04874F
+	org $04874F|!bank
 		BCS free_stack
 		
 	; in case the other player is not drawn, use the unused space
 	; for freeing up stack space.
-	org $048781
+	org $048781|!bank
 		free_stack:
 			; we don't know if it's 16-bit mode or not
 			SEP #$30
@@ -126,7 +126,7 @@ pushpc
 			PLA
 			RTS
 			
-		warnpc $048788
+		warnpc $048788|!bank
 	
 pullpc
 
@@ -156,25 +156,25 @@ endmacro
 
 apply_main_player_high_bit:
 	; if main player has yoshi, store animation number on x, else store 0.
-	LDA $0DD6
+	LDA $0DD6|!addr
 	LSR
 	TAY
 	LSR
 	TAX
-	LDA $0DBA,x
+	LDA $0DBA|!addr,x
 	BEQ +
-	LDA $1F13,y
+	LDA $1F13|!addr,y
 +	TAX
 	
 	; deals when there's player + yoshi, left tile
 	%apply_offscreen_correction($03, 1, 0)
-	STA $0447
-	STA $0449
+	STA $0447|!addr
+	STA $0449|!addr
 	
 	; deals when there's player + yoshi, right tile
 	%apply_offscreen_correction($03, 1, 8)
-	STA $0448
-	STA $044A
+	STA $0448|!addr
+	STA $044A|!addr
 
 	; general case (optimized)
 	; carry calculation for left side
@@ -185,39 +185,39 @@ apply_main_player_high_bit:
 	; this is for the right side tiles (x - 8 + 8)
 	LDA $04,s
 	AND #$01
-	STA $044C
-	STA $044E
+	STA $044C|!addr
+	STA $044E|!addr
 	
 	; this is for the left side tiles (x - 8)
 	BCS +
 	EOR #$01
-+	STA $044B
-	STA $044D
++	STA $044B|!addr
+	STA $044D|!addr
 	
-	JML $0486F9
+	JML $0486F9|!bank
 
 apply_other_player_high_bit:
 	; if other player has yoshi, store animation number on x, else store 0.
-	LDA $0DD6
+	LDA $0DD6|!addr
 	EOR #$04
 	LSR
 	TAY
 	LSR
 	TAX
-	LDA $0DBA,x
+	LDA $0DBA|!addr,x
 	BEQ +	
-	LDA $1F13,y
+	LDA $1F13|!addr,y
 +	TAX
 	
 	; deals when there's player + yoshi, left tile
 	%apply_offscreen_correction($01, 1, 0)
-	STA.W $044F
-	STA.W $0451
+	STA.W $044F|!addr
+	STA.W $0451|!addr
 
 	; deals when there's player + yoshi, right tile
 	%apply_offscreen_correction($01, 1, 8)
-	STA.W $0450
-	STA.W $0452	
+	STA.W $0450|!addr
+	STA.W $0452|!addr
 	
 	; carry calculation for left side
 	LDA $01,s
@@ -227,14 +227,14 @@ apply_other_player_high_bit:
 	; this is for the right side tiles (x - 8 + 8)
 	LDA $02,s
 	AND #$01
-	STA.W $0454
-	STA.W $0456
+	STA.W $0454|!addr
+	STA.W $0456|!addr
 	
 	; this is for the left side tiles (x - 8)
 	BCS +
 	EOR #$01
-+	STA.W $0453
-	STA.W $0455
++	STA.W $0453|!addr
+	STA.W $0455|!addr
 	
 	; end
 	JML free_stack_axy
@@ -292,10 +292,10 @@ full_range_ow_sprites:
 	TSB $0F
 	
 	.render_ok
-		JML $04FB15
+		JML $04FB15|!bank
 	
 	.dont_render
-		JML $04FB36
+		JML $04FB36|!bank
 		
 ;- [!] switch palace blocks
 ;===========================
@@ -314,7 +314,7 @@ cache_palace_color:
 
 	; current palace color -> yxppCCCt
 	; useful speedup without SA-1
-	LDA $13D2
+	LDA $13D2|!addr
 	DEC
 	ASL
 	ORA #$30
@@ -340,15 +340,15 @@ palace_blocks_check_range:
 	SEP #$20
 	
 	LDY $0F
-	STA $0340,y
+	STA $0340|!addr,y
 	
 	LDA $02
-	STA $0341,y
+	STA $0341|!addr,y
 	
 	LDA #$E6
-	STA $0342,y
+	STA $0342|!addr,y
 	LDA $0E
-	STA $0343,y
+	STA $0343|!addr,y
 	
 	TYA
 	LSR
@@ -382,7 +382,7 @@ pushpc
 		
 	org $04F46E
 		STA $00
-		ADC $1B89
+		ADC $1B89|!addr
 		LSR
 		AND #$FE
 		TAX
