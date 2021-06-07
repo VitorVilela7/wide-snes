@@ -1,47 +1,6 @@
 ; Dedicated code for improving level sprites
 ; For widescreen SMW support
 
-; Special thanks:
-; - MarioE
-; - Tattletale
-; - LX5
-; - Thomas
-; - RussianMan
-; - Romi
-
-; TO DO: cluster sprites
-; TO DO: regular sprites
-
-; TO DO: check bounce sprites on vertical levels. $02925C
-; TO DO: add koopaling hair fix
-; TO DO: add "S" from MARIO START
-; TO DO: add Luigi graphics
-; TO DO: test more carefully yoshi eggs on screen edges. (fix needed)
-; TO DO: fix torpedo ted's hand on widescreen area.
-; TO DO: fix jump 'strings'
-; TO DO: fix 'smashed' OAM on koopas without shell.
-; TO DO: fix winged sprites...
-; TO DO: test puff of smoke hitting wall once Roy/Morton/Ludwig is fixed...
-; TO DO: key/keyhole windowing hdma
-; TO DO: dry bones throwing bones...
-; TO DO: spike fall...
-
-; DONE: smoke sprites
-; DONE: spinnning coin sprites (from ? block)
-; DONE: score sprites
-; DONE: mario turning around smoke effect
-; DONE: bounce sprites
-; DONE: quake sprites
-; DONE: minor extended sprites
-; DONE: shooter sprites
-; DONE: extended sprites
-; DONE: generator sprites (adjust spawn position)
-
-; DONE: for spinning: glitter effect (using smoke sprites as proxy).
-; DONE: for spinning: score [10pts] sprite support
-; DONE: podoboo flames position checks.
-; DONE: minor star position generation fixes.
-
 ;- RAM addresses definitions
 ;===========================
 

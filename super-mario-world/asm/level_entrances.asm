@@ -1,6 +1,9 @@
 ;===============================================================
 ; Special patch for customizing level entrances (castle &
 ; ghost houses).
+;
+; No-Yoshi entrance is not supported, but can be easily added
+; by assigning a level number on the entrance pointers.
 ;===============================================================
 
 pushpc
