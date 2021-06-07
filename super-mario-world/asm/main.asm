@@ -370,25 +370,6 @@ org $00E9C2
 
 pullpc
 
-
-; Adjust OW borders
-
-pushpc
-
-org $0084D0+3
-	dl title_screen
-
-pullpc
-
-if !ultrawide == 1
-	title_screen:
-		incbin "title-screen-ultrawide.stim"
-else
-	title_screen:
-		incbin "title-screen.stim"
-endif
-
-
 ; take care of window hdma
 
 pushpc
@@ -535,6 +516,9 @@ incsrc "level_sprites.asm"
 
 ; Overworld map
 incsrc "overworld.asm"
+
+; Title screen
+incrsc "title_screen.asm"
 
 ; 3rd party - independent patches - smoke x/y high bytes patch
 incsrc "smoke_position.asm"
