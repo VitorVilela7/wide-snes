@@ -507,18 +507,14 @@ l2_vertx_h:
 
 ; Side exits
 incsrc "level_side_exits.asm"
-
 ; Castle/ghost house entrances
 incsrc "level_entrances.asm"	
-
 ; Sprites in general
 incsrc "level_sprites.asm"
-
 ; Overworld map
 incsrc "overworld.asm"
-
 ; Title screen
-incrsc "title_screen.asm"
+incsrc "title_screen.asm"
 
 ; 3rd party - independent patches - smoke x/y high bytes patch
 incsrc "smoke_position.asm"
