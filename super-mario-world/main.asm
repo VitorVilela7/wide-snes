@@ -494,7 +494,28 @@ widescreen_sideexit:
 	CMP.W #$00F8+!extra_columns+!extra_columns+$0008
 	SEP #$20
 	RTL
+	
+pushpc
+	org $05DAB2
+		JML my_entrance
 
+pullpc
+
+my_entrance:
+	LDA.w $E000+($0030*3)
+	STA $65
+	LDA.w $E001+($0030*3)
+	STA $66
+	LDA.w $E002+($0030*3)
+	STA $67
+	
+	STZ $1A
+	LDA #$01
+	STA $1B
+	STA $95
+	
+	JML $05DAC1|!bank
+	
 incsrc "level_sprites.asm"
 incsrc "overworld.asm"
 
