@@ -390,47 +390,6 @@ recalc_x:
 	SBC $00
 	JML $05B267|!bank
 	
-pushpc
-	org $05D923
-		JSL horz_customizer
-		NOP
-pullpc
-
-horz_customizer:
-	; if it's ghost house bonus, disable horizontal scrolling
-	LDA #$01
-	CPY #$00FA
-	BNE +
-	DEC
-+	STA $1411|!addr
-
-	; set initial layer 1 position to #$0100
-	; if top secret area
-	CPY #$0003
-	BEQ ++
-	; big boo fight
-	CPY #$00E4
-	BEQ ++
-	; yoshi's house
-	CPY #$0104
-	BNE +
-++	STZ $1A
-	STA $1B
-	; required to the camera not end up adjusted again
-	STZ $1411|!addr
-+
-
-	; special case for specific cloud level
-	CPY #$01C9
-	BNE +
-	STZ $1A
-	LDA #$04
-	STA $1B
-	; required to the camera not end up adjusted again
-	STZ $1411|!addr
-
-+	RTL
-	
 ; layer 1+2 vertical levels
 pushpc
 	org $05BEBC

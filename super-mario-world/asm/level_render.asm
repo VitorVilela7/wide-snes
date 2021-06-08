@@ -85,3 +85,52 @@ restore_orig_position:
 	
 	; return
 	JML $0580B4|!bank
+	
+;- Level specific scrolling configuration
+;========================================
+
+pushpc
+	org $05D923
+		JSL horz_customizer
+		NOP
+pullpc
+
+; The camera is updated by the scroll routine and most of the
+; time is recentered. This section makes sure that the
+; selected level won't do that and will ensure the camera will
+; stay centered relative to the widescreen region.
+
+horz_customizer:
+	; if it's ghost house bonus, disable scrolling
+	LDA #$01
+	CPY #$00FA
+	BNE +
+	DEC
++	STA $1411|!addr
+
+	; set initial layer 1 position to #$0100
+	; if top secret area
+	CPY #$0003
+	BEQ ++
+	; big boo fight
+	CPY #$00E4
+	BEQ ++
+	; yoshi's house
+	CPY #$0104
+	BNE +
+++	STZ $1A
+	STA $1B
+	; required to the camera not end up adjusted again
+	STZ $1411|!addr
++
+
+	; special case for cloud sublevel
+	CPY #$01C9
+	BNE +
+	STZ $1A
+	LDA #$04
+	STA $1B
+	; required to the camera not end up adjusted again
+	STZ $1411|!addr
+
++	RTL
