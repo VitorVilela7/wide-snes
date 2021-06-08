@@ -39,6 +39,8 @@
 ; TO DO: kicking shell doesn't hit turn blocks at widescreen area.
 ; TO DO: fix yoshi wings, including both render and glitter effect.
 ; TO DO: fix thwomp detection range (>$0100)
+; TO DO: fix lakitu cloud smile
+; TO DO: fix magikoopa magic wand on widescreen.
 
 ; DONE: smoke sprites
 ; DONE: spinnning coin sprites (from ? block)

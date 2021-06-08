@@ -178,4 +178,22 @@ l2_vertx_h:
 	
 	JML $05BEC6|!bank
 
-	
+;- Regular level scroll initialization
+;=====================================
+
+; NOTE: seems to fix both horizontal and vertical levels.
+; Not all horizontal levels were affected, for some reason.
+
+pushpc
+	org $05D849
+		JSL init_scroll
+
+pullpc
+
+; Makes sure the initial position is correct
+; and widescreen.	
+init_scroll:
+	LDA.w #!extra_columns
+	STA $1A
+	STA $1E
+	RTL
