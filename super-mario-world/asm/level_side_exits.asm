@@ -5,6 +5,7 @@
 pushpc
 	org $00E991
 		REP #$21
+	
 	org $00E995
 		JSL widescreen_sideexit
 		NOP

@@ -234,10 +234,7 @@ org $00F78E
 
 org $00F73F
     autoclean JML camera_x_limit_horz
-    
-org $009708
-	JSL x_scroll_fix
-    
+   
 freecode
 
 camera_x_limit_vert:
@@ -250,23 +247,6 @@ camera_x_limit_vert:
 +   STA $1A
     
     JML $00F79D|!bank
-
-
-; fix originally provided by Alcaro and it's required to camera bounds work as expected.
-; this fix is not needed for LM 3.01+, keep this in mind for ROM hacks.
-
-; basically SMW does not set the screen width on initialization, which makes the scrolling
-; routine does not work correctly on screen edges.
-
-x_scroll_fix:
-	LDA [$65]
-	AND #$1F
-	INC A
-	STA $5E
-	
-	;I don't remember why I added that on LM 3.00, but it's not needed here.
-	;JSL $00F6DB
-	RTL
 	
 ; this makes sure the camera position is within bounds of the widescreen region, with special
 ; treatment for 256 pixels wide levels.
@@ -305,56 +285,6 @@ camera_x_limit_horz:
 	; static position, keep level centered.
 	STZ $1A
 	BRA .return
-
-;- Force rendering of the whole (512px) screen
-;=============================================
-
-; This is used on 1-screen levels like intro (C5)
-pushpc
-	org $0580A9
-		JML force_whole_render
-		
-	org $0580B0
-		JML restore_orig_position
-		
-pullpc
-	
-force_whole_render:
-	; restore old code
-	STA $4D
-	STA $4F
-	
-	; preverse $1A
-	PEI ($1A)
-	
-	; funny enough, $5D doesn't work there.
-	; the value might be temporally changed on this routine.
-	LDA $5E
-	DEC
-	AND #$00FF
-	BNE .not_needed
-	
-	; why #$0080? it appears that SMW changes the scrolling
-	; strategy based on the odds (0,128,256,384) which fills
-	; completely the rendering screen. I'm using this for me
-	; favor.
-	LDA.w #$0080
-	STA $1A
-	
-.not_needed
-	JML $0580AD|!bank
-	
-restore_orig_position:
-	; restore $1A
-	PLA
-	STA $1A
-	
-	; restore
-	LDA $45
-	STA $47
-	
-	; return
-	JML $0580B4|!bank
 
 pushpc
 
@@ -528,6 +458,8 @@ incsrc "level_side_exits.asm"
 incsrc "level_entrances.asm"	
 ; Sprites in general
 incsrc "level_sprites.asm"
+; Level rendering
+incsrc "level_render.asm"
 ; Overworld map
 incsrc "overworld.asm"
 ; Title screen
