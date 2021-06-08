@@ -306,35 +306,29 @@ camera_x_limit_horz:
 	STZ $1A
 	BRA .return
 
+;- Force rendering of the whole (512px) screen
+;=============================================
+
+; This is used on 1-screen levels like intro (C5)
 pushpc
 	org $0580A9
-		JSL screen0_special
+		JML force_whole_render
 		
 	org $0580B0
-		JSL screen0_restore
+		JML restore_orig_position
 		
 pullpc
-
-screen0_restore:
-	LDA $4F
-	STA $1A
-	LDA $4D
-	STA $4F
 	
-	LDA $45
-	STA $47
-	RTL
-	
-screen0_special:
+force_whole_render:
+	; restore old code
 	STA $4D
-	
-	; temporally copy $1A
-	LDA $1A
 	STA $4F
+	
+	; preverse $1A
+	PEI ($1A)
 	
 	; funny enough, $5D doesn't work there.
 	; the value might be temporally changed on this routine.
-	
 	LDA $5E
 	DEC
 	AND #$00FF
@@ -344,12 +338,23 @@ screen0_special:
 	; strategy based on the odds (0,128,256,384) which fills
 	; completely the rendering screen. I'm using this for me
 	; favor.
-	
 	LDA.w #$0080
 	STA $1A
 	
 .not_needed
-	RTL
+	JML $0580AD|!bank
+	
+restore_orig_position:
+	; restore $1A
+	PLA
+	STA $1A
+	
+	; restore
+	LDA $45
+	STA $47
+	
+	; return
+	JML $0580B4|!bank
 
 pushpc
 
