@@ -84,11 +84,17 @@ if read1($00FFD5) == $23
 	!dp	= $3000
 	!addr	= $6000
 	!bank	= $000000
+	
+	!E4	= $322C
+	!14E0	= $326E
 else
 	!sa1	= 0
 	!dp	= $3000
 	!addr	= $6000
 	!bank	= $800000
+	
+	!E4	= $E4
+	!14E0	= $14E0
 endif
 
 ; Adjust off-screen routines
@@ -238,7 +244,7 @@ camera_x_limit_vert:
     LDA.W #$0101-!extra_columns
 +   STA $1A
     
-    JML $00F79D
+    JML $00F79D|!bank
 
 
 ; fix originally provided by Alcaro and it's required to camera bounds work as expected.
@@ -413,6 +419,7 @@ fix_x_pos:
 	SEP #$20
 	RTL
 
+; TO DO: SA-1
 hack_test:
 	LDA $4217
 	LSR
@@ -441,7 +448,7 @@ recalc_x:
 	LDA #$80
 	SEC
 	SBC $00
-	JML $05B267
+	JML $05B267|!bank
 	
 pushpc
 	org $05D923
@@ -455,7 +462,7 @@ horz_customizer:
 	CPY #$00FA
 	BNE +
 	DEC
-+	STA $1411
++	STA $1411|!addr
 
 	; set initial layer 1 position to #$0100
 	; if top secret area
@@ -470,7 +477,7 @@ horz_customizer:
 ++	STZ $1A
 	STA $1B
 	; required to the camera not end up adjusted again
-	STZ $1411
+	STZ $1411|!addr
 +
 
 	; special case for specific cloud level
@@ -480,7 +487,7 @@ horz_customizer:
 	LDA #$04
 	STA $1B
 	; required to the camera not end up adjusted again
-	STZ $1411
+	STZ $1411|!addr
 
 +	RTL
 	
@@ -499,9 +506,9 @@ pullpc
 l2_vertx_h:
 	LDA #$0000+!extra_columns
 	STA $1A
-	STA $1462
+	STA $1462|!addr
 	STA $1E
-	STA $1466
+	STA $1466|!addr
 	
 	JML $05BEC6|!bank
 

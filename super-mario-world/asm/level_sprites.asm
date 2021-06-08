@@ -45,7 +45,7 @@ pushpc
 		spinning_despawn:
 			; make sure AXY is 8-bit
 			SEP #$30
-			STZ $17D0,x
+			STZ $17D0|!addr,x
 			RTS
 
 		warnpc $0299E9
@@ -55,10 +55,10 @@ pushpc
 		
 	org $029A18
 		; optimize NES legacy to SNES
-		LDA $17D4,x
+		LDA $17D4|!addr,x
 		CMP $02
-		LDA $17E8,x
-		SBC $001D,y
+		LDA $17E8|!addr,x
+		SBC $001D|!dp,y
 		BNE spinning_return
 	
 		; 16-bit calculation
@@ -91,13 +91,13 @@ pushpc
 pullpc
 
 spinning_wide:
-	LDA $17E0,x
+	LDA $17E0|!addr,x
 	SEC
 	SBC $03
 	STA $00
 
-	LDA $17EC,x
-	SBC $001B,y
+	LDA $17EC|!addr,x
+	SBC $001B|!dp,y
 	STA $0E
 	XBA
 	LDA $00
@@ -115,8 +115,8 @@ spinning_load_high:
 	RTL
 	
 spinning_add4:
-	STA $0200,y
-	STA $0204,y
+	STA $0200|!addr,y
+	STA $0204|!addr,y
 	LDA $0E
 	ADC #$00
 	AND #$01 ;mask it already for the MSB bit
@@ -136,14 +136,14 @@ pushpc
 	
 	org $02AE61
 		score:
-			LDA $16ED,x
+			LDA $16ED|!addr,x
 			STA $0E
-			LDA $16F3,x
+			LDA $16F3|!addr,x
 			STA $0F
 			REP #$20
-			LDA $001C,y
+			LDA $001C|!dp,y
 			STA $02
-			LDA $001A,y
+			LDA $001A|!dp,y
 			STA $04
 			
 			LDA $0E
@@ -170,10 +170,10 @@ pushpc
 	org $02AEB1
 		score_draw_two:
 			LDA $0E
-			STA $0200,y
+			STA $0200|!addr,y
 			CLC
 			ADC #$08
-			STA $0204,y
+			STA $0204|!addr,y
 			STZ $0D
 			ROL $0D
 
@@ -185,9 +185,9 @@ pushpc
 		score_draw_msb:
 			LDA $0F
 			AND #$01
-			STA $0420,y
+			STA $0420|!addr,y
 			EOR $0D
-			STA $0421,y
+			STA $0421|!addr,y
 			RTS
 	
 	; print pc	
@@ -233,22 +233,22 @@ pushpc
 	
 	org $029201
 		bounce_gfx:
-			LDA $16A1,x	
+			LDA $16A1|!addr,x	
 			SEC
-			SBC $001C,y
+			SBC $001C|!dp,y
 			STA $01
-			LDA $16A9,x	
-			SBC $001D,y		
+			LDA $16A9|!addr,x	
+			SBC $001D|!dp,y		
 			BNE .return
 		
-			LDA $16A5,x
+			LDA $16A5|!addr,x
 			SEC
-			SBC $001A,y
+			SBC $001A|!dp,y
 			STA $00
 			XBA
 			
-			LDA $16AD,x
-			SBC $001B,y
+			LDA $16AD|!addr,x
+			SBC $001B|!dp,y
 			XBA
 			
 			REP #$20
@@ -270,7 +270,7 @@ pushpc
 		
 			LDY $91ED,x
 			LDA $00
-			STA $0200,y
+			STA $0200|!addr,y
 			
 			SEP #$20
 	
@@ -295,7 +295,7 @@ pushpc
 	; instead of high X. So it's fixed now.
 	
 	org $0286D6
-		STA $16D5,y
+		STA $16D5|!addr,y
 
 pullpc
 
@@ -315,22 +315,22 @@ pullpc
 
 minor_load_spr_x:
 	; restore
-	LDA $E4,x
+	LDA !E4,x
 	STA $00
 	
 	; load sprite x position high
-	LDA $14E0,x
+	LDA !14E0,x
 	STA $01
 	RTL
 	
 minor_store_spr_x:
 	; restore
-	STA $1808,x
+	STA $1808|!addr,x
 	
 	; put logic on sprite high position
 	LDA $01
 	ADC #$00
-	STA $18EA,x
+	STA $18EA|!addr,x
 	
 	; restore
 	LDA $02
@@ -371,10 +371,10 @@ minor_load_spr_x_star:
 	
 minor_store_spr_x_star:
 	; restore
-	STA $1850,y
+	STA $1850|!addr,y
 	
 	LDA $03
-	STA $18EA,y
+	STA $18EA|!addr,y
 	
 	; end/restore
 	RTL
@@ -502,7 +502,7 @@ pushpc
 	
 	org $028F50
 		LDA $00
-		STA $0200,y
+		STA $0200|!addr,y
 		
 		BRA +
 		NOP #2
@@ -533,7 +533,7 @@ pullpc
 		
 
 minor_x_check:
-	LDA $18EA,x
+	LDA $18EA|!addr,x
 	SBC $1B
 	STA $01
 	
@@ -561,7 +561,7 @@ minor_x_check:
 	RTL
 	
 minor_x_calc_check:
-	LDA $1808,x
+	LDA $1808|!addr,x
 	SEC
 	SBC $1A
 	STA $00
@@ -571,7 +571,7 @@ minor_x_calc_check:
 minor_water_x_correction:
 	STA $00
 	
-	LDA $18EA,x
+	LDA $18EA|!addr,x
 	SBC $1B
 	AND #$01
 	ORA #$02
@@ -582,11 +582,11 @@ minor_water_x_correction:
 	
 spawn_rip_van_fish_zs:
 	ADC #$06
-	STA $1808,y
+	STA $1808|!addr,y
 	
-	LDA $14E0,x
+	LDA !14E0,x
 	ADC #$00
-	STA $18EA,y
+	STA $18EA|!addr,y
 	RTL
 
 abort_rip_van_fish_if_timeout:
@@ -603,7 +603,7 @@ abort_rip_van_fish_if_timeout:
 	TAY
 	; at least set the tile msb
 	LDA $0F
-	STA $0420,y
+	STA $0420|!addr,y
 
 	JML $028E76|!bank
 
@@ -643,7 +643,7 @@ pushpc
 pullpc
 
 extended_x_test:
-	LDA $1733,x
+	LDA $1733|!addr,x
 	SBC $1B
 	XBA
 	LDA $00
@@ -680,9 +680,9 @@ pushpc
 		LDA $0F
 		
 	org $02A1B1
-		LDA $1733,x
+		LDA $1733|!addr,x
 		XBA
-		LDA $171F,x
+		LDA $171F|!addr,x
 		REP #$20
 		JML extended_x_test_3
 		
@@ -694,9 +694,9 @@ pushpc
 pullpc
 
 extended_x_test_2:
-	LDA $1733,x
+	LDA $1733|!addr,x
 	XBA
-	LDA $171F,x
+	LDA $171F|!addr,x
 	REP #$20
 	SEC
 	SBC $1A
@@ -739,9 +739,9 @@ extended_x_test_3:
 ; Baseball / bone extended sprites: $02A271
 pushpc
 	org $02A271
-		LDA $1733,x
+		LDA $1733|!addr,x
 		XBA
-		LDA $171F,x
+		LDA $171F|!addr,x
 		REP #$20
 		SEC
 		JML baseball_x_check
@@ -779,9 +779,9 @@ baseball_x_check:
 ; Puff of smoke - mode 7: $02A3B4
 pushpc
 	org $02A36C
-		LDA $1733,x
+		LDA $1733|!addr,x
 		XBA
-		LDA $171F,x
+		LDA $171F|!addr,x
 		REP #$20
 		JML puff_smoke_x_check
 		
@@ -789,9 +789,9 @@ pushpc
 	warnpc $02A379
 	
 	org $02A3B4
-		LDA $1733,x
+		LDA $1733|!addr,x
 		XBA
-		LDA $171F,x
+		LDA $171F|!addr,x
 		REP #$20
 		JML puff_smoke_x_check_mode7
 		
@@ -821,7 +821,7 @@ puff_smoke_x_check:
 	
 .ok
 	SEP #$20
-	STA $0200,y
+	STA $0200|!addr,y
 	XBA
 	AND #$01
 	ORA #$02
@@ -844,7 +844,7 @@ puff_smoke_x_check_mode7:
 	
 .ok
 	SEP #$20
-	STA $0300,y
+	STA $0300|!addr,y
 	XBA
 	AND #$01
 	ORA #$02
@@ -862,9 +862,9 @@ pushpc
 		get_draw_info_1:
 			STZ.w !sprite_wide_flag_table,x
 		
-			LDA $14E0,x
+			LDA !14E0,x
 			XBA	
-			LDA $E4,x
+			LDA !E4,x
 			REP #$20
 			SEC
 			SBC $1A
@@ -882,9 +882,9 @@ pushpc
 		get_draw_info_2:
 			STZ.w !sprite_wide_flag_table,x
 		
-			LDA $14E0,x
+			LDA !14E0,x
 			XBA	
-			LDA $E4,x
+			LDA !E4,x
 			REP #$20
 			SEC
 			SBC $1A
@@ -902,9 +902,9 @@ pushpc
 		get_draw_info_3:
 			STZ.w !sprite_wide_flag_table,x
 		
-			LDA $14E0,x
+			LDA !14E0,x
 			XBA	
-			LDA $E4,x
+			LDA !E4,x
 			REP #$20
 			SEC
 			SBC $1A
@@ -955,9 +955,9 @@ pushpc
 pullpc
 
 torpedo_ted:
-	LDA $17A3,x
+	LDA $17A3|!addr,x
 	XBA
-	LDA $179B,x
+	LDA $179B|!addr,x
 	REP #$20
 	SEC
 	SBC $1A
@@ -981,9 +981,9 @@ pushpc
 pullpc
 
 bullet_bill_shooter:
-	LDA $17A3,x
+	LDA $17A3|!addr,x
 	XBA
-	LDA $179B,x
+	LDA $179B|!addr,x
 	REP #$20
 	STA $00
 	SEC
