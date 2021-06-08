@@ -154,5 +154,28 @@ check_player_camera:
 	CMP.w #$00F0+!extra_columns+!extra_columns
 	SEP #$20
 	RTL
+	
+;- Vertical level with layer 1+2 scroll
+;======================================
+
+; Layer 1+2 vertical levels
+pushpc
+	org $05BEBC
+		JML l2_vertx_h
+
+	; this fixes a sign overflow, causing layer 2 sideways
+	; long scroll sprite not work on widescreen mode.
+	org $05BEFE
+		AND #$01FF
+pullpc
+
+l2_vertx_h:
+	LDA #$0000+!extra_columns
+	STA $1A
+	STA $1462|!addr
+	STA $1E
+	STA $1466|!addr
+	
+	JML $05BEC6|!bank
 
 	

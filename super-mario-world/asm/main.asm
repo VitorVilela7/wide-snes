@@ -37,6 +37,8 @@
 ; TO DO: dry bones throwing bones at widescreen area.
 ; TO DO: spike fall at widescreen area.
 ; TO DO: kicking shell doesn't hit turn blocks at widescreen area.
+; TO DO: fix yoshi wings, including both render and glitter effect.
+; TO DO: fix thwomp detection range (>$0100)
 
 ; DONE: smoke sprites
 ; DONE: spinnning coin sprites (from ? block)
@@ -299,7 +301,7 @@ pushpc
 ; CODE_00E9C5:        CD 62 14      CMP.W $1462               ;/
 ; CODE_00E9C8:        E2 20         SEP #$20                  ; Accum (8 bit)     
 
-
+; TO DO: check if we can make L/R scroll more 'extreme'
 org $00E9B5
     ADC.W #$00E8+!extra_columns
     
@@ -326,6 +328,7 @@ org $00CA74
 	JSL fix_x_pos
 	NOP #3
 	
+; TO DO: this still needs fixing (spotlight)
 org $03C612
 	NOP #3
 
@@ -381,27 +384,6 @@ recalc_x:
 	SEC
 	SBC $00
 	JML $05B267|!bank
-	
-; layer 1+2 vertical levels
-pushpc
-	org $05BEBC
-		JML l2_vertx_h
-
-	; this fixes a sign overflow, causing
-	; layer 2 sideways long scroll sprite
-	; not work on widescreen mode.
-	org $05BEFE
-		AND #$01FF
-pullpc
-
-l2_vertx_h:
-	LDA #$0000+!extra_columns
-	STA $1A
-	STA $1462|!addr
-	STA $1E
-	STA $1466|!addr
-	
-	JML $05BEC6|!bank
 
 ; Side exits
 incsrc "level_side_exits.asm"
