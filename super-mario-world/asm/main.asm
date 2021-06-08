@@ -41,6 +41,8 @@
 ; TO DO: fix thwomp detection range (>$0100)
 ; TO DO: fix lakitu cloud smile
 ; TO DO: fix magikoopa magic wand on widescreen.
+; TO DO: fix reznor fireball on widescreen.
+; TO DO: fix spiny on line guide wrapping around screen.
 
 ; DONE: smoke sprites
 ; DONE: spinnning coin sprites (from ? block)
