@@ -287,14 +287,6 @@ camera_x_limit_horz:
 	BRA .return
 
 pushpc
-
-;CODE_00E9A1:        A5 7E         LDA $7E                   ;\If mario is much far to the right of the screen
-;CODE_00E9A3:        C9 F0         CMP.B #$F0                ;|(position 1 block left from right edge), branch
-;CODE_00E9A5:        B0 61         BCS CODE_00EA08           ;/
-
-org $00E9A1
-    NOP #3
-    CLC
     
 ; CODE_00E9B5:        69 E8 00      ADC.W #$00E8              ;|pixels from right edge of screen
 ; CODE_00E9B8:        C5 94         CMP RAM_MarioXPos         ;/

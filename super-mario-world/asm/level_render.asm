@@ -134,3 +134,25 @@ horz_customizer:
 	STZ $1411|!addr
 
 +	RTL
+
+;- Kill mario if too away from camera
+;====================================
+
+;CODE_00E9A1:        A5 7E         LDA $7E                   ;\If mario is much far to the right of the screen
+;CODE_00E9A3:        C9 F0         CMP.B #$F0                ;|(position 1 block left from right edge), branch
+;CODE_00E9A5:        B0 61         BCS CODE_00EA08           ;/
+
+pushpc
+	org $00E9A1
+		JSL check_player_camera
+pullpc
+
+check_player_camera:
+	REP #$21
+	LDA $7E
+	ADC.w #$0000+!extra_columns
+	CMP.w #$00F0+!extra_columns+!extra_columns
+	SEP #$20
+	RTL
+
+	
