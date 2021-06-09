@@ -130,3 +130,16 @@ rerender_if_bowser:
 .end
 	; return
 	JML $009283|!bank
+
+;- Ludwig support
+;================
+
+pushpc
+	; position when Ludwig should act.
+	org $01CE36
+		CMP.b #$7E-!extra_columns
+pullpc
+
+; TO DO: fix Ludwig background
+; TO DO: fix Reznor fireball
+
