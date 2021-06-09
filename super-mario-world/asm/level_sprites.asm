@@ -672,6 +672,10 @@ extended_x_test:
 ; General / fireball / mode 7: $02A05A
 ; General / fireball / regular: $02A1B1
 pushpc
+	; reznor
+	org $02A19D
+		LDA $0E
+
 	; mode 7 case
 	org $02A05A
 		JML extended_x_test_2
@@ -733,6 +737,8 @@ extended_x_test_3:
 	XBA
 	AND #$01
 	STA $0F
+	ORA #$02
+	STA $0E
 
 	JML $02A1C0|!bank
 	
