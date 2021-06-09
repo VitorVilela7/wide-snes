@@ -124,10 +124,16 @@ horz_customizer:
 	STZ $1411|!addr
 +
 
+	; special case for wendy
+	CPY #$00D3
+	BEQ ++
+	; special case for lemmy
+	CPY #$01F2
+	BEQ ++
 	; special case for cloud sublevel
 	CPY #$01C9
 	BNE +
-	STZ $1A
+++	STZ $1A
 	LDA #$04
 	STA $1B
 	; required to the camera not end up adjusted again
