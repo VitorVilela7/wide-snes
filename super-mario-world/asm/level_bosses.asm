@@ -68,3 +68,65 @@ CODE_03C0D3:                        ;           |
 	DEX                         ;$03C10E    ||
 	BPL CODE_03C0D3             ;$03C10F    |/
 	RTL                         ;$03C111    |
+
+;- Lemmy/Wendy - add one extra pipe
+;==================================
+
+pushpc
+	; x position list for lemmy/wendy
+	org $03CC38
+		db $18+16,$38+16,$58+16,$78+16,$98+16,$B8+16,$D8+16,$08
+	    
+	; y position list for lemmy
+	org $03CC40
+		db $40,$50,$50,$40,$30,$40,$50,$30
+
+	; random positions picker
+	org $03CC5A
+		; lemmy/wendy
+		db $00,$01,$02,$03,$04,$05,$06,$07
+		db $00,$01,$02,$03,$04,$05,$06,$07
+		; dummy 1
+		db $02,$03,$04,$05,$06,$07,$00,$01
+		db $02,$03,$04,$05,$06,$07,$00,$01
+		; dummy 2
+		db $04,$05,$06,$07,$00,$01,$02,$03
+		db $04,$05,$06,$07,$00,$01,$02,$03
+pullpc
+
+;- Bowser - make level interaction restricted
+;============================================
+
+pushpc
+	org $009A17
+		PHA
+		JSR $9A1F
+		JML rerender_if_bowser
+		
+	warnpc $009A1F
+pullpc
+
+rerender_if_bowser:
+	; restore
+	PLA
+	STA $96
+	
+	LDA $0D9B|!addr
+	CMP #$C1
+	BNE .end
+	
+	; make sure the 2nd and forward screens
+	; can't be interacted at all (fill with 0025)
+	LDY #$10
+.loop
+	LDA #$25
+	STA $7EC9B0,x
+	LDA #$00
+	STA $7FC9B0,x
+	
+	DEX
+	BNE .loop
+	
+.end
+	; return
+	JML $009283|!bank
