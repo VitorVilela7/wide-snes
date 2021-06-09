@@ -14,16 +14,15 @@
 ; - Smallhacker
 ; - Alcaro
 ; - JamesD28
+; - Mattrizzle
 
-; TO DO list:
-; -> title screen demo
-; -> credits
-; -> special camera/scrolling status
+; TO DO: title screen demo
+; TO DO: credits
+; TO DO: special camera/scrolling status
 
 ; TO DO: cluster sprites
 ; TO DO: regular sprites
 
-; TO DO: add koopaling hair fix
 ; TO DO: add "S" from MARIO START
 ; TO DO: add Luigi graphics
 
@@ -32,7 +31,6 @@
 ; TO DO: fix jump 'strings' (pea sprite), interaction
 ; TO DO: fix 'smashed' OAM on koopas without shell.
 ; TO DO: fix winged sprites...
-; TO DO: test puff of smoke hitting wall once Roy/Morton/Ludwig is fixed...
 ; TO DO: key/keyhole windowing hdma
 ; TO DO: dry bones throwing bones at widescreen area.
 ; TO DO: spike fall at widescreen area.
@@ -43,6 +41,9 @@
 ; TO DO: fix magikoopa magic wand on widescreen.
 ; TO DO: fix reznor fireball on widescreen.
 ; TO DO: fix spiny on line guide wrapping around screen.
+
+; TO DO: fix Lugwig background
+; TO DO: fix Ludwig sprite decision camera...
 
 ; DONE: smoke sprites
 ; DONE: spinnning coin sprites (from ? block)
@@ -61,6 +62,7 @@
 ; DONE: minor star position generation fixes.
 ; DONE: title screen fix (ow sprites appearing)
 ; DONE: check bounce sprites on vertical levels. $02925C
+; DONE: add koopaling hair fix
 
 ; 1 for 21:9, 0 for 16:9
 !ultrawide = 0
@@ -410,4 +412,5 @@ incsrc "feather_score_fix.asm"
 incsrc "feather_fix.asm"
 ; 3rd party - independent patches - removes overworld sprites at title screen load
 incsrc "windex.asm"
-
+; 3rd party - independent patches - iggy hair fix
+incsrc "iggy_hair.asm"
