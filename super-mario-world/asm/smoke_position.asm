@@ -340,7 +340,7 @@ contact:
 	BIT $0D9B|!addr
 	BVC +
 	LDA $0D9B|!addr
-	DEC
+	CMP #$C1
 	BEQ +
 	LDY #$0190
 +	
@@ -348,7 +348,6 @@ contact:
 	BCS .return
 	STA $0201|!addr,y
 	STA $0205|!addr,y
-	CLC
 	ADC #$08
 	STA $0209|!addr,y
 	STA $020D|!addr,y
