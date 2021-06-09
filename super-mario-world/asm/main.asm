@@ -399,6 +399,8 @@ incsrc "level_entrances.asm"
 incsrc "level_sprites.asm"
 ; Level rendering
 incsrc "level_render.asm"
+; Bosses
+incsrc "level_bosses.asm"
 ; Overworld map
 incsrc "overworld.asm"
 ; Title screen
