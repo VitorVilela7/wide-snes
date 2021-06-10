@@ -43,7 +43,9 @@
 ; TO DO: fix spiny on line guide wrapping around screen.
 
 ; TO DO: fix Lugwig background
-; TO DO: fix Ludwig sprite decision camera...
+
+; DONE: fix Reznor puff smoke disappearing platform sometimes
+; DONE: fix Reznor puff smoke not appearing on right side bridge
 
 ; DONE: smoke sprites
 ; DONE: spinnning coin sprites (from ? block)
@@ -63,6 +65,7 @@
 ; DONE: title screen fix (ow sprites appearing)
 ; DONE: check bounce sprites on vertical levels. $02925C
 ; DONE: add koopaling hair fix
+; DONE: fix Ludwig sprite decision camera...
 
 ; 1 for 21:9, 0 for 16:9
 !ultrawide = 0

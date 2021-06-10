@@ -220,6 +220,14 @@ org $038A2E|!bank
 	STA !high_x,y
 	JSL mod_038A2E
 	RTS
+	
+; skip checking if the smoke is within index
+; on reznor bridge.
+org $03D76C
+	BRA +
+	
+org $03D77A
+	+
 
 ; all of the smoke
 ; rewrites all of the smoke sprite main + pointers + call 
