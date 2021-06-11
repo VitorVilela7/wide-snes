@@ -630,7 +630,8 @@ minor_brick_check:
 ;- Extended sprites
 ;==================
 
-; TO DO: $01FD16
+; NOT NEEDED: $01FD16
+; Iggy/Larry only and they don't interact on widescreen!
 
 ; Volcano Lotus: $029B54
 pushpc
@@ -695,7 +696,52 @@ pushpc
 	
 	org $02A208
 		LDA $0F
+		
+	; other general cases that reuses the routine:
+	; smoke trail
+	org $029C61
+		LDA $0E
+		
+	; torpedo ted arm
+	org $029E7C
+		LDA $0E
+		
+	; air bubble
+	org $029F4F
+		JML bubble_rollout_carry
+	
+	; yoshi fire
+	org $029F93
+		LDA $0E
+	
+	; hammer/bone
+	org $02A33D
+		LDA $0E
+	
 pullpc
+
+; fix a 1.2% chance of flickering happening
+bubble_rollout_carry:
+	STA $0200|!addr,y
+	ROL
+	XBA
+	
+	TYA
+	LSR
+	LSR
+	TAY
+	
+	XBA
+	AND #$01
+	BIT $00
+	BPL +
+	EOR #$01
++	EOR $0420|!addr,y
+	STA $0420|!addr,y
+	
+	LDY $A153,x
+	LDA $0201|!addr,y
+	JML $029F55|!bank
 
 extended_x_test_2:
 	LDA $1733|!addr,x
@@ -717,6 +763,8 @@ extended_x_test_2:
 	XBA
 	AND #$01
 	STA $0F
+	ORA #$02
+	STA $0E
 	XBA
 	JML $02A064|!bank
 	
@@ -1102,6 +1150,9 @@ pullpc
 ;- Regular sprites (wings)
 ;=========================
 
+; Note that goomba wings already works, because it uses
+; the standard finish OAM routine.
+
 ; Koopa and question block wings
 pushpc
 	org $019E61
@@ -1183,5 +1234,17 @@ yoshi_wings_set_high_x:
 	STA $0420|!addr,y
 	
 	JML $02BB86|!bank
+	
+;- Regular sprites (smushed)
+;===========================
+
+pushpc
+	; run the finish OAM write instead of
+	; setting up the extra OAM bits manually.
+	org $01E74E
+		LDY #$00
+		LDA #$01
+		JMP $B7BB
+pullpc
 	
   

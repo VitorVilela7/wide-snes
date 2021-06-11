@@ -26,21 +26,18 @@
 ; TO DO: add "S" from MARIO START
 ; TO DO: add Luigi graphics
 
+; TO DO: wiggler's flower, game coin and lava splash (see level_sprites.asm)
+
 ; TO DO: test more carefully yoshi eggs on screen edges. (fix needed)
-; TO DO: fix torpedo ted's hand on widescreen area.
 ; TO DO: fix jump 'strings' (pea sprite), interaction
-; TO DO: fix 'smashed' OAM on koopas without shell.
-; TO DO: fix winged sprites...
 ; TO DO: key/keyhole windowing hdma
-; TO DO: dry bones throwing bones at widescreen area.
 ; TO DO: spike fall at widescreen area.
 ; TO DO: kicking shell doesn't hit turn blocks at widescreen area.
-; TO DO: fix yoshi wings, including both render and glitter effect.
+; TO DO: figure out why yoshi wings doesn't have glitter effect.
 ; TO DO: fix thwomp detection range (>$0100)
 ; TO DO: fix lakitu cloud smile
 ; TO DO: fix magikoopa magic wand on widescreen.
-; TO DO: fix reznor fireball on widescreen.
-; TO DO: fix spiny on line guide wrapping around screen.
+; TO DO: fix spiny on line (tbm o liquidificador) guide wrapping around screen.
 
 ; TO DO: fix Lugwig background
 
@@ -66,6 +63,15 @@
 ; DONE: check bounce sprites on vertical levels. $02925C
 ; DONE: add koopaling hair fix
 ; DONE: fix Ludwig sprite decision camera...
+; DONE: fix yoshi wings.
+; DONE: fix 'smushed' OAM on koopas without shell.
+; DONE: fix winged sprites...
+; DONE: fix reznor fireball on widescreen.
+; DONE: fix torpedo ted's arm on widescreen area.
+; DONE: dry bones throwing bones at widescreen area.
+; DONE: hammer bro's hammers.
+; DONE: yoshi's flames
+; DONE: air bubbles
 
 ; 1 for 21:9, 0 for 16:9
 !ultrawide = 0
