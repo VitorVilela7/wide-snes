@@ -1098,3 +1098,90 @@ pushpc
 	org $02B073
 		ADC.b #$01
 pullpc
+
+;- Regular sprites (wings)
+;=========================
+
+; Koopa and question block wings
+pushpc
+	org $019E61
+		JML wings_calc_high_x
+		
+	org $019E8D
+		JML wings_set_high_x
+		
+pullpc
+
+wings_calc_high_x:
+	XBA
+	LDA $00
+	REP #$20
+	SEC
+	SBC $1A
+	CMP.w #$0000-!extra_columns-$0010
+	BMI .return
+	CMP.w #$0100+!extra_columns
+	BMI .ok
+.return
+
+	SEP #$20
+	JML $019E93|!bank
+	
+.ok
+	SEP #$20
+	STA $0300|!addr,y
+	
+	JML $019E6F|!bank
+	
+wings_set_high_x:
+	XBA
+	AND #$01
+	ORA.w $9E24,x
+	STA $0460|!addr,y
+	
+	JML $019E93|!bank
+	
+; Yoshi wings
+pushpc
+	org $02BB50
+		JML yoshi_wings_calc_high_x
+		
+	org $02BB7F
+		JML yoshi_wings_set_high_x
+		
+pullpc
+
+; The code is basically copy/paste from above,
+; except it uses the lower half of OAM and
+; different indexing tables.
+
+yoshi_wings_calc_high_x:
+	XBA
+	LDA $00
+	REP #$20
+	SEC
+	SBC $1A
+	CMP.w #$0000-!extra_columns-$0010
+	BMI .return
+	CMP.w #$0100+!extra_columns
+	BMI .ok
+.return
+
+	SEP #$20
+	JML $02BB86|!bank
+	
+.ok
+	SEP #$20
+	STA $0200|!addr,y
+	
+	JML $02BB5E|!bank
+
+yoshi_wings_set_high_x:
+	XBA
+	AND #$01
+	ORA.l $02BB1F,x
+	STA $0420|!addr,y
+	
+	JML $02BB86|!bank
+	
+  
