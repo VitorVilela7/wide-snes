@@ -927,7 +927,7 @@ pushpc
 pullpc
 
 test_offscreen:
-	CMP.w #$0000-!extra_columns
+	CMP.w #$0000-!extra_columns-$0010
 	BMI .offscreen
 	CMP.w #$0100+!extra_columns
 	BMI .ok
