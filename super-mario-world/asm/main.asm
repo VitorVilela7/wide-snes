@@ -28,7 +28,6 @@
 
 ; TO DO: test more carefully yoshi eggs on screen edges. (fix needed)
 ; TO DO: fix jump 'strings' (pea sprite), interaction
-; TO DO: key/keyhole windowing hdma
 ; TO DO: spike fall at widescreen area.
 ; TO DO: kicking shell doesn't hit turn blocks at widescreen area.
 ; TO DO: figure out why yoshi wings doesn't have glitter effect.
@@ -75,6 +74,7 @@
 ; DONE: fix Yoshi's tongue
 ; DONE: fix Yoshi's throat
 ; DONE: wiggler's flower, game coin and lava splash (see level_sprites.asm)
+; DONE: key/keyhole windowing hdma
 
 ; 1 for 21:9, 0 for 16:9
 !ultrawide = 0

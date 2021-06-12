@@ -144,13 +144,41 @@ else
 		STZ $2254
 		JML finish_circle_back
 endif
-	
-; TO DO: spotlight
-; TO DO: this still needs fixing (spotlight)
+
+;- windowing spotlight HDMA effect
+;=================================
 
 pushpc
-	org $03C612
-		NOP #3
+	; left lamp edge
+	org $03C538
+		LDA.b #$78+4+1
+	; right lamp edge
+	org $03C53D
+		LDA.b #$87-4
+		
+	; since 512px width represented in increments
+	; by 2, the lamp will run twice faster.
+	
+	; so let's make it cover the "double" space as
+	; compensation.
+	
+	; we also increase the lamp expansion size by the
+	; widescreen resolution. Looks cooler for me!
+	
+	; original values: $00,$90 (-128, +16)
+	; 512-width ver: $40,$88
+	; compensation: $00,$48
+	org $03C52E
+		LDA.b #$00
+	org $03C533
+		LDA.b #$48*(!screen_size)/256
+		
+	; original values: $FF,$90 (+127, +16)
+	; 512-width ver: $BF,$88
+	; compensation: $FF,$48
+	org $03C491
+		db $FF
+		db $48*(!screen_size)/256
 pullpc
 
 ;- continue/save dialogs windowing HDMA
