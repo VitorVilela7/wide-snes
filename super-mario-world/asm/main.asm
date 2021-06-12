@@ -418,8 +418,8 @@ incsrc "level_bosses.asm"
 incsrc "overworld.asm"
 ; Title screen
 incsrc "title_screen.asm"
-; Yoshi's tongue for widescreen
-incsrc "yoshi_tongue.asm"
+; Yoshi widescreen support
+incsrc "level_yoshi.asm"
 
 ; 3rd party - independent patches - smoke x/y high bytes patch
 incsrc "smoke_position.asm"
