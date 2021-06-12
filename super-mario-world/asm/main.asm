@@ -38,6 +38,8 @@
 ; TO DO: fix lakitu cloud smile
 ; TO DO: fix magikoopa magic wand on widescreen.
 ; TO DO: fix spiny on line (tbm o liquidificador) guide wrapping around screen.
+; TO DO: fix contact smoke sprite when hitting multiple koopas on Yoshi's Island 2 and shoot fireball at the same time.
+; TO DO: fix flying '?' block particles generation
 
 ; TO DO: fix Lugwig background
 
@@ -72,10 +74,10 @@
 ; DONE: hammer bro's hammers.
 ; DONE: yoshi's flames
 ; DONE: air bubbles
+; DONE: fix Yoshi's tongue
 
 ; 1 for 21:9, 0 for 16:9
 !ultrawide = 0
-
 
 ; Extra pixels added to the left/right side
 !extra_columns = 48
@@ -109,6 +111,7 @@ if read1($00FFD5) == $23
 	
 	!E4	= $322C
 	!14E0	= $326E
+	!157C	= $3334
 else
 	!sa1	= 0
 	!dp	= $0000
@@ -117,6 +120,7 @@ else
 	
 	!E4	= $E4
 	!14E0	= $14E0
+	!157C	= $157C
 endif
 
 ; Adjust off-screen routines
@@ -414,6 +418,8 @@ incsrc "level_bosses.asm"
 incsrc "overworld.asm"
 ; Title screen
 incsrc "title_screen.asm"
+; Yoshi's tongue for widescreen
+incsrc "yoshi_tongue.asm"
 
 ; 3rd party - independent patches - smoke x/y high bytes patch
 incsrc "smoke_position.asm"
