@@ -125,7 +125,7 @@ pushpc
 		LDA $01
 
 pullpc		
-		
+
 yoshi_throat_x:
 	XBA
 	LDA !E4,x
