@@ -26,8 +26,6 @@
 ; TO DO: add "S" from MARIO START
 ; TO DO: add Luigi graphics
 
-; TO DO: wiggler's flower, game coin and lava splash (see level_sprites.asm)
-
 ; TO DO: test more carefully yoshi eggs on screen edges. (fix needed)
 ; TO DO: fix jump 'strings' (pea sprite), interaction
 ; TO DO: key/keyhole windowing hdma
@@ -76,6 +74,7 @@
 ; DONE: air bubbles
 ; DONE: fix Yoshi's tongue
 ; DONE: fix Yoshi's throat
+; DONE: wiggler's flower, game coin and lava splash (see level_sprites.asm)
 
 ; 1 for 21:9, 0 for 16:9
 !ultrawide = 0

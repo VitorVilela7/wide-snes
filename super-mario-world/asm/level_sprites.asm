@@ -539,9 +539,9 @@ minor_x_check:
 	
 	REP #$20
 	LDA $00
-	CMP.w #$0000-!extra_columns-$0020
+	CMP.w #$0000-!extra_columns-$0010
 	BMI .return
-	CMP.w #$0100+!extra_columns+$0020
+	CMP.w #$0100+!extra_columns+$0010
 	BMI .ok
 	
 .return
@@ -611,9 +611,9 @@ minor_brick_check:
 	XBA
 	LDA $01
 	REP #$20
-	CMP.w #$0000-!extra_columns-$0020
+	CMP.w #$0000-!extra_columns-$0010
 	BMI .return
-	CMP.w #$0100+!extra_columns+$0020
+	CMP.w #$0100+!extra_columns+$0010
 	BMI .ok
 .return
 	SEP #$20
@@ -649,9 +649,9 @@ extended_x_test:
 	XBA
 	LDA $00
 	REP #$20
-	CMP.w #$0000-!extra_columns-$0020
+	CMP.w #$0000-!extra_columns-$0010
 	BMI .return
-	CMP.w #$0100+!extra_columns+$0020
+	CMP.w #$0100+!extra_columns+$0010
 	BMI .ok
 .return
 	SEP #$20
@@ -666,9 +666,96 @@ extended_x_test:
 	LDA #$00
 	RTL
 
-; TO DO: $029D04
+; Wiggler flower / cloud coin
+pushpc
+	org $029D04
+		; calculat x position 16-bit
+		JML extended_x_test_cloud_wiggler
+		
+	org $029D13
+		; optimize
+		LDA $00
+		BRA +
+		
+	org $029D1D
+		+
+		
+	org $029D3F
+		; x position msb + 8x8
+		LDA $0F
+		
+	org $029D54
+		; x position msb + 16x16
+		LDA $0E
+pullpc
+
+extended_x_test_cloud_wiggler:
+	LDA $1733|!addr,x
+	XBA
+	LDA $171F|!addr,x
+	REP #$20
+	SEC
+	SBC $1A
+	CMP.w #$0000-!extra_columns-$0010
+	BMI .return
+	CMP.w #$0100+!extra_columns+$0010
+	BMI .ok
+.return
+	SEP #$20
+	JML $029D5D|!bank
+
+.ok
+	SEP #$20	
+	STA $00
+	XBA
+	AND #$01
+	STA $0F
+	ORA #$02
+	STA $0E
+
+	JML $029D10|!bank
+
 ; Unused extended sprite - ignored: $029DC7
-; TO DO: $029EA0
+
+; Lava splash: $029EA0
+
+; This particle in particular appears every time a sprite
+; "falls" in lava and you can see some splashes appearing
+; from the lava to the top. Don't confuse with the podoboo
+; particles while jumping.
+pushpc
+	org $029EA0
+		; calculat x position 16-bit
+		JML extended_x_test_lava
+		
+	org $029EDD
+		; x position msb + 8x8
+		LDA $0F
+pullpc
+
+extended_x_test_lava:
+	LDA $1733|!addr,x
+	XBA
+	LDA $171F|!addr,x
+	REP #$20
+	SEC
+	SBC $1A
+	CMP.w #$0000-!extra_columns-$0010
+	BMI .return
+	CMP.w #$0100+!extra_columns+$0010
+	BMI .ok
+.return
+	SEP #$20
+	JML $029EE6|!bank
+
+.ok
+	SEP #$20	
+	XBA
+	AND #$01
+	STA $0F
+	XBA
+
+	JML $029EB1|!bank
 
 ; General / fireball / mode 7: $02A05A
 ; General / fireball / regular: $02A1B1
@@ -750,9 +837,9 @@ extended_x_test_2:
 	REP #$20
 	SEC
 	SBC $1A
-	CMP.w #$0000-!extra_columns-$0020
+	CMP.w #$0000-!extra_columns-$0010
 	BMI .return
-	CMP.w #$0100+!extra_columns+$0020
+	CMP.w #$0100+!extra_columns+$0010
 	BMI .ok
 .return
 	SEP #$20
@@ -771,9 +858,9 @@ extended_x_test_2:
 extended_x_test_3:
 	SEC
 	SBC $1A
-	CMP.w #$0000-!extra_columns-$0020
+	CMP.w #$0000-!extra_columns-$0010
 	BMI .return
-	CMP.w #$0100+!extra_columns+$0020
+	CMP.w #$0100+!extra_columns+$0010
 	BMI .ok
 .return
 	SEP #$20
@@ -810,9 +897,9 @@ pullpc
 
 baseball_x_check:
 	SBC $1A
-	CMP.w #$0000-!extra_columns-$0020
+	CMP.w #$0000-!extra_columns-$0010
 	BMI .return
-	CMP.w #$0100+!extra_columns+$0020
+	CMP.w #$0100+!extra_columns+$0010
 	BMI .ok
 .return
 	SEP #$20
@@ -863,9 +950,9 @@ pullpc
 puff_smoke_x_check:
 	SEC
 	SBC $1A
-	CMP.w #$0000-!extra_columns-$0020
+	CMP.w #$0000-!extra_columns-$0010
 	BMI .return
-	CMP.w #$0100+!extra_columns+$0020
+	CMP.w #$0100+!extra_columns+$0010
 	BMI .ok
 .return
 	SEP #$20
@@ -886,9 +973,9 @@ puff_smoke_x_check:
 puff_smoke_x_check_mode7:
 	SEC
 	SBC $1A
-	CMP.w #$0000-!extra_columns-$0020
+	CMP.w #$0000-!extra_columns-$0010
 	BMI .return
-	CMP.w #$0100+!extra_columns+$0020
+	CMP.w #$0100+!extra_columns+$0010
 	BMI .ok
 .return
 	SEP #$20
