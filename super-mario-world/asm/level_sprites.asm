@@ -1,15 +1,6 @@
 ; Dedicated code for improving level sprites
 ; For widescreen SMW support
 
-;- RAM addresses definitions
-;===========================
-
-; x position high byte for smoke sprites - given by smoke_position.asm
-!smoke_x_high = $18C9
-
-; set if "x position" is on widescreen area. Used as alternative for $15A0.
-!sprite_wide_flag_table = $1FD6
-
 ;- Horizontal/vertical level spawning range
 ;==========================================
 

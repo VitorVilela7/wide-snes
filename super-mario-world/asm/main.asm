@@ -112,6 +112,9 @@ if read1($00FFD5) == $23
 	!E4	= $322C
 	!14E0	= $326E
 	!157C	= $3334
+	
+	!smoke_x_high = $78C9
+	!sprite_wide_flag_table = $766E
 else
 	!sa1	= 0
 	!dp	= $0000
@@ -121,7 +124,14 @@ else
 	!E4	= $E4
 	!14E0	= $14E0
 	!157C	= $157C
+	
+	!smoke_x_high = $18C9
+	
+	; set if "x position" is on widescreen area. Used as alternative for $15A0.
+	!sprite_wide_flag_table = $1FD6
 endif
+
+
 
 ; Adjust off-screen routines
 macro adjust_offscreen(v)

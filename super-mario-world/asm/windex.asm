@@ -1,11 +1,11 @@
-lorom
+;lorom
 
-!bank = $800000
+;!bank = $800000
 
-if read1($00FFD5) == $23
-	sa1rom
-	!bank = $000000
-endif
+;if read1($00FFD5) == $23
+;	sa1rom
+;	!bank = $000000
+;endif
 
 org $009AA4
 autoclean JSL Mymain

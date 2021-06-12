@@ -28,7 +28,11 @@ pushpc
 		; 16-bit x position calculation
 		LDA !14E0,x
 		XBA
-		LDA !E4,x
+		if !sa1
+			LDA ($EE)
+		else
+			LDA !E4,x
+		endif
 		REP #$21
 		ADC $0D
 		SEC
