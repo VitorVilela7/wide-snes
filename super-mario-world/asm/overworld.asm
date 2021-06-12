@@ -1,9 +1,16 @@
-; Dedicated widescreen overworld patch
-; Special thanks to Medic for the forcetask done together
-; in https://www.smwcentral.net/?p=section&a=details&id=12773
-
-; This is universal widescreen support and allows for any
-; resolution from 288x224 to 512x224.
+;===============================================================
+; Dedicated Widescreen overworld patch. Covers everything
+; with the exception of windowing HDMA effects taken care by
+; windowing_effects.asm
+;
+; Special thanks to Medic for the original widescreen overworld
+; patch, which while it had another context it was useful for
+; adding real widescreen support to the game. See also:
+; https://www.smwcentral.net/?p=section&a=details&id=12773
+;
+; This file is universal, works for any resolution from 288x224
+; to 512x224, thanks for the overworld border and window effects
+;===============================================================
 
 ;- overworld maximum horizontal scrolling range
 ;==============================================
@@ -30,28 +37,6 @@ pushpc
 	
 	; interestingly, the submaps even with the original offsets works
 	; as expected, because its tilemap is 16 pixels shifted to the right.
-pullpc
-
-;- overworld shrinking/expanding windowing hdma
-;==============================================
-
-pushpc
-	; effective OW area increases from 28 to 32 8x8 blocks.
-
-	; window animation speed - horizontal axis
-	org $04DB08
-		dw -$0700/2*32/28
-		dw $0700/2*32/28
-		
-	; minimum/maximum size
-	org $04DB0C
-		dw $0000/2*32/28
-		dw $7000/2*32/28
-		
-	; initial size when it's the shrinking animation.
-	org $049630
-		LDA #$7000/2*32/28
-
 pullpc
 
 ;- make the overworld clouds work correctly on widescreen
@@ -375,25 +360,3 @@ pullpc
 
 overworld_border:
 	incbin "overworld-universal.stim"
-
-pushpc
-	org $04F453
-		LSR
-		
-	org $04F46E
-		STA $00
-		ADC $1B89|!addr
-		LSR
-		AND #$FE
-		TAX
-		JSL set_save_window_side_right
-	; print pc
-	warnpc $04F47B
-
-pullpc
-
-set_save_window_side_right:
-	LDA #$80
-	SEC
-	SBC $00
-	RTL

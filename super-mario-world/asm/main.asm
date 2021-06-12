@@ -374,7 +374,7 @@ incsrc "title_screen.asm"
 ; Yoshi widescreen support
 incsrc "level_yoshi.asm"
 ; Window HDMA effects
-incrsc "windowing_effects.asm"
+incsrc "windowing_effects.asm"
 
 ; 3rd party - independent patches - smoke x/y high bytes patch
 incsrc "smoke_position.asm"

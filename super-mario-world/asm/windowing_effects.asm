@@ -1,7 +1,9 @@
 ;===============================================================
 ; Responsible for windowing HDMA effects on widescreen mode.
 ;
-; Most of the simpler effects are handled on overworld.asm
+; Windowing support is done universal, regardless of the
+; widescreen resolution. This uses the 8-bit window registers,
+; the low quality version but with support for any size.
 ;===============================================================
 
 ;- Circle/keyhole HDMA effect
@@ -61,3 +63,51 @@ hack_test:
 	
 	;A's value is used
 	RTL
+
+;- continue/save dialogs windowing HDMA
+;======================================
+
+pushpc
+	org $04F453
+		LSR
+		
+	org $04F46E
+		STA $00
+		ADC $1B89|!addr
+		LSR
+		AND #$FE
+		TAX
+		JSL set_save_window_side_right
+	; print pc
+	warnpc $04F47B
+
+pullpc
+
+set_save_window_side_right:
+	LDA #$80
+	SEC
+	SBC $00
+	RTL
+
+;- overworld shrinking/expanding windowing HDMA
+;==============================================
+
+pushpc
+	; effective OW area increases from 28 to 32 8x8 blocks.
+
+	; window animation speed - horizontal axis
+	org $04DB08
+		dw -$0700/2*32/28
+		dw $0700/2*32/28
+		
+	; minimum/maximum size
+	org $04DB0C
+		dw $0000/2*32/28
+		dw $7000/2*32/28
+		
+	; initial size when it's the shrinking animation.
+	org $049630
+		LDA #$7000/2*32/28
+
+pullpc
+
