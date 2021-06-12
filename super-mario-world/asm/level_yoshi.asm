@@ -1,3 +1,11 @@
+;===============================================================
+; Responsible for Yoshi support on widescreen mode.
+;
+; Makes sure tiles are drawn correctly on levels.
+;===============================================================
+
+;- Yoshi's tongue
+;================
 
 pushpc
 	org $01F418
@@ -89,3 +97,59 @@ yoshi_tongue_offscreen:
 	; stop routine to avoid the tongue wrapping screen side.
 	
 	JML $01F47E|!bank
+
+;- Yoshi's throat
+;================
+
+pushpc
+	org $01F065
+		LDA !14E0,x
+		JML yoshi_throat_x
+		
+	; print pc
+	warnpc $01F06C
+	
+	org $01F071
+		; save new y position
+		STA $03
+		
+	org $01F080
+		; load new y position
+		LDA $03
+		
+	org $01F079
+		JML yoshi_throat_sign_ext
+
+	org $01F09B
+		; get x position msb
+		LDA $01
+
+pullpc		
+		
+yoshi_throat_x:
+	XBA
+	LDA !E4,x
+	REP #$20
+	SEC
+	SBC $1A
+	STA $00
+	SEP #$20
+	
+	JML $01F06C|!bank
+	
+yoshi_throat_sign_ext:
+	ADC.l $03C176,x
+	STA $0300|!addr
+	
+	LDA.l $03C176,x
+	AND #$80
+	BEQ .no_sex
+	ORA #$7F
+.no_sex
+	; set x position msb
+	ADC $01
+	AND #$01
+	STA $01
+	
+	JML $01F080|!bank
+	
