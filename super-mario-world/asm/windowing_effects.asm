@@ -37,6 +37,36 @@ set_up_x_pos:
 
 	JML $00CA79|!bank
 
+; Configure x position but for keyhole animation
+pushpc
+	org $00C4DD
+		JML set_up_keyhole_x_pos
+		
+	org $00C470
+		; Make the keyhole window animation slighter
+		; bigger (by 11%)
+		db $A0,$00,$A0,$00
+pullpc
+
+set_up_keyhole_x_pos:
+	LDA $1436|!addr
+	SEC
+	SBC $1A
+	CLC
+	ADC.w #$0004+$0080
+	
+	BPL +
+	LDA #$0000
++	CMP #$01FF
+	BMI +
+	LDA #$01FF
++
+	LSR
+	ADC #$0000
+	SEP #$20
+	
+	JML $00C4E8|!bank
+
 ; Calculate products
 pushpc
 	if !sa1 == 0
