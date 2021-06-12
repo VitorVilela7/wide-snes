@@ -1004,8 +1004,12 @@ pushpc
 			STZ.w !sprite_wide_flag_table,x
 		
 			LDA !14E0,x
-			XBA	
-			LDA !E4,x
+			XBA
+			if !sa1 == 1
+				LDA ($EE)
+			else
+				LDA !E4,x
+			endif
 			REP #$20
 			SEC
 			SBC $1A
@@ -1024,8 +1028,12 @@ pushpc
 			STZ.w !sprite_wide_flag_table,x
 		
 			LDA !14E0,x
-			XBA	
-			LDA !E4,x
+			XBA
+			if !sa1 == 1
+				LDA ($EE)
+			else
+				LDA !E4,x
+			endif
 			REP #$20
 			SEC
 			SBC $1A
@@ -1044,8 +1052,12 @@ pushpc
 			STZ.w !sprite_wide_flag_table,x
 		
 			LDA !14E0,x
-			XBA	
-			LDA !E4,x
+			XBA
+			if !sa1 == 1
+				LDA ($EE)
+			else
+				LDA !E4,x
+			endif
 			REP #$20
 			SEC
 			SBC $1A
