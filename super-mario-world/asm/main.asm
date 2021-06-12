@@ -127,11 +127,10 @@ else
 	
 	!smoke_x_high = $18C9
 	
-	; set if "x position" is on widescreen area. Used as alternative for $15A0.
+	; set if "x position" is on widescreen area.
+	; used as alternative for $15A0.
 	!sprite_wide_flag_table = $1FD6
 endif
-
-
 
 ; Adjust off-screen routines
 macro adjust_offscreen(v)
@@ -338,62 +337,6 @@ org $00E9C2
 	SBC.W #$0008-!extra_columns
 
 pullpc
-
-; take care of window hdma
-
-pushpc
-
-;define x/y pos
-; use CODE_00CA88 as set up $00 and $01
-; X position should be adjusted.
-
-; size calculation
-org $00CC51
-	JSL hack_test
-	PLY
-	RTS
-	
-org $00CA74
-	JSL fix_x_pos
-	NOP #3
-	
-; TO DO: this still needs fixing (spotlight)
-org $03C612
-	NOP #3
-
-pullpc
-
-fix_x_pos:
-	REP #$20
-	LDA $7E
-	CLC
-	ADC #$0008
-	
-	CLC
-	ADC #$0080
-	BPL +
-	LDA #$0000
-+	CMP #$01FF
-	BMI +
-	LDA #$01FF
-	
-+
-	LSR
-	STA $00
-	SEP #$20
-	RTL
-
-; TO DO: SA-1
-hack_test:
-	LDA $4217
-	LSR
-	STA $02
-	
-	LSR $03
-	
-	;A's value is used
-	RTL
-	
 	
 pushpc
 
@@ -430,6 +373,8 @@ incsrc "overworld.asm"
 incsrc "title_screen.asm"
 ; Yoshi widescreen support
 incsrc "level_yoshi.asm"
+; Window HDMA effects
+incrsc "windowing_effects.asm"
 
 ; 3rd party - independent patches - smoke x/y high bytes patch
 incsrc "smoke_position.asm"
