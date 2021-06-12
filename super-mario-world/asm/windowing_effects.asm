@@ -9,31 +9,14 @@
 ;- Circle/keyhole HDMA effect
 ;============================
 
-; take care of window hdma
-
+; Configure x position to use 512/center offset system.
 pushpc
-
-;define x/y pos
-; use CODE_00CA88 as set up $00 and $01
-; X position should be adjusted.
-
-; size calculation
-org $00CC51
-	JSL hack_test
-	PLY
-	RTS
-	
-org $00CA74
-	JSL fix_x_pos
-	NOP #3
-	
-; TO DO: this still needs fixing (spotlight)
-org $03C612
-	NOP #3
-
+	org $00CA74
+		JML set_up_x_pos
+		
 pullpc
 
-fix_x_pos:
+set_up_x_pos:
 	REP #$20
 	LDA $7E
 	CLC
@@ -49,9 +32,18 @@ fix_x_pos:
 	
 +
 	LSR
-	STA $00
 	SEP #$20
-	RTL
+
+	JML $00CA79|!bank
+
+pushpc
+	; size calculation
+	org $00CC51
+		JSL hack_test
+		PLY
+		RTS
+pullpc
+
 
 ; TO DO: SA-1
 hack_test:
@@ -63,6 +55,14 @@ hack_test:
 	
 	;A's value is used
 	RTL
+	
+; TO DO: spotlight
+; TO DO: this still needs fixing (spotlight)
+
+pushpc
+	org $03C612
+		NOP #3
+pullpc
 
 ;- continue/save dialogs windowing HDMA
 ;======================================
