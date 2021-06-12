@@ -38,23 +38,73 @@ set_up_x_pos:
 
 pushpc
 	; size calculation
-	org $00CC51
-		JSL hack_test
-		PLY
-		RTS
+	if !sa1 == 0
+		org $00CC51
+			JSL circle_window_halve
+			PLY
+			RTS
+	else
+		org $00CC14
+			CLV				;
+			PHY				;
+			LDA #$01			;
+			STA $2250			;
+			LDA $01				;
+			BPL +				;
+			LSR				;
+			SEP #$40			;
+		+	STA $2252			;
+			STZ $2251			;
+			LDA $7433			;
+			STA $2253			;
+			STZ $2254			;
+			NOP				;
+			REP #$20			;
+			LDA $2306			;
+			BVS +				;
+			LSR				;
+		+	TAY				;
+			SEP #$20			;
+			STZ $2250			;
+			LDA $7433			;
+			STA $2251			;
+			STZ $2252			;
+			LDA ($06),y			;
+			STA $2253			;
+			STZ $2254			;
+			JML Jump
+		Back:	LDA $2307			;
+			STA $02				;
+			PLY				;
+			RTS				;
+		
+		print pc
+		warnpc $00CC5C
+	endif
 pullpc
 
 
-; TO DO: SA-1
-hack_test:
-	LDA $4217
-	LSR
-	STA $02
-	
-	LSR $03
-	
-	;A's value is used
-	RTL
+if !sa1 == 0
+	circle_window_halve:
+		LDA $4217
+		LSR
+		STA $02
+		
+		LSR $03
+		
+		;A's value is used
+		RTL
+else
+Jump:
+	NOP				;
+	LDA $2307			;
+	STA $03				;
+	LDA ($04),y			;
+	STA $2253			;
+	STZ $2254			;
+	NOP				;
+	JML Back			;
+endif
 	
 ; TO DO: spotlight
 ; TO DO: this still needs fixing (spotlight)
