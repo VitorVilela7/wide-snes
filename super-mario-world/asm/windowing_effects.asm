@@ -32,12 +32,13 @@ set_up_x_pos:
 	
 +
 	LSR
+	ADC #$0000
 	SEP #$20
 
 	JML $00CA79|!bank
 
+; Calculate products
 pushpc
-	; size calculation
 	if !sa1 == 0
 		org $00CC51
 			JSL circle_window_halve
@@ -45,40 +46,49 @@ pushpc
 			RTS
 	else
 		org $00CC14
-			CLV				;
-			PHY				;
-			LDA #$01			;
-			STA $2250			;
-			LDA $01				;
-			BPL +				;
-			LSR				;
-			SEP #$40			;
-		+	STA $2252			;
-			STZ $2251			;
-			LDA $7433			;
-			STA $2253			;
-			STZ $2254			;
-			NOP				;
-			REP #$20			;
-			LDA $2306			;
-			BVS +				;
-			LSR				;
-		+	TAY				;
-			SEP #$20			;
-			STZ $2250			;
-			LDA $7433			;
-			STA $2251			;
-			STZ $2252			;
-			LDA ($06),y			;
-			STA $2253			;
-			STZ $2254			;
-			JML Jump
-		Back:	LDA $2307			;
-			STA $02				;
-			PLY				;
-			RTS				;
+			CLV
+			PHY
+			LDA #$01
+			STA $2250
+			
+			LDA $01
+			BPL +
+			LSR
+			SEP #$40
+		+	STA $2252
+			STZ $2251
+			
+			LDA $7433
+			STA $2253
+			STZ $2254
+			
+			REP #$20
+			LDA $2306
+			BVS +
+			LSR
+		+	TAY
+			
+			SEP #$20
+			STZ $2250
+			LDA $7433
+			LSR
+			STA $2251
+			STZ $2252
+			
+			LDA ($06),y
+			STA $2253
+			STZ $2254
+			
+			JML finish_circle_sa1
+			
+		finish_circle_back:
+			LDA $2307
+			STA $02
+			
+			PLY
+			RTS
 		
-		print pc
+		; print pc
 		warnpc $00CC5C
 	endif
 pullpc
@@ -95,15 +105,14 @@ if !sa1 == 0
 		;A's value is used
 		RTL
 else
-Jump:
-	NOP				;
-	LDA $2307			;
-	STA $03				;
-	LDA ($04),y			;
-	STA $2253			;
-	STZ $2254			;
-	NOP				;
-	JML Back			;
+	finish_circle_sa1:
+		LDA $2307
+		STA $03
+		
+		LDA ($04),y
+		STA $2253
+		STZ $2254
+		JML finish_circle_back
 endif
 	
 ; TO DO: spotlight
