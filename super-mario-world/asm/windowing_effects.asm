@@ -6,6 +6,29 @@
 ; the low quality version but with support for any size.
 ;===============================================================
 
+;- Layer 3 message boxes
+;=======================
+
+pushpc
+
+org $05B25D
+	JML recalc_x
+
+pullpc
+
+; recalculate to take in account the 512-width window.
+recalc_x:
+	LSR
+	STA $00
+	CLC
+	ADC #$80
+	XBA
+	
+	LDA #$80
+	SEC
+	SBC $00
+	JML $05B267|!bank
+
 ;- Circle/keyhole HDMA effect
 ;============================
 

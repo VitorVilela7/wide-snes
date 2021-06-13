@@ -339,25 +339,6 @@ org $00E9C2
 	SBC.W #$0008-!extra_columns
 
 pullpc
-	
-pushpc
-
-org $05B25D
-	JML recalc_x
-
-pullpc
-
-recalc_x:
-	LSR
-	STA $00
-	CLC
-	ADC #$80
-	XBA
-	
-	LDA #$80
-	SEC
-	SBC $00
-	JML $05B267|!bank
 
 ; Side exits
 incsrc "level_side_exits.asm"
