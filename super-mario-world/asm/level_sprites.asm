@@ -142,7 +142,7 @@ test_offscreen:
 	BMI .ok
 	
 .offscreen
-	INC $15A0,x
+	INC !sprite_offscreen_flag_table,x
 
 .ok
 	CLC

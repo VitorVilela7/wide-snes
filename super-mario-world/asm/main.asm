@@ -115,6 +115,7 @@ if read1($00FFD5) == $23
 	
 	!smoke_x_high = $78C9
 	!sprite_wide_flag_table = $766E
+	!sprite_offscreen_flag_table = $3376
 else
 	!sa1	= 0
 	!dp	= $0000
@@ -130,6 +131,7 @@ else
 	; set if "x position" is on widescreen area.
 	; used as alternative for $15A0.
 	!sprite_wide_flag_table = $1FD6
+	!sprite_offscreen_flag_table = $15A0
 endif
 
 ; Adjust off-screen routines
