@@ -407,3 +407,41 @@ chain_test_for_offscreen:
 	JML $01C95B|!bank
 
 ;- Climibing net door - send unused tiles to offscreen
+;=====================================================
+
+pushpc
+	; we can't multiply Y by 4 because SA-1 Pack
+	; hijacks the LDY #$0C at $01BBFA
+	
+	org $01BBFF
+		JML netdoor_scale
+
+	org $01BC06
+		LDA.b #$F0   
+		STA.w !addr+$0201+(4*($0463-$0420)),Y
+		STA.w !addr+$0201+(4*($0464-$0420)),Y		
+		STA.w !addr+$0201+(4*($0465-$0420)),Y
+		
+	org $01BC11
+		LDA.b #$F0
+		STA.w !addr+$0201+(4*($0466-$0420)),Y
+		STA.w !addr+$0201+(4*($0467-$0420)),Y
+		STA.w !addr+$0201+(4*($0468-$0420)),Y
+
+pullpc
+
+netdoor_scale:
+	TYA
+	ASL
+	ASL
+	TAY
+
+	PLA
+	BEQ .return
+	CMP #$02
+	
+	JML $01BC04|!bank
+
+.return
+	JML $01BC1C|!bank
+
