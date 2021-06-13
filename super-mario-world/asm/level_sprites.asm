@@ -28,6 +28,126 @@ pushpc
 		
 pullpc
 
+;- SUB_OFF_SCREEN tables range for widescreen
+;============================================
+
+; Adjust off-screen routines
+macro adjust_offscreen(v)
+	if <v> >= $8000
+		!r = <v>-!extra_columns
+
+		assert !r >= $8000, "offscreen underflow error"
+	else
+		!r = <v>+!extra_columns
+
+		assert !r <= $7FFF, "offscreen overflow error"
+	endif
+
+	db !r
+	skip 8-1
+	
+	db (!r)>>8
+	skip -8
+endmacro
+
+pushpc
+	;SpriteOffScreen3:
+	;	db $30,$C0,$A0,$C0,$A0,$F0,$60,$90
+	;SpriteOffScreen4:
+	;	db $01,$FF,$01,$FF,$01,$FF,$01,$FF
+
+	org $01AC11
+		%adjust_offscreen($0130)
+		%adjust_offscreen($FFC0)
+		%adjust_offscreen($01A0)
+		%adjust_offscreen($FFC0)
+		%adjust_offscreen($01A0)
+		%adjust_offscreen($FFF0)
+		%adjust_offscreen($0160)
+		%adjust_offscreen($FF90)
+		warnpc $01AC11+8
+    
+	;DATA_02D007:
+	;	db $30,$C0,$A0,$C0,$A0,$70,$60,$B0
+	;DATA_02D00F:
+	;	db $01,$FF,$01,$FF,$01,$FF,$01,$FF
+	
+	org $02D007
+		%adjust_offscreen($0130)
+		%adjust_offscreen($FFC0)
+		%adjust_offscreen($01A0)
+		%adjust_offscreen($FFC0)
+		%adjust_offscreen($01A0)
+		%adjust_offscreen($FF70)
+		%adjust_offscreen($0160)
+		%adjust_offscreen($FFB0)
+		warnpc $02D007+8
+
+	;DATA_03B83F
+	;	db $30,$C0,$A0,$80,$A0,$40,$60,$B0
+	;DATA_03B847
+	;	db $01,$FF,$01,$FF,$01,$00,$01,$FF
+	org $03B83F
+		%adjust_offscreen($0130)
+		%adjust_offscreen($FFC0)
+		%adjust_offscreen($01A0)
+		%adjust_offscreen($FF80)
+		%adjust_offscreen($01A0)
+		%adjust_offscreen($0040)
+		%adjust_offscreen($0160)
+		%adjust_offscreen($FFB0)
+		warnpc $03B83F+8
+pullpc
+
+pushpc
+	;DATA_02FEC5:
+	;	db $40,$B0
+	;DATA_02FEC7
+	;	db $01,$FF
+	;DATA_02FEC9
+	;	db $30,$C0
+	;DATA_02FECB
+	;	db $01,$FF
+	
+	org $02FEC5
+		db $40+!extra_columns
+		db $B0-!extra_columns
+	    
+	org $02FEC9
+		db $30+!extra_columns
+		db $C0-!extra_columns
+pullpc
+
+; The following changes avoids the game out of sudden
+; not drawing sprites anymore (even though they are active)
+pushpc
+
+	;CODE_01A385:        69 40 00      ADC.W #$0040
+	;CODE_01A388:        C9 80 01      CMP.W #$0180
+	org $01A385
+		ADC.W #$0040+!extra_columns
+		CMP.W #$0180+!extra_columns+!extra_columns
+	    
+	;CODE_01C9F9:        69 10 00      ADC.W #$0010
+	;CODE_01C9FC:        C9 20 01      CMP.W #$0120
+	org $01C9F9
+		ADC.W #$0010+!extra_columns
+		CMP.W #$0120+!extra_columns+!extra_columns
+
+	;CODE_03B780:        69 40 00      ADC.W #$0040
+	;CODE_03B783:        C9 80 01      CMP.W #$0180
+	org $03B780
+		ADC.W #$0040+!extra_columns
+		CMP.W #$0180+!extra_columns+!extra_columns
+
+	;CODE_02D398:        69 40 00      ADC.W #$0040
+	;CODE_02D39B:        C9 80 01      CMP.W #$0180
+	org $02D398
+		ADC.W #$0040+!extra_columns
+		CMP.W #$0180+!extra_columns+!extra_columns
+
+pullpc
+
 ;- Smoke sprites
 ;===============
 
