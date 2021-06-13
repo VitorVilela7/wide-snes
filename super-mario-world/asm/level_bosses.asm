@@ -34,15 +34,15 @@ prepare_lava_stream:
 CODE_03C0D3:                        ;           |
 	STX $02                     ;$03C0D3    |
 	LDA $00                     ;$03C0D5    |\ 
-	STA.w $0200,Y               ;$03C0D7    ||
+	STA.w $0200|!addr,Y         ;$03C0D7    ||
 	CLC                         ;$03C0DA    || Store X position to OAM.
 	ADC.b #$10                  ;$03C0DB    ||
 	STA $00                     ;$03C0DD    |/
 	LDA.b #$C4                  ;$03C0DF    |\ Store Y position to OAM.
-	STA.w $0201,Y               ;$03C0E1    |/
+	STA.w $0201|!addr,Y         ;$03C0E1    |/
 	LDA $64                     ;$03C0E4    |\ 
 	ORA.b #$09                  ;$03C0E6    || Store YXPPCCCT to OAM.
-	STA.w $0203,Y               ;$03C0E8    |/
+	STA.w $0203|!addr,Y         ;$03C0E8    |/
 	PHX                         ;$03C0EB    |
 	LDA $14                     ;$03C0EC    |\ 
 	LSR                         ;$03C0EE    ||
@@ -53,13 +53,13 @@ CODE_03C0D3:                        ;           |
 	AND.b #$03                  ;$03C0F6    ||
 	TAX                         ;$03C0F8    ||
 	LDA.l $03C0B2,X             ;$03C0F9    ||
-	STA.w $0202,Y               ;$03C0FD    |/
+	STA.w $0202|!addr,Y         ;$03C0FD    |/
 	TYA                         ;$03C100    |
 	LSR                         ;$03C101    |
 	LSR                         ;$03C102    |
 	TAX                         ;$03C103    |
 	LDA.b #$03                  ;$03C104    |\ Store size to OAM as 16x16.
-	STA.w $0420,X               ;$03C106    |/
+	STA.w $0420|!addr,X         ;$03C106    |/
 	PLX                         ;$03C109    |
 	INY                         ;$03C10A    |\ 
 	INY                         ;$03C10B    ||
@@ -119,10 +119,17 @@ rerender_if_bowser:
 	; can't be interacted at all (fill with 0025)
 	LDY #$10
 .loop
-	LDA #$25
-	STA $7EC9B0,x
-	LDA #$00
-	STA $7FC9B0,x
+	if !sa1 == 0
+		LDA #$25
+		STA $7EC9B0,x
+		LDA #$00
+		STA $7FC9B0,x
+	else
+		LDA #$25
+		STA $40C9B0,x
+		LDA #$00
+		STA $41C9B0,x	
+	endif
 	
 	DEX
 	BNE .loop
