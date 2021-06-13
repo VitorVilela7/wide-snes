@@ -3,21 +3,33 @@
 ; for Widescreen SMW
 ;===============================================================
 
-;- Minor extended sprites
-;========================
+;- Regular sprites sparkling effect
+;==================================
 
 pushpc
-	; hatch yoshi egg animatino
+	org $01B170
+		STA $03
+		BRA +
+		
+	org $01B17A
+		+
+pullpc
+
+;- Hatching yoshi animation
+;==========================
+
+pushpc
+	; hatch yoshi egg animation
 	org $01F7CD
-		JSL minor_load_spr_x
+		JSL minor_load_egg_x
 		
 	org $01F7FF
-		JSL minor_store_spr_x
+		JSL minor_store_egg_x
 		NOP
 
 pullpc
 
-minor_load_spr_x:
+minor_load_egg_x:
 	; restore
 	LDA !E4,x
 	STA $00
@@ -27,7 +39,7 @@ minor_load_spr_x:
 	STA $01
 	RTL
 	
-minor_store_spr_x:
+minor_store_egg_x:
 	; restore
 	STA $1808|!addr,x
 	
