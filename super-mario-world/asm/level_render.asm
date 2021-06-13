@@ -9,10 +9,10 @@
 ;- X-scroll fix
 ;==============
 
-pushpc
-	org $009708
-		JSL x_scroll_fix
-pullpc
+;pushpc
+;	org $009708
+;		JSL x_scroll_fix
+;pullpc
 
 ; fix originally provided by Alcaro and it's required to camera
 ; bounds work as expected. this fix is not needed for LM 3.01+,
@@ -23,18 +23,16 @@ pullpc
 ; screen edges (when you spawn nearby end of the level right
 ; bound)
 
-x_scroll_fix:
-	LDA [$65]
-	AND #$1F
-	INC A
-	STA $5E
-	
-	;I don't remember why I added that on LM 3.00,
-	;but it's not needed here.
-	
-	;JSL $00F6DB
-	
-	RTL
+;x_scroll_fix:
+;	LDA [$65]
+;	AND #$1F
+;	INC A
+;	STA $5E
+;	
+;	;I don't know why that's needed on LM3+
+;	JSL $00F6DB
+;	
+;	RTL
 
 ;- Force rendering of the whole (512px) screen
 ;=============================================
