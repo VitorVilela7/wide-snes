@@ -275,9 +275,10 @@ pushpc
 		
 	org $019F51
 		ORA.w !sprite_wide_flag_table,x
-		
-	org $01BF0F
-		ORA.w !sprite_wide_flag_table,x
+	
+	; Magikoopa's wand, handled elsewhere.
+	;org $01BF0F
+	;	ORA.w !sprite_wide_flag_table,x
 pullpc
 
 ;- Regular sprites (wings)
@@ -565,3 +566,32 @@ netdoor_scale:
 .return
 	JML $01BC1C|!bank
 
+;- Magikoopa's wand - widescreen
+;===============================
+
+pushpc
+	org $01BEDB
+		JML magikoopa_calc_wand_x
+		
+	org $01BF0D
+		LDA $0F
+		BRA +
+	
+	org $01BF12
+		+
+	
+pullpc
+
+magikoopa_calc_wand_x:
+	ADC $BE6C,y
+	SEC
+	SBC $1A
+	XBA
+	
+	LDA !14E0,x
+	SBC $1B
+	AND #$01
+	STA $0F
+	
+	XBA
+	JML $01BEE1|!bank

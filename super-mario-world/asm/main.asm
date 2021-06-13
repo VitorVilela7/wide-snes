@@ -29,7 +29,6 @@
 ; TO DO: kicking shell doesn't hit turn blocks at widescreen area.
 ; TO DO: figure out why yoshi wings doesn't have glitter effect.
 ; TO DO: fix thwomp detection range (>$0100)
-; TO DO: fix magikoopa magic wand on widescreen.
 ; TO DO: fix spiny on line (tbm o liquidificador) guide wrapping around screen.
 ; TO DO: fix contact smoke sprite when hitting multiple koopas on Yoshi's Island 2 and shoot fireball at the same time.
 ; TO DO: fix flying '?' block particles generation
@@ -76,6 +75,7 @@
 ; DONE: fix "S" palette from MARIO START (done by Lunar Magic)
 ; DONE: fix lakitu cloud face
 ; DONE: fix jump 'strings' (pea sprite) interaction
+; DONE: fix magikoopa magic wand and sparkles on widescreen.
 
 ; 1 for 21:9, 0 for 16:9
 !ultrawide = 0
