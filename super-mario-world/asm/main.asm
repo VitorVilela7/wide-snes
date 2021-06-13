@@ -363,6 +363,22 @@ incsrc "level_side_exits.asm"
 incsrc "level_entrances.asm"	
 ; Sprites in general
 incsrc "level_sprites.asm"
+; Spinning sprites
+incsrc "level_sprite_spinning.asm"
+; Minor extended sprites
+incsrc "level_minor_extended_sprites.asm"
+; Extended sprites
+incsrc "level_extended_sprites.asm"
+; Shooters
+incsrc "level_shooters.asm"
+; Generators
+incsrc "level_generators.asm"
+; Score sprites
+incsrc "level_score_sprites.asm"
+; Bounce sprites
+incsrc "level_bounce_sprites.asm"
+; Quake sprites
+incsrc "level_quake_sprites.asm"
 ; Level rendering
 incsrc "level_render.asm"
 ; Bosses
