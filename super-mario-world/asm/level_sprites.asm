@@ -288,3 +288,56 @@ cloud_face_calculate_x:
 	STA $0E
 	XBA
 	JML $01E969|!bank
+
+;- PEA/wall springboard
+;======================
+
+pushpc
+	org $02CF82
+		JSL pea_decide_horizontally
+pullpc
+
+macro sign_extend()
+	AND #$80
+	BEQ ?no_extend
+	ORA #$7F
+?no_extend:
+
+endmacro
+
+pea_decide_horizontally:
+	ADC.b #$08
+	CMP.b #$14
+	BCS .end
+	
+	; $0300,y = $00 (8-bit unsigned) + $08 (8-bit signed)
+	
+	; $00 is sprite x - camera x; $7E is mario x - camera x
+	; $7E - $00 = sprite x - camera x - (mario x - camera x)
+	; = sprite x - camera x - mario x + camera x
+	; = sprite x - mario x + $08 sign extended.
+	
+	; $08 must be sign extended
+	LDA $08
+	%sign_extend()
+	PHA
+	LDA $08
+	PHA
+	
+	LDA !14E0,x
+	XBA
+	LDA !E4,x
+	REP #$21
+	ADC $01,s
+	SEC
+	SBC $94
+	CLC
+	ADC.w #$0008-$0002
+	CMP #$0014
+	
+	PLA
+	SEP #$20
+.end
+	RTL
+	
+		
