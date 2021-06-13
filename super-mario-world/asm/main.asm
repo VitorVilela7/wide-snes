@@ -25,7 +25,6 @@
 ; TO DO: add Luigi graphics
 
 ; TO DO: test more carefully yoshi eggs on screen edges. (fix needed)
-; TO DO: fix jump 'strings' (pea sprite), interaction
 ; TO DO: spike fall at widescreen area.
 ; TO DO: kicking shell doesn't hit turn blocks at widescreen area.
 ; TO DO: figure out why yoshi wings doesn't have glitter effect.
@@ -76,6 +75,7 @@
 ; DONE: special camera/scrolling status
 ; DONE: fix "S" palette from MARIO START (done by Lunar Magic)
 ; DONE: fix lakitu cloud face
+; DONE: fix jump 'strings' (pea sprite) interaction
 
 ; 1 for 21:9, 0 for 16:9
 !ultrawide = 0

@@ -340,4 +340,70 @@ pea_decide_horizontally:
 .end
 	RTL
 	
-		
+;- Aggressive finish OAM routine
+;===============================
+
+pushpc
+	org $01B80D
+		JML test_for_offscreen
+pullpc
+
+test_for_offscreen:
+	REP #$20
+	LDA $04
+	SEC
+	SBC $1A
+	CMP.w #$0000-!extra_columns-$0010
+	BMI .delete
+	CMP.w #$0100+!extra_columns
+	BMI .ok
+	
+.delete
+	SEP #$20
+	; trash the tile
+	JML $01B833|!bank
+	
+.ok
+	SEP #$20
+
+	; move tile to widescreen but don't trash it.
+	TYA
+	LSR
+	LSR
+	TAX
+	JML $01B811|!bank
+
+;- Chained platform - remove if offscreen
+;========================================
+
+pushpc
+	org $01C957
+		JML chain_test_for_offscreen
+pullpc
+
+chain_test_for_offscreen:
+	REP #$20
+	LDA $04
+	SEC
+	SBC $1A
+	CMP.w #$0000-!extra_columns-$0010
+	BMI .delete
+	CMP.w #$0100+!extra_columns
+	BMI .ok
+	
+.delete
+	SEP #$20
+	; trash the tile
+	JML $01C97A|!bank
+	
+.ok
+	SEP #$20
+
+	; move tile to widescreen but don't trash it.
+	TYA
+	LSR
+	LSR
+	TAX
+	JML $01C95B|!bank
+
+;- Climibing net door - send unused tiles to offscreen
