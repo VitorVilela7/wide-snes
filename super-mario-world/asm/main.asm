@@ -18,12 +18,10 @@
 
 ; TO DO: title screen demo
 ; TO DO: credits
-; TO DO: special camera/scrolling status
 
 ; TO DO: cluster sprites
 ; TO DO: regular sprites
 
-; TO DO: add "S" from MARIO START
 ; TO DO: add Luigi graphics
 
 ; TO DO: test more carefully yoshi eggs on screen edges. (fix needed)
@@ -32,11 +30,11 @@
 ; TO DO: kicking shell doesn't hit turn blocks at widescreen area.
 ; TO DO: figure out why yoshi wings doesn't have glitter effect.
 ; TO DO: fix thwomp detection range (>$0100)
-; TO DO: fix lakitu cloud smile
 ; TO DO: fix magikoopa magic wand on widescreen.
 ; TO DO: fix spiny on line (tbm o liquidificador) guide wrapping around screen.
 ; TO DO: fix contact smoke sprite when hitting multiple koopas on Yoshi's Island 2 and shoot fireball at the same time.
 ; TO DO: fix flying '?' block particles generation
+; TO DO: fix sprite memory to 0x08 on SA-1 modified levels.
 
 ; TO DO: fix Lugwig background
 
@@ -75,6 +73,9 @@
 ; DONE: fix Yoshi's throat
 ; DONE: wiggler's flower, game coin and lava splash (see level_sprites.asm)
 ; DONE: key/keyhole windowing hdma
+; DONE: special camera/scrolling status
+; DONE: fix "S" palette from MARIO START (done by Lunar Magic)
+; DONE: fix lakitu cloud face
 
 ; 1 for 21:9, 0 for 16:9
 !ultrawide = 0

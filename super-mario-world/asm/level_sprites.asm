@@ -260,4 +260,31 @@ pushpc
 		JMP $B7BB
 pullpc
 	
-  
+;- Lakitu's cloud face
+;=====================
+
+pushpc
+	org $01E963
+		JML cloud_face_calculate_x
+		
+	org $01E97F
+		LDA $0E
+		
+pullpc
+
+cloud_face_calculate_x:
+	LDA !sprite_wide_flag_table,x
+	STA $0E
+
+	LDA $14B0|!addr
+	CLC
+	ADC.b #$04
+	BCS +
+	JML $01E969|!bank
+	
++	XBA
+	LDA #$01
+	EOR $0E
+	STA $0E
+	XBA
+	JML $01E969|!bank
