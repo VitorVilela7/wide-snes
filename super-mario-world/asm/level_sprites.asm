@@ -418,14 +418,6 @@ pushpc
 		JSL pea_decide_horizontally
 pullpc
 
-macro sign_extend()
-	AND #$80
-	BEQ ?no_extend
-	ORA #$7F
-?no_extend:
-
-endmacro
-
 pea_decide_horizontally:
 	ADC.b #$08
 	CMP.b #$14

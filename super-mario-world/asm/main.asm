@@ -135,6 +135,15 @@ else
 	!sprite_offscreen_flag_table = $15A0
 endif
 
+; sign extend high byte utility
+macro sign_extend()
+	AND #$80
+	BEQ ?no_extend
+	ORA #$7F
+?no_extend:
+
+endmacro
+
 ; this is for vertical levels...
 ; Control camera screen scrolling:
 ; CODE_00F789:        A5 02         LDA $02                   ;>Load distance
