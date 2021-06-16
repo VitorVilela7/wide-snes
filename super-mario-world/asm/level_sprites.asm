@@ -587,3 +587,67 @@ magikoopa_calc_wand_x:
 	
 	XBA
 	JML $01BEE1|!bank
+
+;- Koopa's eyes
+;==============
+
+pushpc
+	org $019846
+		JML shake_koopa_shell
+		
+	org $019864
+		JML koopa_eyes
+
+	org $01989A
+		RTS
+
+pullpc
+
+macro swap_widescreen(tile_position, is_big_tile)
+	STA $01
+	
+	BCC ?no_swap
+	LDA !sprite_wide_flag_table,x
+	EOR #$01
+	STA !sprite_wide_flag_table,x
+?no_swap:
+
+	TYA
+	LSR
+	LSR
+	TAY
+	
+	LDA !sprite_wide_flag_table,x
+	if <is_big_tile> == 1
+		ORA.b #$02
+	endif
+	STA !addr|$0460+<tile_position>,y
+	
+	LDY !15EA,x
+	LDA $01
+endmacro
+
+shake_koopa_shell:
+	ADC #$00
+	STA $0308|!addr,y
+
+	%swap_widescreen(2, 1)
+	
+	LDX $15E9|!addr
+	JML $01984D|!bank
+
+koopa_eyes:
+	LDA $0308|!addr,y
+	CLC
+	ADC #$02
+	STA $0300|!addr,y
+	
+	%swap_widescreen(0, 0)
+
+	CLC
+	ADC #$04
+	STA $0304|!addr,y
+	
+	%swap_widescreen(1, 0)
+	
+	JML $019873|!bank

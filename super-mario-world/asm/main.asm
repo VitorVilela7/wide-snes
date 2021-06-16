@@ -18,6 +18,17 @@
 ; - JackTheSpades
 ; - HammerBrother
 
+; TESTING BUGS:
+; - Adam Londero
+; - RupeeClock
+; - z384
+
+; TESTING:
+; - FuRiOUS
+; - DerKoun
+; - Seathorne
+; - Doctor No
+
 ; TO DO: title screen demo
 ; TO DO: credits
 
@@ -32,6 +43,19 @@
 
 ; TO DO: fix Lugwig background
 
+; TO DO: decide what to do with Bowser platform and the big chains
+; TO DO: Donut Plains 2 init scroll
+; TO DO: brief flashing once you clear Vanilla Fortress - https://streamable.com/5gif44
+; TO DO: 5up when too many enemies dies
+; TO DO: dry bones uncollapsing widescreen bug.
+
+; FIXED: Fixed some invisible tiles flashing on the screen
+; while Valley of the Bowser is appearing, after beating
+; Sunken Ghost Ship. - Thanks z387
+
+; FIXED: Fixed Koopa Troopa's eyes (when on stunned state)
+; appearing outside widescreen area, including when the shell
+; is shaking. - Thanks RupeeClock
 
 ; DONE: fix Reznor puff smoke disappearing platform sometimes
 ; DONE: fix Reznor puff smoke not appearing on right side bridge
@@ -116,6 +140,7 @@ if read1($00FFD5) == $23
 	!E4	= $322C
 	!14E0	= $326E
 	!157C	= $3334
+	!15EA	= $33A2
 	
 	!smoke_x_high = $78C9
 	!sprite_wide_flag_table = $766E
@@ -129,6 +154,7 @@ else
 	!E4	= $E4
 	!14E0	= $14E0
 	!157C	= $157C
+	!15EA	= $15EA
 	
 	!smoke_x_high = $18C9
 	
