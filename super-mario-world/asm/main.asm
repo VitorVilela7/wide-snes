@@ -60,6 +60,10 @@
 ; conflicting Lunar Magic 3XX hijack.
 ; - Thanks Adam Londero for reporting
 
+; FIXED: Vertical level horizontal scrolling limits going
+; more than one píxel than it should. Fixes Vanilla Secret 1.
+; - Thanks z387 for reporting.
+
 ; DONE: fix Reznor puff smoke disappearing platform sometimes
 ; DONE: fix Reznor puff smoke not appearing on right side bridge
 
@@ -217,7 +221,7 @@ camera_x_limit_vert:
 	LDA.W #$0000+!extra_columns
 +	CMP.W #$0101-!extra_columns
 	BMI +
-	LDA.W #$0101-!extra_columns
+	LDA.W #$0100-!extra_columns
 +	STA $1A
 
 	JML $00F79D|!bank
