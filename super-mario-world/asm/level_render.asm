@@ -201,3 +201,37 @@ init_scroll:
 	STA $1A
 	STA $1E
 	RTL
+
+;- Override LM behavior
+;======================
+
+; Only required if you use a recent version
+; of Lunar Magic. In case this is addressed
+; by LM, it's required to this be removed.
+
+pushpc
+	org $05DA1C
+		JML l2_workaround
+		
+pullpc
+
+l2_workaround:
+	; preserve
+	PHA
+	
+	; offset
+	REP #$21
+	LDA $1E
+	ADC.w #!extra_columns
+	STA $1E
+	SEP #$20
+	
+	; restore
+	PLA	
+	CMP #$52
+	BCC CODE_05DA24
+	
+	JML $05DA20|!bank
+	
+CODE_05DA24:
+	JML $05DA24|!bank

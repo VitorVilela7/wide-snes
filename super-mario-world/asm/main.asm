@@ -44,18 +44,21 @@
 ; TO DO: fix Lugwig background
 
 ; TO DO: decide what to do with Bowser platform and the big chains
-; TO DO: Donut Plains 2 init scroll
 ; TO DO: brief flashing once you clear Vanilla Fortress - https://streamable.com/5gif44
 ; TO DO: 5up when too many enemies dies
 ; TO DO: dry bones uncollapsing widescreen bug.
 
 ; FIXED: Fixed some invisible tiles flashing on the screen
 ; while Valley of the Bowser is appearing, after beating
-; Sunken Ghost Ship. - Thanks z387
+; Sunken Ghost Ship. - Thanks z387 for reporting
 
 ; FIXED: Fixed Koopa Troopa's eyes (when on stunned state)
 ; appearing outside widescreen area, including when the shell
-; is shaking. - Thanks RupeeClock
+; is shaking. - Thanks RupeeClock for reporting
+
+; FIXED: Donut Plains 2 flickers at the beginning due of a
+; conflicting Lunar Magic 3XX hijack.
+; - Thanks Adam Londero for reporting
 
 ; DONE: fix Reznor puff smoke disappearing platform sometimes
 ; DONE: fix Reznor puff smoke not appearing on right side bridge
