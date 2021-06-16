@@ -45,7 +45,6 @@
 
 ; TO DO: decide what to do with Bowser platform and the big chains
 ; TO DO: brief flashing once you clear Vanilla Fortress - https://streamable.com/5gif44
-; TO DO: 5up when too many enemies dies
 ; TO DO: dry bones uncollapsing widescreen bug.
 
 ; FIXED: Fixed some invisible tiles flashing on the screen
@@ -62,6 +61,11 @@
 
 ; FIXED: Vertical level horizontal scrolling limits going
 ; more than one píxel than it should. Fixes Vanilla Secret 1.
+; - Thanks z387 for reporting.
+
+; FIXED: On Forest of Illusion 2, it's possible to beat the level
+; with so many rip-van-fish on screen that the goal point might give
+; you more than 3-ups and display glitchy score values.
 ; - Thanks z387 for reporting.
 
 ; DONE: fix Reznor puff smoke disappearing platform sometimes
@@ -332,3 +336,5 @@ incsrc "windex.asm"
 incsrc "iggy_hair.asm"
 ; 3rd party - independent patches - proximity wrap fix
 incsrc "proximity_wrap_fix.asm"
+; 3rd party - independent patches - goal/score sprite fix
+incsrc "goal_fix.asm"
