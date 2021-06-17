@@ -184,6 +184,29 @@ macro sign_extend()
 
 endmacro
 
+; widescreen settings
+org $FFE0
+	; format: --l- -uw-
+	; w = enable 16:9 (352x224 mode + 8:7 PAR) widescreen hack
+	; u = enable 21:9 (448x224 mode + 8:7 PAR) ultrawide hack
+	; l = enable no sprite limit hack
+	; - = unknown/not yet defined.
+	if !ultrawide == 0
+		db $22
+	else
+		db $24
+	endif
+
+	; widescreen identifier (dummy $51XX vector value)
+	db $51
+
+	; format: ---- ----
+	; - = unknown/not yet defined.
+	db $00
+
+	; widescreen identifier (dummy $21XX vector value)
+	db $21
+
 ; this is for vertical levels...
 ; Control camera screen scrolling:
 ; CODE_00F789:        A5 02         LDA $02                   ;>Load distance
