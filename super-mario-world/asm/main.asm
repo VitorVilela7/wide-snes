@@ -159,6 +159,7 @@ if read1($00FFD5) == $23
 	!157C	= $3334
 	!15EA	= $33A2
 	!D8	= $3216
+	!B6	= $B6 ;this is not a typo.
 	
 	!smoke_x_high = $78C9
 	!sprite_wide_flag_table = $766E
@@ -179,6 +180,7 @@ else
 	!157C	= $157C
 	!15EA	= $15EA
 	!D8	= $D8
+	!B6	= $B6
 	
 	!smoke_x_high = $18C9
 	

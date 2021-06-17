@@ -182,3 +182,108 @@ get_out_of_widescreen:
 	SEP #$20
 	RTL
 	
+;- Bowser's arena
+;================
+
+; MAXTILE ROUTINE START
+if !sa1 == 1
+
+pushpc
+	org $03B4AD
+		LDA $190D|!addr
+		STA $0F
+		JML configure_max_tile
+		
+	org $03B4E0
+		PHY
+		LDY $0A
+		INC $0A
+		LDA #$02
+		STA $0000,y
+		PLY
+	; print pc
+	warnpc $03B4EB
+		
+	org $03B4F2
+		LDX #$000F
+		BRA +
+		
+	org $03B4FA
+		+
+		
+	org $03B4FA
+		LDA.l $03B48C,x
+		SEC
+		SBC $1A
+		STA $6300,y
+		
+		LDA.l $03B49C,x
+		SEC
+		SBC $1C
+		JML support
+		
+	org $03B530
+		JML end_max_tile
+		
+	org $03B51F
+		LDY $0A
+		INC $0A
+		LDA #$02
+		STA $0000,y
+	print pc
+	warnpc $03B528
+	
+	;org $03B500
+	;	STA $6300,y
+		
+	;org $03B509
+	;	STA $6301,y
+		
+	org $03B514
+		STA $6302,y
+		
+	org $03B51B
+		STA $6303,y
+pullpc
+
+support:
+		STA $6301,y
+		
+	LDA #$08
+	CPX #$0006
+	JML $03B510
+
+end_max_tile:
+	PLB
+	SEP #$10
+	JML $03B56A
+	
+configure_max_tile:
+	REP #$30
+	; get 17+16 tiles
+	LDY #$0011+$0010
+	; maximum priority
+	LDA #$0000
+	JSL maxtile_get_slot
+	
+	LDA $3100
+	SEC
+	SBC #$6300
+	STA $08
+	LDA $3102
+	STA $0A
+	
+	SEP #$20
+	PHB
+	LDA #$40
+	PHA
+	PLB
+	
+	STZ $01
+	
+	LDY $08
+	LDX #$0010
+	JML $03B4BF
+
+endif
+
