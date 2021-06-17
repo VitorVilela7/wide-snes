@@ -287,3 +287,51 @@ configure_max_tile:
 
 endif
 
+;- Bowser - safe distance
+;========================
+
+pushpc
+	org $03AB94
+		JML safe_distance
+		
+pullpc
+
+safe_distance:
+	LDA !14E0,x
+	XBA
+	LDA !E4,x
+	REP #$21
+	ADC #$000F
+	SEC
+	SBC $1A
+	;STA $00
+	CMP #$0000+$0030
+	BMI .go_to_right
+	CMP #$0100-$0030
+	BPL .go_to_left
+	SEP #$20
+	
+.done
+	;debug: track bowser's position
+	;LDA $00
+	;STA $6200
+	;LDA #$50
+	;STA $6201
+	;STA $6202
+	;STA $6203
+	;LDA #$02
+	;STA $6420
+
+	LDA $AB62,y
+	STA !B6,x
+	JML $03AB99|!bank
+	
+.go_to_right
+	SEP #$20
+	LDY #$00
+	BRA .done
+	
+.go_to_left
+	SEP #$20
+	LDY #$01
+	BRA .done
