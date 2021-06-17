@@ -158,10 +158,16 @@ if read1($00FFD5) == $23
 	!14E0	= $326E
 	!157C	= $3334
 	!15EA	= $33A2
+	!D8	= $3216
 	
 	!smoke_x_high = $78C9
 	!sprite_wide_flag_table = $766E
 	!sprite_offscreen_flag_table = $3376
+	
+	maxtile_flush_nmstl         = $0084A8
+	maxtile_get_sprite_slot     = $0084AC
+	maxtile_get_slot            = $0084B0
+	maxtile_finish_oam          = $0084B4
 else
 	!sa1	= 0
 	!dp	= $0000
@@ -172,6 +178,7 @@ else
 	!14E0	= $14E0
 	!157C	= $157C
 	!15EA	= $15EA
+	!D8	= $D8
 	
 	!smoke_x_high = $18C9
 	

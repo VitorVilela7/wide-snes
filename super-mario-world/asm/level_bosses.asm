@@ -148,5 +148,37 @@ pushpc
 pullpc
 
 ; TO DO: fix Ludwig background
-; TO DO: fix Reznor fireball
 
+;- Bowser's bowling ball
+;=======================
+
+pushpc
+	org $03B193
+		JSL get_out_of_widescreen
+pullpc
+
+; make the bowling ball fall whenever it's outside
+; widescreen area...
+get_out_of_widescreen:
+	LDA !14E0,x
+	XBA
+	LDA !E4,x
+	REP #$20
+	SEC
+	SBC $1A
+	CMP #$0000-12
+	BMI .outside
+	CMP #$0100-4
+	BPL .outside
+	SEP #$20
+.inside
+	; restore
+	LDA !D8,x
+	CMP #$B0
+	RTL
+	
+.outside
+	CLC
+	SEP #$20
+	RTL
+	
