@@ -562,7 +562,7 @@ netdoor_scale:
 ;===============================
 
 pushpc
-	org $01BEDB
+	org $01BED8
 		JML magikoopa_calc_wand_x
 		
 	org $01BF0D
@@ -575,16 +575,23 @@ pushpc
 pullpc
 
 magikoopa_calc_wand_x:
-	ADC $BE6C,y
+	LDA !14E0,x
+	XBA
+	LDA !E4,x
+	REP #$21
+	ADC #$0010
 	SEC
 	SBC $1A
-	XBA
 	
-	LDA !14E0,x
-	SBC $1B
+	CPY #$00
+	BEQ +
+	CLC
+	ADC.w #$FFF8-$0010
++	SEP #$20
+
+	XBA
 	AND #$01
 	STA $0F
-	
 	XBA
 	JML $01BEE1|!bank
 
