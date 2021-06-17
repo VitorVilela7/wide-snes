@@ -42,9 +42,7 @@
 ; TO DO: fix contact smoke sprite when hitting multiple koopas on Yoshi's Island 2 and shoot fireball at the same time.
 
 ; TO DO: fix Lugwig background
-
 ; TO DO: decide what to do with Bowser platform and the big chains
-; TO DO: brief flashing once you clear Vanilla Fortress - https://streamable.com/5gif44
 
 ; FIXED: Fixed some invisible tiles flashing on the screen
 ; while Valley of the Bowser is appearing, after beating
@@ -70,6 +68,11 @@
 ; FIXED: an original game bug where shaking dry bones can make
 ; its base tile end up teleporting to the wrong spot. 
 ; - Thanks z387 for reporting.
+
+; FIXED: an original game bug where if layer 2 event tiles
+; is larger than the remaning horizontal screen space, it will
+; wrap around the other side and affect widescreen region.
+; - Thanks Adam Londero for reporting.
 
 ; DONE: fix Reznor puff smoke disappearing platform sometimes
 ; DONE: fix Reznor puff smoke not appearing on right side bridge

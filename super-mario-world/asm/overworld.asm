@@ -348,6 +348,79 @@ palace_blocks_check_range:
 .no
 	SEP #$20
 	JML $04F378|!bank
+	
+;- layer 2 fade reveal
+;=====================
+
+pushpc
+	; copy $00 to $0E and zero $0F
+	org $04EAC9
+		JML setup_reset_wide_l2_reveal_x
+		
+	; copy $00 to $0E and zero $0F
+	org $04EAE9
+		JSL reset_wide_l2_reveal_x
+		
+	; increment $0E by 16-bit and assign
+	; x position msb.
+	org $04EB16
+		JSL increment_l2_reveal_x
+		
+	; skip zering oam extra properties
+	org $04EB30
+		BRA +
+		
+	org $04EB38
+		+
+pullpc
+
+setup_reset_wide_l2_reveal_x:
+	LDA.w $1B83|!addr			;$04EC6F	|
+	CLC					;$04EC72	|
+	SBC $20					;$04EC73	|
+	STA $01					;$04EC75	|
+
+	LDA.w $1B82|!addr
+	SEC					;$04EC6A	|
+	SBC $1E					;$04EC6B	|
+	STA $00					;$04EC6D	|
+	STA $0E
+	STZ $0F
+	
+	REP #$30
+	JML $04EACE|!bank
+	
+reset_wide_l2_reveal_x:
+	STA $03
+	
+	LDA $00
+	STA $0E
+	STZ $0F
+	
+	RTL
+
+increment_l2_reveal_x:	
+	INX
+
+	PHY
+	REP #$20
+	TYA
+	LSR
+	LSR
+	TAY
+	SEP #$20
+	LDA $0F
+	AND #$01
+	STA $0474|!addr,y
+	PLY
+	
+	REP #$21
+	LDA $0E
+	ADC #$0008
+	STA $0E
+	SEP #$20
+	RTL
+
 
 ;- add universal overworld border (works with any size)
 ;======================================================
