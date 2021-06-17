@@ -658,3 +658,21 @@ koopa_eyes:
 	%swap_widescreen(1, 0)
 	
 	JML $019873|!bank
+
+;- Dry bones
+;===========
+
+pushpc
+	; Dry bones draws 3 tiles, the first one via shared
+	; routine. However after drawing +2 tiles, it tries
+	; modifying the first one. So let's make finish OAM
+	; redo the calculations.
+	org $01E465
+		BRA +
+		
+	org $01E46C
+		+
+		
+	org $01E4AE
+		LDA #$02
+pullpc

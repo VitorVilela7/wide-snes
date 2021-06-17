@@ -45,7 +45,6 @@
 
 ; TO DO: decide what to do with Bowser platform and the big chains
 ; TO DO: brief flashing once you clear Vanilla Fortress - https://streamable.com/5gif44
-; TO DO: dry bones uncollapsing widescreen bug.
 
 ; FIXED: Fixed some invisible tiles flashing on the screen
 ; while Valley of the Bowser is appearing, after beating
@@ -66,6 +65,10 @@
 ; FIXED: On Forest of Illusion 2, it's possible to beat the level
 ; with so many rip-van-fish on screen that the goal point might give
 ; you more than 3-ups and display glitchy score values.
+; - Thanks z387 for reporting.
+
+; FIXED: an original game bug where shaking dry bones can make
+; its base tile end up teleporting to the wrong spot. 
 ; - Thanks z387 for reporting.
 
 ; DONE: fix Reznor puff smoke disappearing platform sometimes
