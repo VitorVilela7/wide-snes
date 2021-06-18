@@ -37,7 +37,6 @@
 ; TO DO: credits
 
 ; Low priority:
-; TO DO: Sumo brother flame on widescreen
 ; TO DO: fix spiny on line (tbm o liquidificador) guide wrapping around screen.
 ; TO DO: fix contact smoke sprite when hitting multiple koopas on Yoshi's Island 2 and shoot fireball at the same time.
 
@@ -91,6 +90,8 @@
 ; DONE: Luigi graphics
 
 ; DONE: fix Lugwig background
+
+; DONE: sumo brother flame on widescreen
 
 ;other:
 ; DONE: fix Reznor puff smoke disappearing platform sometimes

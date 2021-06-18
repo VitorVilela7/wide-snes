@@ -43,6 +43,12 @@ endif
 ; Aside from terrible interaction system, it's ready for
 ; widescreen/ultrawide.
 
+pushpc
+	; spawn flames regardless of position
+	org $02DF83
+		NOP #2
+pullpc
+
 ;- Boo ring
 ;==========
 
