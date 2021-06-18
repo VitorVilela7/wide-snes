@@ -230,7 +230,7 @@ pushpc
 		INC $0A
 		LDA #$02
 		STA $0000,y
-	print pc
+	; print pc
 	warnpc $03B528
 	
 	;org $03B500

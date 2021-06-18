@@ -17,7 +17,7 @@ pushpc
 			JSR $F62D
 			JSL load_index
 			
-	print pc
+	; print pc
 	warnpc $009C75
 			
 	org $009C9F

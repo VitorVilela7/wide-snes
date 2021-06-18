@@ -34,13 +34,12 @@
 ; - Rugar
 
 ; TO DO: credits
-
-; TO DO: cluster sprites
-
 ; TO DO: add Luigi graphics
 
 ; TO DO: Sumo brother flame on widescreen
+
 ; TO DO: fix spiny on line (tbm o liquidificador) guide wrapping around screen.
+
 ; TO DO: fix contact smoke sprite when hitting multiple koopas on Yoshi's Island 2 and shoot fireball at the same time.
 
 ; TO DO: fix Lugwig background
@@ -88,6 +87,9 @@
 ; when it's not used and using more advanced control flow techniques.
 
 ; DONE: title screen
+
+; DONE: cluster sprites - castle candles, sunken ghost boo sprites,
+; reappearing boos from ghost houses, etc.
 
 ;other:
 ; DONE: fix Reznor puff smoke disappearing platform sometimes
@@ -365,6 +367,8 @@ incsrc "level_score_sprites.asm"
 incsrc "level_bounce_sprites.asm"
 ; Quake sprites
 incsrc "level_quake_sprites.asm"
+; Cluster sprites
+incsrc "level_cluster_sprites.asm"
 ; Level rendering
 incsrc "level_render.asm"
 ; Bosses
