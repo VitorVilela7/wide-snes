@@ -17,6 +17,9 @@
 ; - Mattrizzle
 ; - JackTheSpades
 ; - HammerBrother
+; - Arujus
+; - Near
+; - DerKoun
 
 ; TESTING BUGS:
 ; - Adam Londero
@@ -33,7 +36,6 @@
 ; TO DO: credits
 
 ; TO DO: cluster sprites
-; TO DO: regular sprites
 
 ; TO DO: add Luigi graphics
 
@@ -42,7 +44,11 @@
 ; TO DO: fix contact smoke sprite when hitting multiple koopas on Yoshi's Island 2 and shoot fireball at the same time.
 
 ; TO DO: fix Lugwig background
-; TO DO: decide what to do with Bowser platform and the big chains
+
+; TO DO: SA-1 low power mode
+
+; DONE: decide what to do with Bowser platform
+; and the bowling balls.
 
 ; FIXED: Fixed some invisible tiles flashing on the screen
 ; while Valley of the Bowser is appearing, after beating
@@ -73,6 +79,9 @@
 ; is larger than the remaning horizontal screen space, it will
 ; wrap around the other side and affect widescreen region.
 ; - Thanks Adam Londero for reporting.
+
+; FIXED: Donut Plains 2 level was ending with part of the level
+; with empty space. - Thanks Adam Londero for reporting.
 
 ; DONE: fix Reznor puff smoke disappearing platform sometimes
 ; DONE: fix Reznor puff smoke not appearing on right side bridge
