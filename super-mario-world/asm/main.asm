@@ -33,16 +33,14 @@
 ; - Doctor No
 ; - Rugar
 
-; TO DO: credits
-; TO DO: add Luigi graphics
-
-; TO DO: Sumo brother flame on widescreen
-
-; TO DO: fix spiny on line (tbm o liquidificador) guide wrapping around screen.
-
-; TO DO: fix contact smoke sprite when hitting multiple koopas on Yoshi's Island 2 and shoot fireball at the same time.
-
+; Priority:
 ; TO DO: fix Lugwig background
+; TO DO: credits
+
+; Low priority:
+; TO DO: Sumo brother flame on widescreen
+; TO DO: fix spiny on line (tbm o liquidificador) guide wrapping around screen.
+; TO DO: fix contact smoke sprite when hitting multiple koopas on Yoshi's Island 2 and shoot fireball at the same time.
 
 ;b02
 ; DONE: decide what to do with Bowser platform
@@ -90,6 +88,8 @@
 
 ; DONE: cluster sprites - castle candles, sunken ghost boo sprites,
 ; reappearing boos from ghost houses, etc.
+
+; DONE: Luigi graphics
 
 ;other:
 ; DONE: fix Reznor puff smoke disappearing platform sometimes
@@ -381,6 +381,8 @@ incsrc "title_screen.asm"
 incsrc "level_yoshi.asm"
 ; Window HDMA effects
 incsrc "windowing_effects.asm"
+; Custom Luigi
+incsrc "luigi.asm"
 
 ; 3rd party - independent patches - smoke x/y high bytes patch
 incsrc "smoke_position.asm"
