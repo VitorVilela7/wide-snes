@@ -34,7 +34,6 @@
 ; - Rugar
 
 ; Priority:
-; TO DO: fix Lugwig background
 ; TO DO: credits
 
 ; Low priority:
@@ -90,6 +89,8 @@
 ; reappearing boos from ghost houses, etc.
 
 ; DONE: Luigi graphics
+
+; DONE: fix Lugwig background
 
 ;other:
 ; DONE: fix Reznor puff smoke disappearing platform sometimes

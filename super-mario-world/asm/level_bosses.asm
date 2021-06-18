@@ -335,3 +335,115 @@ safe_distance:
 	SEP #$20
 	LDY #$01
 	BRA .done
+
+;- Ludwig Boss Room
+;==================
+
+if !sa1 == 1
+pushpc
+	org $02827D
+		JML check_room
+pullpc
+
+check_room:
+	LDA $1884|!addr
+	BEQ ludwig_main
+	
+	LDA $1A
+	STA $188D|!addr
+	JML $028282|!bank
+
+!maxtile_pointer_low        = $61B0
+
+fuzz_candles:
+	LDA $14
+	AND #$03
+	BNE +
+	JSL $01ACF9
+	EOR $3600
+	STA $3600
++	RTS
+
+ludwig_main:
+	PHB
+	LDA #$02
+	PHA
+	PLB
+	JSR fuzz_candles
+	REP #$10
+	
+	LDA #$00
+	STA $0F
+	
+	LDA $3600
+	STA $0E
+	
+	LDY.w #57-1
+	LDX !maxtile_pointer_low+0
+.loop
+	LDA.w $028178,y
+	SEC
+	SBC $1A
+	STA $00
+	STA $400000,x
+	
+	LDA $0F
+	SBC $1B
+	STA $01
+	
+	LDA.w $028226,y
+	STA $400002,x
+	CMP #$E8
+	BEQ +
+
+	LDA #$0D
+	BRA ++
+	
++	ROR $0E
+	BCC +
+	LDA #$EA
+	STA $400002,x
+
++	LDA #$09
+++	STA $400003,x
+
+	REP #$20
+	LDA $00
+	CMP.w #$0000-!extra_columns-$0010
+	BMI .offscreen
+	CMP.w #$0100+!extra_columns
+	BPL .offscreen
+	SEP #$20
+	
+	LDA.w $0281CF,y
+	STA $400001,x
+
+	PHX
+	LDX !maxtile_pointer_low+2
+	LDA $01
+	AND #$01
+	ORA #$02
+	STA $400000,x
+	DEX
+	STX !maxtile_pointer_low+2
+	PLX
+
+
+	DEX #4
+	
+.offscreen
+	SEP #$20
+	DEY
+	BPL .loop
+	
+	LDY.w #57-1
+	INC $0F
+	LDA $0F
+	CMP #$01
+	BEQ .loop
+	
+	STX !maxtile_pointer_low+0
+	SEP #$10
+	PLB
+	RTL
+endif
