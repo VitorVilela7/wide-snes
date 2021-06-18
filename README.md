@@ -42,7 +42,7 @@ ways the original Super Mario World (USA) ROM and apply the BPS patch over it.
 - In case you can't get the BSO file working, you can open it using a text editor and manually apply the widescreen settings on bsnes_hd settings.
 
 # Download
-Patch version: 1.1
+Patch version: 1.2
 
 [Download latest patch (BPS)](./../../raw/master/smw-widescreen.bps)
 

@@ -346,7 +346,7 @@ pushpc
 pullpc
 
 check_room:
-	LDA $1884|!addr
+	LDA $3419
 	BEQ ludwig_main
 	
 	LDA $1A
