@@ -154,6 +154,10 @@ set_logic:
 	JML $009629
 .jslrtsreturn
 
+	LDA $0100|!addr
+	CMP #$1C
+	BCC +
+
 	LDA #$40
 	STA $2126
 	LDA #$C0
@@ -173,7 +177,7 @@ set_logic:
 	LDA #$20
 	STA $40
 	
-	LDA #$09
++	LDA #$09
 	STA $3E
 	JML $00968D|!bank
 	
