@@ -11,6 +11,8 @@ __          _______ _____  ______  _____ _   _ ______  _____
 Super Mario World Widescreen
 ============================
 
+![image](https://user-images.githubusercontent.com/12776674/122607515-0e8d4600-d051-11eb-900b-1b072f5bbbad.png)
+
 **Super Mario World Widescreen** is your beloved Mario World
 SNES game but in the 16:9 resolution. This is possible by expanding
 the horizontal resolution by 96 pixels, increasing resolution from
