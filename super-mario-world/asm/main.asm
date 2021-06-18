@@ -33,9 +33,6 @@
 ; - Doctor No
 ; - Rugar
 
-; Priority:
-; TO DO: credits
-
 ; Low priority:
 ; TO DO: fix spiny on line (tbm o liquidificador) guide wrapping around screen.
 ; TO DO: fix contact smoke sprite when hitting multiple koopas on Yoshi's Island 2 and shoot fireball at the same time.
@@ -92,6 +89,8 @@
 ; DONE: fix Lugwig background
 
 ; DONE: sumo brother flame on widescreen
+
+; DONE: credits
 
 ;other:
 ; DONE: fix Reznor puff smoke disappearing platform sometimes
@@ -385,6 +384,8 @@ incsrc "level_yoshi.asm"
 incsrc "windowing_effects.asm"
 ; Custom Luigi
 incsrc "luigi.asm"
+; Yoshi's House credits
+incsrc "credits.asm"
 
 ; 3rd party - independent patches - smoke x/y high bytes patch
 incsrc "smoke_position.asm"
