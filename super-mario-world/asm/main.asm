@@ -31,8 +31,8 @@
 ; - DerKoun
 ; - Seathorne
 ; - Doctor No
+; - Rugar
 
-; TO DO: title screen demo
 ; TO DO: credits
 
 ; TO DO: cluster sprites
@@ -45,8 +45,7 @@
 
 ; TO DO: fix Lugwig background
 
-; TO DO: SA-1 low power mode
-
+;b02
 ; DONE: decide what to do with Bowser platform
 ; and the bowling balls.
 
@@ -80,9 +79,17 @@
 ; wrap around the other side and affect widescreen region.
 ; - Thanks Adam Londero for reporting.
 
+;b03
 ; FIXED: Donut Plains 2 level was ending with part of the level
 ; with empty space. - Thanks Adam Londero for reporting.
 
+; IMPROVED: Added SA-1 Pack v1.41-LP, version 1.41 low power mode.
+; makes the emulator run up to 50% faster, by disabling the chip
+; when it's not used and using more advanced control flow techniques.
+
+; DONE: title screen
+
+;other:
 ; DONE: fix Reznor puff smoke disappearing platform sometimes
 ; DONE: fix Reznor puff smoke not appearing on right side bridge
 
