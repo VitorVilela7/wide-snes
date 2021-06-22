@@ -31,15 +31,17 @@ SNES Picture Processing Unit. This means that the screen you will see is
 like how would you see on a real TV screen connected to the SNES, except
 expanded to the widescreen resolution!
 
+## Instructions
+
+1. [Download the latest patch (BPS)](./../../raw/master/smw-widescreen.bps)
+2. [Patch your ROM](https://sneslab.net/wiki/How_to_apply_ROM_patches). For copyright reasons, the ROM is not provided. You will have to obtain it on your own.
+3. [Download widescreen configuration file (BSO)](./../../raw/master/smw-widescreen.bso) and name it the same as your patched ROM file e.g. `SMW.bso` and `SMW.smc`
+4. Remove the `.bps` file from the folder you're loading the ROM from, otherwise you'll get an error from the emulator.
+5. [Play with bsnes-hd](https://github.com/DerKoun/bsnes-hd/releases). You **must** play with bsnes-hd, it won't work on other emulators. If using RetroArch, simply look for the `bsnes-hd beta` core.
+
 ## IMPORTANT
 
-- You **must** play with bsnes_hd. You can download it here: https://github.com/DerKoun/bsnes-hd/releases
-or look for "bsnes-hd beta" core on RetroArch.
-- For copyright reasons, the ROM is not provided. You will have to obtain on your own
-ways the original Super Mario World (USA) ROM and apply the BPS patch over it.
-- See https://sneslab.net/wiki/How_to_apply_ROM_patches how to apply BPS patches.
-- The BSO file **must stay in the same folder as the patched ROM file** and **copy have the same file name as the ROM file**. Otherwise, the widescreen settings will not load on bsnes_hd or RetroArch and you will see a completely oval title screen opening circle. Example: "SMW.bso" and "SMW.smc"
-- In case you can't get the BSO file working, you can open it using a text editor and manually apply the widescreen settings on bsnes_hd settings.
+- In case you can't get the BSO file working, you can open it using a text editor and manually apply the widescreen settings on bsnes-hd settings.
 
 # Download
 Patch version: 1.2
