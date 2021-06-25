@@ -5,7 +5,7 @@ __          _______ _____  ______  _____ _   _ ______  _____
   \ \/  \/ /   | | | |  | |  __|  \___ \| . ` |  __|  \___ \    
    \  /\  /   _| |_| |__| | |____ ____) | |\  | |____ ____) |   
     \/  \/   |_____|_____/|______|_____/|_| \_|______|_____/    
-                                     by Vitor Vilela & friends!~
+                                    by Vitor Vilela & friends
 ```
 
 Super Mario World Widescreen
@@ -39,7 +39,9 @@ expanded to the widescreen resolution!
 4. Remove the `.bps` file from the folder you're loading the ROM from, otherwise you'll get an error from the emulator.
 5. [Play with bsnes-hd](https://github.com/DerKoun/bsnes-hd/releases). You **must** play with bsnes-hd, it won't work on other emulators. If using RetroArch, simply look for the `bsnes-hd beta` core.
 
-## IMPORTANT
+Alternatively, you can go to the "Releases" tab and download the most up to date .bps and .bso files on a single zip package.
+
+## Important
 
 - In case you can't get the BSO file working, you can open it using a text editor and manually apply the widescreen settings on bsnes-hd settings.
 
@@ -53,20 +55,20 @@ Patch version: 1.2
 # Credits
 Thank you for the following people that helped me directly, either by
 testing, providing technical support or base assembly (patches) files for Super Mario World:
- - MarioE (ASM)
- - Tattletale (ASM)
- - LX5 (ASM)
- - Thomas (ASM)
- - RussianMan (ASM)
- - Romi (ASM)
- - FuSoYa (ASM, Lunar Magic, technical support)
- - Smallhacker (ASM)
- - Alcaro (ASM)
- - JamesD28 (ASM)
- - Mattrizzle (ASM)
- - JackTheSpades (ASM)
- - HammerBrother (ASM)
- - Arujus (ASM, SA-1 Pack)
+ - MarioE (additional ASM patches)
+ - Tattletale (additional ASM patches)
+ - LX5 (additional ASM patches)
+ - Thomas (additional ASM patches)
+ - RussianMan (additional ASM patches)
+ - Romi (additional ASM patches)
+ - FuSoYa (additional ASM patches, Lunar Magic, technical support)
+ - Smallhacker (additional ASM patches)
+ - Alcaro (additional ASM patches)
+ - JamesD28 (additional ASM patches)
+ - Mattrizzle (additional ASM patches)
+ - JackTheSpades (additional ASM patches)
+ - HammerBrother (additional ASM patches)
+ - Arujus (additional ASM patches, SA-1 Pack)
  - Near (technical support, convincing me to do the patch!)
  - DerKoun (technical support, convincing me to do the patch!)
  - Adam Londero (testing and bugs report)
@@ -76,6 +78,7 @@ testing, providing technical support or base assembly (patches) files for Super 
  - Seathorne (testing)
  - Doctor No (testing)
  - Rugar (testing)
+ - danielah05 (bugs report)
 
 Special thanks also for all my patrons from
 https://www.patreon.com/vitorvilela, specially for:
