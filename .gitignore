@@ -9,3 +9,5 @@ other/
 *.zs*
 *.bst
 *.log
+super-mario-world/asm/Mario.bin
+super-mario-world/asm/Luigi.bin
