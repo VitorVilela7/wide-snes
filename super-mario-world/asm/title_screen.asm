@@ -6,6 +6,10 @@
 ;=======================
 
 pushpc
+	; This is needed to realoc part of the code just after
+	; the title screen record, since it uses 2 more bytes
+	; than normal.
+	
 	org $9329+(7*2)
 		dw GM7
 		
@@ -31,6 +35,14 @@ load_index:
 	RTL
 
 pushpc
+	; adjust title recording data depending on the type of
+	; widescreen. Each screen size changes a little bit the
+	; timing of the enemies. The level C7 also has been
+	; edited slightly to accomate the timing changes.
+	
+	; The ($00) means that it's the command added, not an
+	; indirect command.
+	
 	if !widetype == !normal
 		org $9C1F
 			; #$0000
@@ -67,7 +79,7 @@ pushpc
 			; #$0018
 			db $41,$20,($00),$20,$01,$30,$E1,$01,$00,$60
 			; #$0020
-			db $41,$4E,$80,$10,$00,$30,$41,$58+3
+			db $41,$4E,$80,$10,$00,$30+6,$41,$58+3
 			; #$0028
 			db $00,$20,$60,$01,$00,$30,$60,$01
 			; #$0030
@@ -75,7 +87,7 @@ pushpc
 			; #$0038
 			db $00,$30,$60,$01,$00,$30,$41,$1A+8
 			; #$0040
-			db $C1,$30-8,$00,$30+3
+			db $C1,$30-8,$00,$30+3-6
 			db $FF
 		
 		warnpc $009C66	
