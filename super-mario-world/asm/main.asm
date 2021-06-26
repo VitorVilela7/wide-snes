@@ -1,4 +1,4 @@
-; Super Mario World - Widescreen Patch v1.00
+; Super Mario World - Widescreen Patch v1.03
 ; by Vitor Vilela
 
 ; WARNING: only works with vanilla SMW or vanilla SMW + SA-1 Pack
@@ -32,6 +32,11 @@
 ; - Seathorne
 ; - Doctor No
 ; - Rugar
+
+; Ultrawide support
+; TO DO: SubSprGfx2Entry1
+; TO DO: SubSprGfx1
+; TO DO: CODE_01A3DF (finish OAM draw for those)
 
 ; Low priority:
 ; TO DO: fix spiny on line (tbm o liquidificador) guide wrapping around screen.
@@ -140,14 +145,27 @@
 ; DONE: spike fall at widescreen area.
 ; DONE: fix thwomp detection range (>$0100)
 
+; 16:9 with 8:7 PAR or 16:10 with 1:1 PAR
+!normal = 0
+; 16:9 with 1:1 PAR or 18:9 with 8:7 PAR
+!extra = 2
+; 21:9 with 7:6 PAR or 18:9 with 1:1 PAR
+!ultra = 1
+; 21:9 with 8:7 PAR
+!hyper = 3
+
 ; 1 for 21:9, 0 for 16:9
-!ultrawide = 0
+; 3 for 21:9, 2 for 16:9 (both pixel perfect)
+!widetype = !extra
 
-; Extra pixels added to the left/right side
-!extra_columns = 48
-
-if !ultrawide == 1
+if !widetype == !normal
+	!extra_columns = 48
+elseif !widetype == !extra
+	!extra_columns = 64
+elseif !widetype == !ultra
 	!extra_columns = 96
+elseif !widetype == !hyper
+	!extra_columns = 112
 endif
 
 ; Effective screen width
@@ -157,7 +175,12 @@ endif
 ; (4/3) / (8/7) = 4/3 * 7/8 = 1/3 * 7/2 = 7/6
 
 ; CRT Screen Aspect Correction Ratio Theory #2:
-; Most analysis leads to, possibly due of NTSC clock differences = 8/7
+; { 52.6 us/63.5 us = (256+x)/341
+; { y*(256+x)*4/3 = 240
+;
+; y is the pixel aspect ratio
+; x is the amount of border.
+; y is approximately 8/7 and x is approximately 24.
 
 ; Either way for both to be used, !extra_columns must be 44 according bsnes-hd spec.
 ; Keeping in mind that it must be divisible by 16.
@@ -220,15 +243,22 @@ endmacro
 
 ; widescreen settings
 org $FFE0
-	; format: --l- -uw-
+	; format: p-l- -uw-
 	; w = enable 16:9 (352x224 mode + 8:7 PAR) widescreen hack
 	; u = enable 21:9 (448x224 mode + 8:7 PAR) ultrawide hack
 	; l = enable no sprite limit hack
+	; p = 1 to disable 8:7 PAR
 	; - = unknown/not yet defined.
-	if !ultrawide == 0
+	if !widetype == !normal
 		db $22
-	else
+	elseif !widetype == !extra
+		db $A2
+	elseif !widetype == !ultra
 		db $24
+	elseif !widetype == !hyper
+		db $A4
+	else
+		error "Unknown widescreen mode"
 	endif
 
 	; widescreen identifier (dummy $51XX vector value)
