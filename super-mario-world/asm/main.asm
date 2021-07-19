@@ -431,3 +431,5 @@ incsrc "iggy_hair.asm"
 incsrc "proximity_wrap_fix.asm"
 ; 3rd party - independent patches - goal/score sprite fix
 incsrc "goal_fix.asm"
+; 3rd party - independent patches - sprite facing fix
+incsrc "facing_fix.asm"
