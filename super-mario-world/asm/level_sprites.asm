@@ -613,6 +613,11 @@ pullpc
 macro swap_widescreen(tile_position, is_big_tile)
 	STA $01
 	
+	; if vertically offscreen, don't care
+	; about all calculations
+	LDA !186C,x
+	BNE ?skip
+	
 	BCC ?no_swap
 	LDA !sprite_wide_flag_table,x
 	EOR #$01
@@ -631,6 +636,7 @@ macro swap_widescreen(tile_position, is_big_tile)
 	STA !addr|$0460+<tile_position>,y
 	
 	LDY !15EA,x
+?skip:
 	LDA $01
 endmacro
 
