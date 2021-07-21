@@ -156,7 +156,7 @@
 
 ; 1 for 21:9, 0 for 16:9
 ; 3 for 21:9, 2 for 16:9 (both pixel perfect)
-!widetype = !extra
+!widetype = !normal
 
 if !widetype == !normal
 	!extra_columns = 48
