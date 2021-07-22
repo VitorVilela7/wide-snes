@@ -116,12 +116,15 @@ Special thanks also for all my patrons from
 https://www.patreon.com/vitorvilela, specially for:
 
 * Christopher
+* Devon Shaw
+* Evan Clue
 * Fabio Akita
 * Frogamus Lewd
 * gunmakuma
 * Jake Mauer
 * Josh Tarie
 * kccheng
+* Luke Greatwow
 * NeGiZON
 * PsychoFox
 * sam
