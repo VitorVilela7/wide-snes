@@ -228,7 +228,6 @@ Thwompfix_sub:			;>$01AECB
 	BNE +			;>Restore code
 	LDY #$D1		;>current x position
 	JSR SubHorizPos16Bit
-	SEP #$20
 	JML $01AED0|!long		;>continue on determining which side mario is on.
 +	JML $01AEF9|!long		;>Restore code
 
@@ -257,6 +256,7 @@ Thwompfix_range2:		;>$01AEE5
 FallingSpike_sub_range:
 	LDY #$D1
 	JSR SubHorizPos16Bit
+	REP #$20
 	CLC
 	ADC #$0040
 	CMP #$0080
@@ -270,6 +270,7 @@ FallingSpike_sub_range:
 YoshiEgg_sub_range:
 	LDY #$D1
 	JSR SubHorizPos16Bit
+	REP #$20
 	CLC
 	ADC #$0020
 	CMP #$0040
@@ -285,6 +286,7 @@ YoshiEgg_sub_range:
 Chuck:		;>$02C360
 	LDY #$94		;>Next frame x position.
 	JSR SubHorizPos16Bit
+	REP #$20
 	CLC
 	ADC #$0030
 	CMP #$0060
@@ -305,6 +307,8 @@ Chuck2:		;>$02C602
 Chuck3:
 	LDY #$96		;>Next frame y position.
 	JSR SubVertPos16Bit
+	REP #$20
+	LDA $02
 	CLC
 	ADC #$0028
 	CMP #$0050
@@ -313,6 +317,8 @@ Chuck3:
 Chuck4:
 	LDY #$96		;>Next frame y position.
 	JSR SubVertPos16Bit
+	REP #$20
+	LDA $02
 	CLC
 	ADC #$0030
 	CMP #$0060
@@ -326,6 +332,7 @@ RipVanFish:	;>$02C05C
 
 	LDY #$94		;>Next frame x position.
 	JSR SubHorizPos16Bit
+	REP #$20
 	CLC
 	ADC #$0030
 	CMP #$0060
@@ -335,6 +342,8 @@ RipVanFish:	;>$02C05C
 RipVanFish2:	;>$02C067
 	LDY #$96		;>Next frame y position.
 	JSR SubVertPos16Bit
+	REP #$20
+	LDA $02
 	CLC
 	ADC #$0030
 	CMP #$0060
@@ -348,6 +357,8 @@ RipVanFish2:	;>$02C067
 JumpingPiranhaPlant:		;>$02E143
 	LDY #$94
 	JSR SubHorizPos16Bit
+	REP #$20
+	LDA $02
 	CLC
 	ADC #$001B
 	CMP #$0037
@@ -363,6 +374,8 @@ ClassicPiranhaPlant:		;>$018ED0
 	LDA $00			;\$00 is reserved for something else.
 	PHA			;/
 	JSR SubHorizPos16Bit
+	REP #$20
+	LDA $02
 	CLC
 	ADC #$001B
 	CMP #$0037
@@ -378,6 +391,7 @@ ClassicPiranhaPlant:		;>$018ED0
 SwooperBat:
 LDY #$D1			;check with current-frame player position
 JSR SubHorizPos16Bit		;
+REP #$20
 TYA				;for some reason it doesn't face player correctly
 EOR #$0001			;
 TAY				;
@@ -394,6 +408,7 @@ RTL				;
 ExplodingBlock:
 LDY #$94			;check with next-frame player position
 JSR SubHorizPos16Bit		;
+REP #$20
 CLC : ADC #$0060		;
 CMP #$00C0			;
 SEP #$20			;
@@ -406,6 +421,7 @@ RTL				;
 MontyMole:
 LDY #$D1			;i thought I can reuse exploding block fix, but this uses $D1
 JSR SubHorizPos16Bit		;
+REP #$20
 CLC : ADC #$0060		;
 CMP #$00C0			;
 SEP #$20			;
@@ -414,8 +430,10 @@ RTL				;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;New SubHorizPos subroutine.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; input: either #$D1 or #$94 in Y
-; output: Y=1 if mario right to the srite, A=absolute distance in 16-bit + stored into $02.
+; input: either #$D1 or #$94 in Y (RAM $D1 or $94)
+; output:
+;  Y=1 if Mario right to the sprite, A=absolute distance in 16-bit + stored into $02.
+;  $02 = Absolute distance
 
 SubHorizPos16Bit:
 	LDA !SprTbl_14E0,x	;\Load x position high byte and transfer it to
@@ -437,12 +455,13 @@ SubHorizPos16Bit:
 	INC		;/
 .skipinvert
 	STA $02		; store distance
+	SEP #$20
 	RTS
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;SubVertPos subroutine 2, based on address $02D50C.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; input: either #$D3 or #$96 in Y
+; input: either #$D3 or #$96 in Y (RAM $D1 or $94)
 ; output: Y=1 if mario right to the srite, A=absolute distance in 16-bit + stored into $02.
 
 SubVertPos16Bit:
@@ -465,4 +484,5 @@ SubVertPos16Bit:
 	INC		;/
 .skipinvert
 	STA $02		; store distance
+	SEP #$20
 	RTS
