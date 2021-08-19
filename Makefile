@@ -40,4 +40,4 @@ patch: rom
 watch:
 	@echo 'Assembling the hacked ROM when any file on "src/" changes...'
 	@echo
-	@$(RUN) find src/ | entr make assemble
+	@$(RUN) bash -c 'find src/ | entr make RUN="" rom'
