@@ -14,5 +14,5 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Flips
-      run: flips
+    - name: Download external dependencies
+      run: make prepare RUN=''
