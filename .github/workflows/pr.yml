@@ -16,3 +16,14 @@ jobs:
 
     - name: Download external dependencies
       run: make prepare RUN=''
+
+    - name: Assemble the game changes
+      run: make rom RUN=''
+
+    - name: Create the patch
+      run: make patch RUN=''
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: Wide SNES patch
+        path: ./build/release/smw.bps
