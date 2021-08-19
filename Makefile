@@ -1,4 +1,6 @@
 LUIGI_GRAPHICS_URL = https://dl.smwcentral.net/26117/sepluigi_23_sa1.zip
+ORIGINAL_ROM = smw.sfc
+
 RUN = docker run \
 		--interactive \
 		--tty \
@@ -12,9 +14,16 @@ prepare:
 	@rm -rf ./build
 	@mkdir -p ./build/resources
 	@mkdir -p ./build/downloaded
-	@$(RUN) curl $(LUIGI_GRAPHICS_URL) -o ./build/downloaded/luigi.zip
+
+	@$(RUN) curl $(LUIGI_GRAPHICS_URL) \
+		--output ./build/downloaded/luigi.zip
 	@$(RUN) unzip ./build/downloaded/luigi.zip -d ./build/downloaded
 	@cp ./build/downloaded/sepluigi_23_sa1/*.bin ./build/resources
+
+	@curl -X POST https://content.dropboxapi.com/2/files/download \
+		--header "Authorization: Bearer $(DROPBOX_TOKEN)" \
+		--header "Dropbox-API-Arg: {\"path\": \"/$(ORIGINAL_ROM)\"}" \
+		--output ./build/resources/smw.sfc
 
 rom:
 	@echo 'Assembling hacked ROM...'

@@ -16,6 +16,8 @@ jobs:
 
     - name: Download external dependencies
       run: make prepare RUN=''
+      env:
+        DROPBOX_TOKEN: ${{ secrets.DROPBOX_TOKEN }}
 
     - name: Assemble the game changes
       run: make rom RUN=''
