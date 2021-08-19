@@ -1,18 +1,19 @@
 EXECUTE=./scripts/execute m00qek/snes-game-patcher:latest
 ORIGINAL_ROM = smw.sfc
+VERSION = DEV-0.0.0
+REPO = USER/REPOSITORY
 
 prepare:
 	@rm -rf ./build
 	@mkdir -p ./build/resources
-	@mkdir -p ./build/downloaded
 
 	@$(EXECUTE) ./scripts/download-graphics \
 		./build/resources
 
 	@$(EXECUTE) ./scripts/download-game-backup \
 		"$(ORIGINAL_ROM)" \
-		"$(DROPBOX_TOKEN)" \
-		./build/resources/smw.sfc
+		./build/resources/smw.sfc \
+		"$(DROPBOX_TOKEN)" 
 
 rom:
 	@echo 'Assembling modified game...'
@@ -41,4 +42,7 @@ watch:
 	@$(EXECUTE) bash -c 'find src/ | entr make EXECUTE="" rom'
 
 release: ./build/release/smw.bps
-	@$(EXECUTE) ./scripts/release-notes $(GIT_TAG) ./build/release-notes.md
+	@$(EXECUTE) ./scripts/release-notes \
+		$(VERSION) \
+		$(REPO) \
+		./build/release-notes.md

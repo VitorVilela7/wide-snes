@@ -8,7 +8,6 @@ on:
 
 jobs:
   build:
-    name: Create patch
     runs-on: ubuntu-latest
     container: "m00qek/snes-game-patcher:latest"
     steps:

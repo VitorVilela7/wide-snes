@@ -1,11 +1,12 @@
 #!/bin/sh
 
-TAG="$1"
-OUTPUT="$2"
+VERSION="$1"
+REPO="$2"
+OUTPUT="$3"
 
 COMMIT=$(git rev-parse HEAD)
 
-echo "# Version ${TAG}" > "${OUTPUT}"
+echo "# Version ${VERSION}" > "${OUTPUT}"
 echo "Possible configurations:" >> "${OUTPUT}"
 
 for CONFIG_FILE in $(find assets/ -name '*.bso' -exec basename {} .bso \;); do
@@ -15,5 +16,5 @@ for CONFIG_FILE in $(find assets/ -name '*.bso' -exec basename {} .bso \;); do
           | tr -s ' ')
 
   echo "###${TITLE}" >> "${OUTPUT}"
-  echo "![${CONFIG_FILE}](https://github.com/m00qek/wide-snes/raw/${COMMIT}/assets/${CONFIG_FILE}.png)" >> "${OUTPUT}"
+  echo "![${CONFIG_FILE}](https://github.com/${REPO}/raw/${COMMIT}/assets/${CONFIG_FILE}.png)" >> "${OUTPUT}"
 done
