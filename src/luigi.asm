@@ -81,11 +81,11 @@ pushpc
 	freedata cleaned
 	
 	luigi:
-		incbin "Luigi.bin"
+		incbin "!mario_bin"
 	
 	freedata cleaned
 	
 	mario:
-		incbin "Mario.bin"
+		incbin "!luigi_bin"
 
 pullpc
