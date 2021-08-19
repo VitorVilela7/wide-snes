@@ -1,36 +1,25 @@
-LUIGI_GRAPHICS_URL = https://dl.smwcentral.net/26117/sepluigi_23_sa1.zip
+EXECUTE=./scripts/execute m00qek/snes-game-patcher:latest
 ORIGINAL_ROM = smw.sfc
-
-RUN = docker run \
-		--interactive \
-		--tty \
-		--rm \
-		--mount "type=bind,src=$$(pwd),dst=/project" \
-		--workdir /project \
-		--user "$$(id -u):$$(id -g)" \
-		m00qek/snes-game-patcher:latest
 
 prepare:
 	@rm -rf ./build
 	@mkdir -p ./build/resources
 	@mkdir -p ./build/downloaded
 
-	@$(RUN) curl $(LUIGI_GRAPHICS_URL) \
-		--output ./build/downloaded/luigi.zip
-	@$(RUN) unzip ./build/downloaded/luigi.zip -d ./build/downloaded
-	@cp ./build/downloaded/sepluigi_23_sa1/*.bin ./build/resources
+	@$(EXECUTE) ./scripts/download-graphics \
+		./build/resources
 
-	@curl -X POST https://content.dropboxapi.com/2/files/download \
-		--header "Authorization: Bearer $(DROPBOX_TOKEN)" \
-		--header "Dropbox-API-Arg: {\"path\": \"/$(ORIGINAL_ROM)\"}" \
-		--output ./build/resources/smw.sfc
+	@$(EXECUTE) ./scripts/download-game-backup \
+		"$(ORIGINAL_ROM)" \
+		"$(DROPBOX_TOKEN)" \
+		./build/resources/smw.sfc
 
 rom:
-	@echo 'Assembling hacked ROM...'
+	@echo 'Assembling modified game...'
 	@rm -rf ./build/release
 	@mkdir -p ./build/release
 	@cp ./build/resources/*.sfc ./build/release/smw.sfc
-	@$(RUN) asar \
+	@$(EXECUTE) asar \
 		--define mario_bin='../build/resources/Mario.bin' \
 		--define luigi_bin='../build/resources/Luigi.bin' \
 		./src/main.asm \
@@ -38,8 +27,8 @@ rom:
 	@echo 'Done!'
 
 patch: rom
-	@echo 'Creating patch with differences between original and hacked ROM...'
-	@$(RUN) flips \
+	@echo 'Creating patch with differences between original and modified game...'
+	@$(EXECUTE) flips \
 		--create \
 		--bps-delta \
 		./build/resources/smw.sfc \
@@ -47,6 +36,9 @@ patch: rom
 		./build/release/smw.bps
 
 watch:
-	@echo 'Assembling the hacked ROM when any file on "src/" changes...'
+	@echo 'Assembling modified game when any file on "src/" changes...'
 	@echo
-	@$(RUN) bash -c 'find src/ | entr make RUN="" rom'
+	@$(EXECUTE) bash -c 'find src/ | entr make EXECUTE="" rom'
+
+release: ./build/release/smw.bps
+	@$(EXECUTE) ./scripts/release-notes $(GIT_TAG) ./build/release-notes.md

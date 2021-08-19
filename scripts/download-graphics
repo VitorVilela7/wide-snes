@@ -1,0 +1,12 @@
+#!/bin/sh
+
+OUTPUT_DIR="$1"
+
+TMP_DIR=$(mktemp -d)
+
+curl https://dl.smwcentral.net/26117/sepluigi_23_sa1.zip \
+  --output ${TMP_DIR}/graphics.zip
+
+unzip ${TMP_DIR}/graphics.zip -d ${TMP_DIR}
+
+cp ${TMP_DIR}/*/*.bin ${OUTPUT_DIR}
