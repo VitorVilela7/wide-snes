@@ -1,12 +1,13 @@
+LUIGI_GRAPHICS_URL = https://dl.smwcentral.net/26117/sepluigi_23_sa1.zip
+
 prepare:
 	@rm -rf ./build
 	@mkdir -p ./build/resources
 	@mkdir -p ./build/downloaded
-	@cd ./build/downloaded \
-		&& curl https://dl.smwcentral.net/26117/sepluigi_23_sa1.zip | jar xv
+	@cd ./build/downloaded && curl $(LUIGI_GRAPHICS_URL) | jar xv
 	@cp ./build/downloaded/sepluigi_23_sa1/*.bin ./build/resources
 
-assemble:
+rom:
 	@echo 'Assembling hacked ROM...'
 	@rm -rf ./build/release
 	@mkdir -p ./build/release
@@ -18,7 +19,7 @@ assemble:
 		./build/release/smw.sfc
 	@echo 'Done!'
 
-release: assemble
+patch: rom
 	@echo 'Creating patch with differences between original and hacked ROM...'
 	@flips \
 		--create \
