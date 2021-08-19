@@ -1,9 +1,7 @@
 %             SUPER MARIO WORLD             %
 % ! with widescreen patch by Vitor Vilela ! %
 
-% WARNING: 16:9 mode only. Check out the    %
-% GitHub releases tab for more aspect       %
-% ratios and configurations.                %
+%#  WIDESCREEN 16:9 (with pixel stretching)  #%
 
 w :    1    % WideScreen Mode : all %
 W :   48    % WideScreen Aspect Ratio: 16:9 %
