@@ -1,0 +1,18 @@
+name: Pull Requests
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Create patch
+    runs-on: ubuntu-latest
+    container: "m00qek/snes-game-patcher:latest"
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Flips
+      run: flips
