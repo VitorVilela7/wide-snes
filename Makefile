@@ -34,14 +34,14 @@ patch: rom
 		--bps-delta \
 		./build/resources/smw.sfc \
 		./build/release/smw.sfc \
-		./build/release/smw.bps
+		./build/release/smw-patch.bps
 
 watch:
 	@echo 'Assembling modified game when any file on "src/" changes...'
 	@echo
 	@$(EXECUTE) bash -c 'find src/ | entr make EXECUTE="" rom'
 
-release: ./build/release/smw.bps
+release: ./build/release/*.bps
 	@$(EXECUTE) ./scripts/release-notes \
 		$(VERSION) \
 		$(REPO) \

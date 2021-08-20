@@ -27,4 +27,4 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: Super Mario World Widescreen patch
-        path: ./build/release/smw.bps
+        path: ./build/release/*.bps

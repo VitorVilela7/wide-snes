@@ -3,11 +3,12 @@ name: Releases
 on:
   push:
     tags:
-    - '*'
+    - 'v*'
 
 jobs:
   release:
     runs-on: ubuntu-latest
+    container: "m00qek/snes-game-patcher:latest"
     steps:
     - uses: actions/checkout@v2
 
@@ -23,9 +24,9 @@ jobs:
       run: make patch EXECUTE=''
 
     - name: Create release notes
-      run: make release EXECUTE=''
+      run: make release EXECUTE='' REPO=${REPO} VERSION=${VERSION##*/}
       env:
-        VERSION: ${GITHUB_REF##*/}
+        VERSION: ${{ github.ref }}
         REPO: ${{ github.repository }}
 
     - uses: ncipollo/release-action@v1
