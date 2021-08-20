@@ -1,0 +1,35 @@
+name: Releases
+
+on:
+  push:
+    tags:
+    - '*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Download external dependencies
+      run: make prepare EXECUTE=''
+      env:
+        DROPBOX_TOKEN: ${{ secrets.DROPBOX_TOKEN }}
+
+    - name: Assemble game changes
+      run: make rom EXECUTE=''
+
+    - name: Create patch
+      run: make patch EXECUTE=''
+
+    - name: Create release notes
+      run: make release EXECUTE=''
+      env:
+        VERSION: ${GITHUB_REF##*/}
+        REPO: ${{ github.repository }}
+
+    - uses: ncipollo/release-action@v1
+      with:
+        artifacts: "assets/*.bso,build/release/*.bps"
+        bodyFile: "build/release-notes.md"
+        token: ${{ secrets.GITHUB_TOKEN }}
