@@ -1,4 +1,4 @@
-EXECUTE=./scripts/execute m00qek/snes-game-patcher:latest
+EXECUTE=./scripts/execute m00qek/snes-game-patcher:alpine
 ORIGINAL_ROM = smw.sfc
 DEV_VERSION = DEV-0.0.0
 VERSION = $(DEV_VERSION)
