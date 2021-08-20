@@ -1,6 +1,7 @@
 EXECUTE=./scripts/execute m00qek/snes-game-patcher:latest
 ORIGINAL_ROM = smw.sfc
-VERSION = DEV-0.0.0
+DEV_VERSION = DEV-0.0.0
+VERSION = $(DEV_VERSION)
 REPO = USER/REPOSITORY
 
 prepare:
@@ -41,8 +42,16 @@ watch:
 	@echo
 	@$(EXECUTE) bash -c 'find src/ | entr make EXECUTE="" rom'
 
-release: ./build/release/*.bps
+release-notes: ./build/release/*.bps
 	@$(EXECUTE) ./scripts/release-notes \
 		$(VERSION) \
 		$(REPO) \
 		./build/release-notes.md
+
+tag-and-release:
+ifeq ($(VERSION),$(DEV_VERSION))
+	$(error "You must specify a version using VERSION=v0.0.0")
+else
+	@git tag $(VERSION)
+	@git push origin $(VERSION)
+endif

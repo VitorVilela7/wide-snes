@@ -24,7 +24,7 @@ jobs:
       run: make patch EXECUTE=''
 
     - name: Create release notes
-      run: make release EXECUTE='' REPO=${REPO} VERSION=${VERSION##*/}
+      run: make release-notes EXECUTE='' REPO=${REPO} VERSION=${VERSION##*/}
       env:
         VERSION: ${{ github.ref }}
         REPO: ${{ github.repository }}
