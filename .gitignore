@@ -3,11 +3,12 @@ other/
 *.cht
 *.srm
 *.smc
+*.sfc
 *.bsz
 *.lnk
 *.bp
 *.zs*
 *.bst
+*.bps
 *.log
-super-mario-world/asm/Mario.bin
-super-mario-world/asm/Luigi.bin
+build/

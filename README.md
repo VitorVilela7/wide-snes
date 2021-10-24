@@ -84,6 +84,38 @@ Patch version: 1.2
 
 [Download widescreen configuration file (BSO)](./../../raw/master/smw-widescreen.bso)
 
+# Contributing
+
+In order to build this patch you will need a game dump/backup from an original
+cartridge of Super Mario World. With that file at hand you may:
+
+```bash
+# run the next command just once
+$> cp /path/to/you/game/backup.sfc ./smw.sfc && make prepare
+
+# to generate a patched game
+$> make rom
+
+# to create a distributable patch file
+$> make patch
+
+# to re-generate a patched game every time a source code file changes
+$> make watch
+```
+
+You'll need to have docker installed. All other apps are transparently provided
+by the docker image. If you want to force them run using you local environment
+add `EXECUTE=''` after any make command, like in
+
+ ```bash
+ $> make patch EXECUTE=''
+ ```
+
+# Releasing
+
+If you are a maintainer of this project please check it out the 
+[releasing guide](./RELEASING.md) to learn how to create new releases.
+
 # Credits
 Thank you for the following people that helped me directly, either by
 testing, providing technical support or base assembly (patches) files for Super Mario World:

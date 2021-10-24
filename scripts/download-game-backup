@@ -1,0 +1,15 @@
+#!/bin/sh
+
+ORIGINAL_ROM="$1"
+OUTPUT="$2"
+DROPBOX_TOKEN="$3"
+
+if [ -n "${DROPBOX_TOKEN}" ]; then
+  echo 1
+  curl -X POST https://content.dropboxapi.com/2/files/download \
+    --header "Authorization: Bearer ${DROPBOX_TOKEN}" \
+    --header "Dropbox-API-Arg: {\"path\": \"/${ORIGINAL_ROM}\"}" \
+    --output ${OUTPUT}
+else
+  cp ${ORIGINAL_ROM} ${OUTPUT}
+fi

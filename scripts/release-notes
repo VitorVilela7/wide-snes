@@ -1,0 +1,20 @@
+#!/bin/sh
+
+VERSION="$1"
+REPO="$2"
+OUTPUT="$3"
+
+COMMIT=$(git rev-parse HEAD)
+
+echo "# Version ${VERSION}" > "${OUTPUT}"
+echo "Possible configurations:" >> "${OUTPUT}"
+
+for CONFIG_FILE in $(find assets/ -name '*.bso' -exec basename {} .bso \;); do
+  TITLE=$(grep \#% ./assets/${CONFIG_FILE}.bso \
+          | sed 's/\#%//g' \
+          | sed 's/%\#//g' \
+          | tr -s ' ')
+
+  echo "###${TITLE}" >> "${OUTPUT}"
+  echo "![${CONFIG_FILE}](https://github.com/${REPO}/raw/${COMMIT}/assets/${CONFIG_FILE}.png)" >> "${OUTPUT}"
+done
