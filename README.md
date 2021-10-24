@@ -36,7 +36,7 @@ to 352x224. Can be used on 16:9 mode (with pixel stretch) and
 ### SMW Extrawide Mode
 
 SMW Extrawide mode expands the screen by 128 pixels (+50.0%), increasing
-to 384x24. Can be used on 16:9 mode (without pixel stretch) and
+to 384x224. Can be used on 16:9 mode (without pixel stretch) and
 2:1/18:9/18.5:9 mode (with pixel streching).
 
 ## Instructions
