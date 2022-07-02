@@ -75,7 +75,8 @@ stretching and wanna download the files individually:
 
 ## Important
 
-- In case you can't get the BSO file working, you can open it using a text editor and manually apply the widescreen settings on bsnes-hd settings.
+- In case you can't get the BSO file working, you can open it using a text editor and manually
+apply the widescreen settings on bsnes-hd settings.
 
 # Download
 Patch version: 1.2
@@ -83,6 +84,11 @@ Patch version: 1.2
 [Download latest patch (BPS)](./../../raw/master/smw-widescreen.bps)
 
 [Download widescreen configuration file (BSO)](./../../raw/master/smw-widescreen.bso)
+
+# Building from source (advanced)
+
+If you are a programmer and would like to build SMW Widescreen from scratch, follow the
+instructions on [BUILDING.md](./BUILDING.md)
 
 # Credits
 Thank you for the following people that helped me directly, either by
