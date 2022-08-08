@@ -46,7 +46,7 @@ Apply main.asm using Asar (alternatively, via the do.sh script) to the base ROM 
 
 # Setting up BSO
 
-The BSO file tells how bsnes-plus will render the game.
+The BSO file tells how bsnes-hd will render the game.
 
 w1s1WXXS2i0o0p0b1B1c1
 
@@ -57,8 +57,8 @@ Change the WXX to:
 * W96 - for 448x224 resolution
 * W112 - for 480x224 resolution
 
-Change **o0p0** to **o1p1** to enable screen stretching, enabling pixel aspect ratio correction
-and full screen view.
+Change **o0p0** to **o1p1** to turn on overscan and pixel aspect ratio (e.g. 8:7 pixels).
+These settings in particular only affect the bsnes-hd core.
 
 Make sure to save the .bso file to the same name as the ROM file.
 
