@@ -79,7 +79,7 @@ stretching and wanna download the files individually:
 apply the widescreen settings on bsnes-hd settings.
 
 # Download
-Patch version: 1.2
+Patch version: 1.11
 
 [Download latest patch (BPS)](./../../raw/master/smw-widescreen.bps)
 
