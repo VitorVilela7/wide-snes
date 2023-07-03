@@ -62,7 +62,7 @@ example `SMW.bso` and `SMW.smc`
 otherwise you'll get an error from the emulator.
 5. [Play with bsnes-hd](https://github.com/DerKoun/bsnes-hd/releases).
 You **must** play with bsnes-hd, it won't work on other emulators.
-If using RetroArch, simply look for the `bsnes-hd beta` core.
+If using RetroArch, simply look for the `bsnes` core.
 
 Alternatively, if you just want to play the 16:9 version with CRT pixel
 stretching and wanna download the files individually:
@@ -71,7 +71,7 @@ stretching and wanna download the files individually:
 2. [Patch your ROM](https://sneslab.net/wiki/How_to_apply_ROM_patches). For copyright reasons, the ROM is not provided. You will have to obtain it on your own.
 3. [Download widescreen configuration file (BSO)](./../../raw/master/smw-widescreen.bso) and name it the same as your patched ROM file e.g. `SMW.bso` and `SMW.smc`
 4. Remove the `.bps` file from the folder you're loading the ROM from, otherwise you'll get an error from the emulator.
-5. [Play with bsnes-hd](https://github.com/DerKoun/bsnes-hd/releases). You **must** play with bsnes-hd, it won't work on other emulators. If using RetroArch, simply look for the `bsnes-hd beta` core.
+5. [Play with bsnes-hd](https://github.com/DerKoun/bsnes-hd/releases). You **must** play with bsnes-hd, it won't work on other emulators. If using RetroArch, simply look for the `bsnes` core.
 
 ## Important
 
